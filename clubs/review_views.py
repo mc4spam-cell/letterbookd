@@ -10,24 +10,56 @@ from .models import Comment, Notification, Reading, ReadingStatus, Review
 from .visibility import shares_club_with, visible_reviews, visible_users
 
 
+def _parse_date(raw):
+    from datetime import date as _d
+
+    raw = (raw or "").strip()
+    if not raw:
+        return None
+    try:
+        return _d.fromisoformat(raw)
+    except ValueError:
+        return None
+
+
 @login_required
 def read_book(request, book_id):
-    """Marque la lecture (statut + note) et, si texte, crée/édite l'avis."""
+    """Marque la lecture (statut + note + dates) et, si texte, crée/édite l'avis.
+
+    `?nouvelle=1` force une nouvelle lecture (relecture) plutôt que de mettre
+    à jour la plus récente.
+    """
     book = get_object_or_404(Book, pk=book_id)
-    reading = Reading.objects.filter(user=request.user, book=book).first()
+    force_new = request.GET.get("nouvelle") == "1" or request.POST.get("nouvelle") == "1"
+    reading = (
+        None
+        if force_new
+        else Reading.objects.filter(user=request.user, book=book)
+        .order_by("-updated_at")
+        .first()
+    )
     if request.method == "POST":
         status = request.POST.get("status") or ReadingStatus.READ
         if status not in ReadingStatus.values:
             status = ReadingStatus.READ
         rating_raw = (request.POST.get("rating") or "").strip()
         rating = int(rating_raw) if rating_raw.isdigit() and 0 <= int(rating_raw) <= 10 else None
+        started_on = _parse_date(request.POST.get("started_on"))
+        finished_on = _parse_date(request.POST.get("finished_on"))
         if reading is None:
             reading = Reading.objects.create(
-                user=request.user, book=book, status=status, rating=rating
+                user=request.user,
+                book=book,
+                status=status,
+                rating=rating,
+                started_on=started_on,
+                finished_on=finished_on,
             )
         else:
             reading.status = status
             reading.rating = rating
+            reading.started_on = started_on
+            reading.finished_on = finished_on
             reading.save()
         text = (request.POST.get("review_text") or "").strip()
         spoiler = request.POST.get("spoiler") == "on"
@@ -47,6 +79,7 @@ def read_book(request, book_id):
             "reading": reading,
             "review": getattr(reading, "review", None) if reading else None,
             "statuses": ReadingStatus.choices,
+            "force_new": force_new,
         },
     )
 
@@ -130,7 +163,25 @@ def profile_readings(request, user_id):
     other = get_object_or_404(get_user_model(), pk=user_id)
     if other.pk != request.user.pk and other not in visible_users(request.user):
         raise Http404
-    readings = (
-        Reading.objects.filter(user=other).select_related("book").order_by("-updated_at")
+    qs = Reading.objects.filter(user=other).select_related("book")
+    status = request.GET.get("status")
+    if status in ReadingStatus.values:
+        qs = qs.filter(status=status)
+    sort = request.GET.get("tri")
+    if sort == "note":
+        qs = qs.order_by("-rating", "-updated_at")
+    elif sort == "fini":
+        qs = qs.order_by("-finished_on", "-updated_at")
+    else:
+        qs = qs.order_by("-updated_at")
+    return render(
+        request,
+        "clubs/readings.html",
+        {
+            "profile_user": other,
+            "readings": qs,
+            "statuses": ReadingStatus.choices,
+            "current_status": status or "",
+            "current_sort": sort or "",
+        },
     )
-    return render(request, "clubs/readings.html", {"profile_user": other, "readings": readings})

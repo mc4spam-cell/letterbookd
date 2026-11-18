@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Listes" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Listes" %}</h1>
+<p><a href="{% url 'list_create' %}">{% translate "Nouvelle liste" %}</a></p>
+{% if lists %}
+<ul>
+    {% for l in lists %}
+    <li>
+        <a href="{% url 'list_detail' list_id=l.id %}">{{ l.name }}</a>
+        — {{ l.owner }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Aucune liste visible." %}</p>
+{% endif %}
+{% endblock %}

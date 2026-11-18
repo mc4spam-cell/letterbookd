@@ -3,6 +3,25 @@
 {% block title %}{% translate "Lectures de" %} {{ profile_user }}{% endblock %}
 {% block content %}
 <h1>{% translate "Lectures de" %} {{ profile_user }}</h1>
+
+<form method="get">
+    <label>{% translate "Filtrer par statut" %}
+        <select name="status" onchange="this.form.submit()">
+            <option value="">{% translate "Tous" %}</option>
+            {% for v, label in statuses %}
+                <option value="{{ v }}" {% if current_status == v %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>{% translate "Trier par" %}
+        <select name="tri" onchange="this.form.submit()">
+            <option value="" {% if not current_sort %}selected{% endif %}>{% translate "récent" %}</option>
+            <option value="fini" {% if current_sort == "fini" %}selected{% endif %}>{% translate "terminé" %}</option>
+            <option value="note" {% if current_sort == "note" %}selected{% endif %}>{% translate "note" %}</option>
+        </select>
+    </label>
+</form>
+
 {% if readings %}
 <ul>
     {% for r in readings %}
@@ -10,11 +29,12 @@
         <a href="{% url 'books_detail' book_id=r.book.id %}">{{ r.book }}</a>
         — {{ r.get_status_display }}
         {% if r.rating is not None %} — {{ r.rating }}/10{% endif %}
+        {% if r.finished_on %} — {% translate "terminé" %} {{ r.finished_on|date:"Y-m-d" }}{% endif %}
         {% if r.review %} — <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "avis" %}</a>{% endif %}
     </li>
     {% endfor %}
 </ul>
 {% else %}
-    <p>{% translate "Aucune lecture pour l'instant." %}</p>
+    <p>{% translate "Aucune lecture pour ce filtre." %}</p>
 {% endif %}
 {% endblock %}

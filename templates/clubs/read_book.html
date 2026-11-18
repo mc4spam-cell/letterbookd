@@ -3,7 +3,9 @@
 {% block title %}{% translate "Noter" %} — {{ book.title }}{% endblock %}
 {% block content %}
 <h1>{{ book.title }}</h1>
+{% if force_new %}<p><em>{% translate "Nouvelle lecture (relecture)" %}</em></p>{% endif %}
 <form method="post">{% csrf_token %}
+    {% if force_new %}<input type="hidden" name="nouvelle" value="1">{% endif %}
     <p><label>{% translate "Statut" %}
         <select name="status">
             {% for v, label in statuses %}
@@ -11,7 +13,13 @@
             {% endfor %}
         </select>
     </label></p>
-    <p><label>{% translate "Note (0 à 10 demi-points, vide = pas de note)" %}
+    <p><label>{% translate "Commencé le" %}
+        <input type="date" name="started_on" value="{{ reading.started_on|date:'Y-m-d' }}">
+    </label></p>
+    <p><label>{% translate "Terminé le" %}
+        <input type="date" name="finished_on" value="{{ reading.finished_on|date:'Y-m-d' }}">
+    </label></p>
+    <p><label>{% translate "Note (0 à 10 demi-points)" %}
         <input type="number" name="rating" min="0" max="10" step="1" value="{{ reading.rating|default_if_none:'' }}">
     </label></p>
     <p><label>{% translate "Avis (optionnel)" %}<br>
@@ -20,4 +28,7 @@
     <p><label><input type="checkbox" name="spoiler" {% if review and review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
     <button type="submit">{% translate "Enregistrer" %}</button>
 </form>
+{% if reading and not force_new %}
+    <p><a href="?nouvelle=1">{% translate "Ou enregistrer une relecture" %}</a></p>
+{% endif %}
 {% endblock %}

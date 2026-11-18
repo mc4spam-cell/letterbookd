@@ -11,6 +11,7 @@
         <a href="{% url 'home' %}">letterbookd</a>
         {% if user.is_authenticated %}
             · <a href="{% url 'books_search' %}">{% translate "livres" %}</a>
+            · <a href="{% url 'lists_index' %}">{% translate "listes" %}</a>
             · <a href="{% url 'feed' %}">{% translate "flux" %}</a>
             · <a href="{% url 'notifications' %}">{% translate "notifs" %}</a>
         {% endif %}

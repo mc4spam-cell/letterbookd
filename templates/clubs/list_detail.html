@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ list.name }}{% endblock %}
+{% block content %}
+<h1>{{ list.name }}</h1>
+<p>{% translate "par" %} {{ list.owner }}</p>
+{% if list.description %}<p>{{ list.description }}</p>{% endif %}
+
+{% if items %}
+<ul>
+    {% for it in items %}
+    <li>
+        <a href="{% url 'books_detail' book_id=it.book.id %}">{{ it.book }}</a>
+        {% if it.note %} — {{ it.note }}{% endif %}
+        {% if is_owner %}
+            <form method="post" action="{% url 'list_remove' list_id=list.id item_id=it.id %}" style="display:inline">{% csrf_token %}
+                <button type="submit">{% translate "retirer" %}</button>
+            </form>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Liste vide." %}</p>
+{% endif %}
+
+{% if is_owner %}
+<h2>{% translate "Ajouter un livre" %}</h2>
+{% if catalog %}
+<form method="post" action="{% url 'list_add' list_id=list.id %}">{% csrf_token %}
+    <select name="book_id" required>
+        {% for b in catalog %}<option value="{{ b.id }}">{{ b }}</option>{% endfor %}
+    </select>
+    <button type="submit">{% translate "Ajouter" %}</button>
+</form>
+{% else %}
+    <p>{% translate "Catalogue vide." %} <a href="{% url 'books_search' %}">{% translate "Chercher un livre" %}</a></p>
+{% endif %}
+
+<form method="post" action="{% url 'list_delete' list_id=list.id %}" onsubmit="return confirm('{% translate "Supprimer cette liste ?" %}');">{% csrf_token %}
+    <button type="submit">{% translate "Supprimer la liste" %}</button>
+</form>
+{% endif %}
+{% endblock %}

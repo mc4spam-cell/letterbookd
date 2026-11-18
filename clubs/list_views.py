@@ -1,0 +1,74 @@
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
+
+from books.models import Book
+
+from .models import ListItem, ReadingList
+from .visibility import visible_lists
+
+
+@login_required
+def lists_index(request):
+    lists = visible_lists(request.user).select_related("owner").order_by("-updated_at")
+    return render(request, "clubs/lists_index.html", {"lists": lists})
+
+
+@login_required
+def list_create(request):
+    if request.method == "POST":
+        name = (request.POST.get("name") or "").strip()[:120]
+        if name:
+            rl = ReadingList.objects.create(
+                owner=request.user,
+                name=name,
+                description=(request.POST.get("description") or "").strip(),
+            )
+            return redirect("list_detail", list_id=rl.pk)
+    return render(request, "clubs/list_form.html", {})
+
+
+@login_required
+def list_detail(request, list_id):
+    rl = get_object_or_404(ReadingList.objects.select_related("owner"), pk=list_id)
+    if rl not in visible_lists(request.user):
+        raise Http404
+    items = rl.items.select_related("book")
+    return render(
+        request,
+        "clubs/list_detail.html",
+        {
+            "list": rl,
+            "items": items,
+            "is_owner": rl.owner_id == request.user.pk,
+            "catalog": Book.objects.all() if rl.owner_id == request.user.pk else [],
+        },
+    )
+
+
+@login_required
+def list_add(request, list_id):
+    rl = get_object_or_404(ReadingList, pk=list_id, owner=request.user)
+    if request.method == "POST":
+        book_id = request.POST.get("book_id")
+        book = get_object_or_404(Book, pk=book_id)
+        ListItem.objects.get_or_create(list=rl, book=book)
+        rl.save(update_fields=["updated_at"])
+    return redirect("list_detail", list_id=rl.pk)
+
+
+@login_required
+def list_remove(request, list_id, item_id):
+    rl = get_object_or_404(ReadingList, pk=list_id, owner=request.user)
+    if request.method == "POST":
+        ListItem.objects.filter(pk=item_id, list=rl).delete()
+    return redirect("list_detail", list_id=rl.pk)
+
+
+@login_required
+def list_delete(request, list_id):
+    rl = get_object_or_404(ReadingList, pk=list_id, owner=request.user)
+    if request.method == "POST":
+        rl.delete()
+        return redirect("lists_index")
+    return redirect("list_detail", list_id=rl.pk)

@@ -22,6 +22,8 @@ class Reading(models.Model):
     rating = models.PositiveSmallIntegerField(
         _("note (demi-points, 0 à 10)"), null=True, blank=True
     )  # 0..10 = 0..5 étoiles par pas de 0,5
+    started_on = models.DateField(_("commencé le"), null=True, blank=True)
+    finished_on = models.DateField(_("terminé le"), null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

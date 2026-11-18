@@ -50,3 +50,11 @@ def visible_reviews(viewer) -> QuerySet:
     if not getattr(viewer, "is_authenticated", False):
         return Review.objects.none()
     return Review.objects.filter(reading__user__in=visible_users(viewer)).distinct()
+
+
+def visible_lists(viewer) -> QuerySet:
+    from .models import ReadingList
+
+    if not getattr(viewer, "is_authenticated", False):
+        return ReadingList.objects.none()
+    return ReadingList.objects.filter(owner__in=visible_users(viewer)).distinct()
