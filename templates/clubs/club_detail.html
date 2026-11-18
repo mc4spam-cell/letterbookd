@@ -4,6 +4,41 @@
 {% block content %}
 <h1>{{ club.name }}</h1>
 {% if club.description %}<p>{{ club.description }}</p>{% endif %}
+
+<h2>{% translate "Livre du mois" %}</h2>
+{% if current %}
+    <p><a href="{% url 'books_detail' book_id=current.winner.book_id %}">{{ current.winner.book }}</a>
+    — {% translate "du" %} {{ current.start_date|default:"?" }} {% translate "au" %} {{ current.end_date|default:"?" }}</p>
+{% else %}
+    <p>{% translate "Pas de livre en cours." %}</p>
+{% endif %}
+
+<h2>{% translate "Vote" %}</h2>
+{% if open_vote %}
+    <p><a href="{% url 'vote_detail' club_id=club.id %}">{% translate "Un vote est en cours." %}</a></p>
+{% else %}
+    <p>
+        <a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un livre" %}</a>
+        ({{ propositions.count }} {% translate "en lice" %})
+    </p>
+    {% if is_host and propositions %}
+    <form method="post" action="{% url 'open_vote' club_id=club.id %}">{% csrf_token %}
+        <button type="submit">{% translate "Ouvrir le vote" %}</button>
+    </form>
+    {% endif %}
+{% endif %}
+
+<h2>{% translate "Sélections passées" %}</h2>
+{% if past_selections %}
+    <ul>
+        {% for v in past_selections %}
+            <li>{{ v.winner.book }} — {{ v.start_date|default:"?" }} → {{ v.end_date|default:"?" }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{% translate "Aucune pour l'instant." %}</p>
+{% endif %}
+
 <h2>{% translate "Membres" %}</h2>
 <ul>
     {% for m in members %}

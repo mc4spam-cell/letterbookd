@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Vote" %} · {{ club.name }}{% endblock %}
+{% block content %}
+<h1>{% translate "Vote en cours" %} — {{ club.name }}</h1>
+
+{% if my_ballot %}
+    <p>{% translate "Tu as voté pour" %} <strong>{{ my_ballot.proposition.book }}</strong>.</p>
+{% else %}
+    <form method="post">{% csrf_token %}
+        {% for p in propositions %}
+            <label><input type="radio" name="proposition_id" value="{{ p.id }}" required>
+                {{ p.book }} — {{ p.book.authors }}
+            </label><br>
+        {% endfor %}
+        <button type="submit">{% translate "Voter" %}</button>
+    </form>
+{% endif %}
+
+<h2>{% translate "Dépouillement en direct" %}</h2>
+<ul>
+    {% for p in propositions %}
+        <li>{{ p.book }} : {{ p.ballots_count }}</li>
+    {% endfor %}
+</ul>
+
+{% if is_host %}
+<h2>{% translate "Clôturer" %}</h2>
+<form method="post" action="{% url 'close_vote' club_id=club.id %}">{% csrf_token %}
+    <label>{% translate "Début de lecture" %} <input type="date" name="start_date" required></label>
+    <label>{% translate "Fin de lecture" %} <input type="date" name="end_date" required></label>
+    <button type="submit" onclick="return confirm('{% translate "Clôturer le vote et fixer le livre du mois ?" %}');">{% translate "Clôturer" %}</button>
+</form>
+{% endif %}
+{% endblock %}

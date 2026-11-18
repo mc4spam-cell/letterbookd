@@ -51,3 +51,6 @@ class Membership(models.Model):
 
     def __str__(self):
         return f"{self.user} @ {self.club} ({self.role})"
+
+
+from .cycle_models import Ballot, Proposition, Vote  # noqa: E402, F401

@@ -43,10 +43,21 @@ def club_detail(request, club_id):
     if me is None:
         raise Http404
     members = club.members.all()
+    from .cycle_views import current_selection, past_selections
+    open_vote = club.votes.filter(closed_at__isnull=True).first()
     return render(
         request,
         "clubs/club_detail.html",
-        {"club": club, "me": me, "members": members, "is_host": me.role == Role.HOST},
+        {
+            "club": club,
+            "me": me,
+            "members": members,
+            "is_host": me.role == Role.HOST,
+            "open_vote": open_vote,
+            "current": current_selection(club),
+            "past_selections": past_selections(club),
+            "propositions": club.propositions.select_related("book"),
+        },
     )
 
 
