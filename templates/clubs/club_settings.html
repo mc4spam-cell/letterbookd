@@ -22,6 +22,11 @@
                 <input type="hidden" name="user_id" value="{{ m.id }}">
                 <button type="submit">{% translate "Exclure" %}</button>
             </form>
+            <form method="post" style="display:inline">{% csrf_token %}
+                <input type="hidden" name="action" value="promote">
+                <input type="hidden" name="user_id" value="{{ m.id }}">
+                <button type="submit">{% translate "Promouvoir animateur" %}</button>
+            </form>
         </li>
     {% endfor %}
 </ul>

@@ -28,6 +28,23 @@ pytest
 ruff check .
 ```
 
+## Sauvegardes
+
+Sauvegarde nocturne chiffrée de PostgreSQL (à lancer par cron sur l'hôte) :
+
+```bash
+docker compose exec -T db pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" \
+  | gpg --symmetric --cipher-algo AES256 \
+  > "backup-$(date +%F).sql.gpg"
+```
+
+Restauration (à tester une fois avant mise en service) :
+
+```bash
+gpg --decrypt backup-YYYY-MM-DD.sql.gpg \
+  | docker compose exec -T db psql -U "$POSTGRES_USER" "$POSTGRES_DB"
+```
+
 ## Cycle automatique
 
 Le vote mensuel s'ouvre et se clôt tout seul via une commande à lancer

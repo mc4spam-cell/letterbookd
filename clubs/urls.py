@@ -16,6 +16,7 @@ urlpatterns = [
     path("avis/<int:review_id>/", review_views.review_detail, name="review_detail"),
     path("flux/", review_views.feed, name="feed"),
     path("notifications/", review_views.notifications, name="notifications"),
+    path("stats/", review_views.stats, name="stats"),
     path("listes/", list_views.lists_index, name="lists_index"),
     path("listes/nouvelle/", list_views.list_create, name="list_create"),
     path("listes/<int:list_id>/", list_views.list_detail, name="list_detail"),

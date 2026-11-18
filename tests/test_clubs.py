@@ -101,7 +101,9 @@ def test_profile_visible_within_shared_club(make_user, make_club):
 @pytest.mark.django_db
 def test_delete_account_removes_memberships(make_user, make_club):
     host = make_user()
-    make_club(host)
+    cohost = make_user()
+    club = make_club(host)
+    Membership.objects.create(user=cohost, club=club, role=Role.HOST)
     _login(host).post(reverse("me_settings"), {"action": "delete"})
     assert Membership.objects.filter(user__pk=host.pk).count() == 0
 

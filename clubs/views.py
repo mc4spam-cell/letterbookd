@@ -1,10 +1,23 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Exists, OuterRef
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
 from .models import Club, Membership, Role
 from .visibility import visible_clubs
+
+
+def _sole_host_clubs(user):
+    hosting = Membership.objects.filter(user=user, role=Role.HOST).values("club_id")
+    other_host = Membership.objects.filter(
+        club_id=OuterRef("pk"), role=Role.HOST
+    ).exclude(user=user)
+    return (
+        Club.objects.filter(pk__in=hosting)
+        .annotate(has_other=Exists(other_host))
+        .filter(has_other=False)
+    )
 
 
 @login_required
@@ -77,6 +90,12 @@ def club_settings(request, club_id):
                 Membership.objects.filter(
                     club=club, user_id=target_id, role=Role.MEMBER
                 ).delete()
+        elif action == "promote":
+            target_id = request.POST.get("user_id")
+            if target_id:
+                Membership.objects.filter(
+                    club=club, user_id=target_id, role=Role.MEMBER
+                ).update(role=Role.HOST)
         return redirect("club_settings", club_id=club.pk)
     return render(
         request,
@@ -112,12 +131,25 @@ def profile_detail(request, user_id):
 @login_required
 def me_settings(request):
     user = request.user
+    blocking = list(_sole_host_clubs(user).values_list("name", flat=True))
     if request.method == "POST":
         if request.POST.get("action") == "delete":
+            if blocking:
+                return render(
+                    request,
+                    "clubs/me.html",
+                    {
+                        "error": _(
+                            "Tu es le seul animateur de ces clubs ; promeus un autre "
+                            "membre avant de supprimer ton compte."
+                        ),
+                        "blocking_clubs": blocking,
+                    },
+                )
             user.delete()
             return redirect("home")
         user.display_name = (request.POST.get("display_name") or "").strip()[:80]
         user.bio = (request.POST.get("bio") or "").strip()
         user.save(update_fields=["display_name", "bio"])
         return redirect("me_settings")
-    return render(request, "clubs/me.html", {})
+    return render(request, "clubs/me.html", {"blocking_clubs": blocking})

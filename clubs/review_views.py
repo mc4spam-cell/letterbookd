@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch
+from django.db.models import Avg, Count, Prefetch
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -153,6 +153,26 @@ def notifications(request):
         )
     return render(
         request, "clubs/notifications.html", {"notifications": qs[:100], "fresh": unread}
+    )
+
+
+@login_required
+def stats(request):
+    qs = Reading.objects.filter(user=request.user)
+    by_status = dict(qs.values_list("status").annotate(n=Count("id")))
+    year = timezone.now().year
+    return render(
+        request,
+        "clubs/stats.html",
+        {
+            "total": qs.count(),
+            "by_status": [
+                (label, by_status.get(v, 0)) for v, label in ReadingStatus.choices
+            ],
+            "avg_rating": qs.exclude(rating__isnull=True).aggregate(a=Avg("rating"))["a"],
+            "finished_this_year": qs.filter(finished_on__year=year).count(),
+            "year": year,
+        },
     )
 
 

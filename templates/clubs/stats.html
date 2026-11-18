@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Mes stats" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Mes stats" %}</h1>
+<dl>
+    <dt>{% translate "Lectures enregistrées" %}</dt><dd>{{ total }}</dd>
+    <dt>{% translate "Terminées en" %} {{ year }}</dt><dd>{{ finished_this_year }}</dd>
+    <dt>{% translate "Note moyenne (/10)" %}</dt>
+    <dd>{% if avg_rating %}{{ avg_rating|floatformat:1 }}{% else %}—{% endif %}</dd>
+</dl>
+<h2>{% translate "Par statut" %}</h2>
+<ul>
+    {% for label, n in by_status %}
+        <li>{{ label }} : {{ n }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
