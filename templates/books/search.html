@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Chercher un livre" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Chercher un livre" %}</h1>
+<form method="get">
+    <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'titre, auteur, ISBN' %}" autofocus>
+    <button type="submit">{% translate "Chercher" %}</button>
+</form>
+{% if q and not results %}
+    <p>{% translate "Rien trouvé pour cette recherche." %}</p>
+{% endif %}
+{% if results %}
+<ul>
+    {% for r in results %}
+    <li>
+        <strong>{{ r.title }}</strong>
+        {% if r.authors %} — {{ r.authors }}{% endif %}
+        {% if r.year %} ({{ r.year }}){% endif %}
+        <form method="post" action="{% url 'books_add' %}" style="display:inline">{% csrf_token %}
+            <input type="hidden" name="olid" value="{{ r.olid }}">
+            <input type="hidden" name="title" value="{{ r.title }}">
+            <input type="hidden" name="authors" value="{{ r.authors }}">
+            <input type="hidden" name="isbn" value="{{ r.isbn }}">
+            <input type="hidden" name="pages" value="{{ r.pages|default_if_none:'' }}">
+            <input type="hidden" name="year" value="{{ r.year|default_if_none:'' }}">
+            <input type="hidden" name="cover_id" value="{{ r.cover_id|default_if_none:'' }}">
+            <button type="submit">{% translate "Ajouter" %}</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

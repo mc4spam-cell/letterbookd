@@ -1,0 +1,91 @@
+import io
+import json
+from unittest.mock import patch
+
+import pytest
+from django.test import Client
+from django.urls import reverse
+
+from books import openlibrary
+from books.models import Book
+
+SAMPLE = {
+    "docs": [
+        {
+            "key": "/works/OL27448W",
+            "title": "L'Étranger",
+            "author_name": ["Albert Camus"],
+            "isbn": ["9782070360024"],
+            "number_of_pages_median": 159,
+            "cover_i": 12345,
+            "first_publish_year": 1942,
+        }
+    ]
+}
+
+
+def _fake_urlopen(*_a, **_k):
+    return io.BytesIO(json.dumps(SAMPLE).encode("utf-8"))
+
+
+def _login(user):
+    c = Client()
+    c.force_login(user)
+    return c
+
+
+@pytest.mark.django_db
+def test_search_returns_normalised_results(make_user):
+    with patch.object(openlibrary, "urlopen", _fake_urlopen):
+        r = _login(make_user()).get(reverse("books_search"), {"q": "camus"})
+    assert r.status_code == 200
+    assert b"Albert Camus" in r.content
+
+
+@pytest.mark.django_db
+def test_add_creates_local_copy_without_network(make_user):
+    c = _login(make_user())
+    r = c.post(
+        reverse("books_add"),
+        {
+            "olid": "OL27448W",
+            "title": "L'Étranger",
+            "authors": "Albert Camus",
+            "isbn": "9782070360024",
+            "pages": "159",
+            "year": "1942",
+            "cover_id": "12345",
+        },
+    )
+    book = Book.objects.get(olid="OL27448W")
+    assert r.status_code == 302
+    assert book.title == "L'Étranger"
+    assert book.pages == 159
+
+
+@pytest.mark.django_db
+def test_add_is_idempotent(make_user):
+    c = _login(make_user())
+    data = {"olid": "OL1W", "title": "T", "authors": "A"}
+    c.post(reverse("books_add"), data)
+    c.post(reverse("books_add"), data)
+    assert Book.objects.filter(olid="OL1W").count() == 1
+
+
+@pytest.mark.django_db
+def test_detail_renders_offline(make_user):
+    book = Book.objects.create(olid="OL2W", title="Belle du Seigneur", authors="Cohen")
+    r = _login(make_user()).get(reverse("books_detail", args=[book.pk]))
+    assert r.status_code == 200
+    assert b"Belle du Seigneur" in r.content
+
+
+def test_search_requires_login():
+    r = Client().get(reverse("books_search"))
+    assert r.status_code in (301, 302)
+
+
+def test_openlibrary_search_empty_query_skips_network():
+    with patch.object(openlibrary, "urlopen", side_effect=AssertionError("called")):
+        assert openlibrary.search("") == []
+        assert openlibrary.search("   ") == []
