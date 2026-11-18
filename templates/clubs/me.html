@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Mon compte" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Mon compte" %}</h1>
+<form method="post">{% csrf_token %}
+    <p><label>{% translate "Nom affiché" %} <input type="text" name="display_name" value="{{ user.display_name }}" maxlength="80"></label></p>
+    <p><label>{% translate "Bio" %}<br><textarea name="bio">{{ user.bio }}</textarea></label></p>
+    <button type="submit">{% translate "Enregistrer" %}</button>
+</form>
+
+<h2>{% translate "Supprimer mon compte" %}</h2>
+<p>{% translate "Cela efface ton profil et tes adhésions, sans retour en arrière." %}</p>
+<form method="post" onsubmit="return confirm('{% translate "Confirmer la suppression définitive de ton compte ?" %}');">{% csrf_token %}
+    <input type="hidden" name="action" value="delete">
+    <button type="submit">{% translate "Supprimer définitivement" %}</button>
+</form>
+{% endblock %}

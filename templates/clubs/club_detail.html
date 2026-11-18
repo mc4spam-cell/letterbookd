@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ club.name }}{% endblock %}
+{% block content %}
+<h1>{{ club.name }}</h1>
+{% if club.description %}<p>{{ club.description }}</p>{% endif %}
+<h2>{% translate "Membres" %}</h2>
+<ul>
+    {% for m in members %}
+        <li><a href="{% url 'profile_detail' user_id=m.id %}">{{ m }}</a></li>
+    {% endfor %}
+</ul>
+{% if is_host %}
+    <p><a href="{% url 'club_settings' club_id=club.id %}">{% translate "Réglages du club" %}</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load i18n %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}letterbookd{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <a href="{% url 'home' %}">letterbookd</a>
+        {% if user.is_authenticated %}
+            · <a href="{% url 'me_settings' %}">{% translate "moi" %}</a>
+            · <form action="{% url 'account_logout' %}" method="post" style="display:inline">{% csrf_token %}<button type="submit">{% translate "me déconnecter" %}</button></form>
+        {% else %}
+            · <a href="{% url 'account_login' %}">{% translate "me connecter" %}</a>
+            · <a href="{% url 'account_signup' %}">{% translate "créer un compte" %}</a>
+        {% endif %}
+    </header>
+    <main>
+        {% if messages %}<ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

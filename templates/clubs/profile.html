@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ profile_user }}{% endblock %}
+{% block content %}
+<h1>{{ profile_user }}</h1>
+{% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
+<h2>{% translate "Clubs en commun" %}</h2>
+<ul>
+    {% for c in shared_clubs %}
+        <li><a href="{% url 'club_detail' club_id=c.id %}">{{ c.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
