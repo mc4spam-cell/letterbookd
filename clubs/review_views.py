@@ -130,29 +130,57 @@ def _notify_for_comment(comment: Comment) -> None:
     )
 
 
+def _club_filter(request):
+    """Rend (clubs_du_viewer, club_filtré ou None) depuis ?club=<id>."""
+    from .visibility import visible_clubs
+
+    my_clubs = list(visible_clubs(request.user).order_by("name"))
+    raw = request.GET.get("club") or ""
+    selected = None
+    if raw.isdigit():
+        for c in my_clubs:
+            if c.pk == int(raw):
+                selected = c
+                break
+    return my_clubs, selected
+
+
 @login_required
 def feed(request):
-    reviews = (
-        visible_reviews(request.user)
-        .select_related("reading__user", "reading__book")
-        .order_by("-created_at")[:50]
+    my_clubs, club = _club_filter(request)
+    qs = visible_reviews(request.user).select_related("reading__user", "reading__book")
+    if club is not None:
+        qs = qs.filter(reading__user__membership__club=club).distinct()
+    reviews = qs.order_by("-created_at")[:50]
+    return render(
+        request,
+        "clubs/feed.html",
+        {"reviews": reviews, "my_clubs": my_clubs, "selected_club": club},
     )
-    return render(request, "clubs/feed.html", {"reviews": reviews})
 
 
 @login_required
 def notifications(request):
+    my_clubs, club = _club_filter(request)
     qs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
     )
+    if club is not None:
+        qs = qs.filter(actor__membership__club=club).distinct()
     unread = list(qs.filter(read_at__isnull=True))
-    # Marque comme lus à l'affichage.
     if unread:
         Notification.objects.filter(pk__in=[n.pk for n in unread]).update(
             read_at=timezone.now()
         )
     return render(
-        request, "clubs/notifications.html", {"notifications": qs[:100], "fresh": unread}
+        request,
+        "clubs/notifications.html",
+        {
+            "notifications": qs[:100],
+            "fresh": unread,
+            "my_clubs": my_clubs,
+            "selected_club": club,
+        },
     )
 
 
@@ -187,12 +215,15 @@ def profile_readings(request, user_id):
     status = request.GET.get("status")
     if status in ReadingStatus.values:
         qs = qs.filter(status=status)
-    sort = request.GET.get("tri")
+    sort = request.GET.get("tri") or "date"
     if sort == "note":
         qs = qs.order_by("-rating", "-updated_at")
+    elif sort == "auteur":
+        qs = qs.order_by("book__authors", "book__title")
     elif sort == "fini":
         qs = qs.order_by("-finished_on", "-updated_at")
     else:
+        sort = "date"
         qs = qs.order_by("-updated_at")
     return render(
         request,
@@ -202,6 +233,6 @@ def profile_readings(request, user_id):
             "readings": qs,
             "statuses": ReadingStatus.choices,
             "current_status": status or "",
-            "current_sort": sort or "",
+            "current_sort": sort,
         },
     )

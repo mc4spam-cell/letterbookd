@@ -56,8 +56,16 @@ def club_detail(request, club_id):
     if me is None:
         raise Http404
     members = club.members.all()
-    from .cycle_views import current_selection, past_selections
-    open_vote = club.votes.filter(closed_at__isnull=True).first()
+    from .cycle_views import past_selections
+    from .models import Reading, ReadingStatus
+    status_filter = request.GET.get("statut") or ReadingStatus.READING
+    if status_filter not in ReadingStatus.values:
+        status_filter = ReadingStatus.READING
+    group_readings = (
+        Reading.objects.filter(user__in=members, status=status_filter)
+        .select_related("book", "user")
+        .order_by("-updated_at")[:50]
+    )
     return render(
         request,
         "clubs/club_detail.html",
@@ -66,10 +74,11 @@ def club_detail(request, club_id):
             "me": me,
             "members": members,
             "is_host": me.role == Role.HOST,
-            "open_vote": open_vote,
-            "current": current_selection(club),
-            "past_selections": past_selections(club),
+            "selections": past_selections(club),
             "propositions": club.propositions.select_related("book"),
+            "group_readings": group_readings,
+            "statuses": ReadingStatus.choices,
+            "current_status": status_filter,
         },
     )
 

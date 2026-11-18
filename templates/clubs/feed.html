@@ -3,6 +3,16 @@
 {% block title %}{% translate "Flux" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Flux" %}</h1>
+<form method="get" style="margin-bottom:10px">
+    <label>{% translate "Club" %}
+        <select name="club" onchange="this.form.submit()">
+            <option value="" {% if not selected_club %}selected{% endif %}>{% translate "tous mes clubs" %}</option>
+            {% for c in my_clubs %}
+                <option value="{{ c.id }}" {% if selected_club.id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+</form>
 {% if reviews %}
 <ul class="book-list">
     {% for r in reviews %}

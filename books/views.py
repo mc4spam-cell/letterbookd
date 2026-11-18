@@ -24,7 +24,7 @@ def add(request):
     pages = request.POST.get("pages") or None
     year = request.POST.get("year") or None
     cover_id = request.POST.get("cover_id") or None
-    book, _ = Book.objects.get_or_create(
+    book, created = Book.objects.get_or_create(
         olid=olid,
         defaults={
             "title": (request.POST.get("title") or "")[:500],
@@ -35,10 +35,14 @@ def add(request):
             "year": int(year) if year and year.isdigit() else None,
         },
     )
+    if created:
+        book.hydrate_from_openlibrary()
     return redirect("books_detail", book_id=book.pk)
 
 
 @login_required
 def detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
+    if not book.description or not book.cover_id:
+        book.hydrate_from_openlibrary()
     return render(request, "books/detail.html", {"book": book})

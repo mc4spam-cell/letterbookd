@@ -53,7 +53,7 @@ class Membership(models.Model):
         return f"{self.user} @ {self.club} ({self.role})"
 
 
-from .cycle_models import Ballot, Proposition, Vote  # noqa: E402, F401
+from .cycle_models import Proposition, Vote  # noqa: E402, F401
 from .list_models import ListItem, ReadingList  # noqa: E402, F401
 from .review_models import (  # noqa: E402, F401
     Comment,

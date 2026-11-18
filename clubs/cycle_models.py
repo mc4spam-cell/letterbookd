@@ -60,16 +60,3 @@ class Vote(models.Model):
         return self.closed_at is None
 
 
-class Ballot(models.Model):
-    vote = models.ForeignKey(Vote, on_delete=models.CASCADE, related_name="ballots")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    proposition = models.ForeignKey(Proposition, on_delete=models.CASCADE)
-    cast_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=["vote", "user"], name="uniq_ballot_per_user"),
-        ]
-
-    def __str__(self):
-        return f"{self.user} → {self.proposition}"

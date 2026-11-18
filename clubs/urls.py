@@ -8,7 +8,6 @@ urlpatterns = [
     path("clubs/<int:club_id>/", views.club_detail, name="club_detail"),
     path("clubs/<int:club_id>/reglages/", views.club_settings, name="club_settings"),
     path("clubs/<int:club_id>/proposer/", cycle_views.propose, name="propose"),
-    path("clubs/<int:club_id>/vote/", cycle_views.vote_detail, name="vote_detail"),
     path("rejoindre/<str:token>/", views.join_by_token, name="join_by_token"),
     path("membres/<int:user_id>/", views.profile_detail, name="profile_detail"),
     path("membres/<int:user_id>/lectures/", review_views.profile_readings, name="profile_readings"),

@@ -3,6 +3,18 @@
 {% block title %}{% translate "Listes" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Listes" %}</h1>
+
+<h2>{% translate "Par membre" %}</h2>
+<ul>
+    <li><strong><a href="{% url 'profile_readings' user_id=user.id %}">{% translate "Tous mes livres" %}</a></strong></li>
+    {% for u in visible_people %}
+        {% if u.id != user.id %}
+        <li><a href="{% url 'profile_readings' user_id=u.id %}">{% blocktranslate with name=u %}Tous les livres de {{ name }}{% endblocktranslate %}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<h2>{% translate "Listes thématiques" %}</h2>
 <p><a href="{% url 'list_create' %}">{% translate "Nouvelle liste" %}</a></p>
 {% if lists %}
 <ul>

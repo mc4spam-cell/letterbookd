@@ -1,13 +1,12 @@
 from datetime import date
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from books.models import Book
 
-from .models import Ballot, Club, Membership, Proposition, Vote
+from .models import Club, Membership, Proposition, Vote
 
 
 def _membership(user, club):
@@ -37,33 +36,6 @@ def propose(request, club_id):
     )
 
 
-@login_required
-def vote_detail(request, club_id):
-    club, me = _require_member(request.user, club_id)
-    vote = Vote.objects.filter(club=club, closed_at__isnull=True).first()
-    if vote is None:
-        return redirect("club_detail", club_id=club.pk)
-    my_ballot = Ballot.objects.filter(vote=vote, user=request.user).first()
-    if request.method == "POST" and my_ballot is None:
-        prop_id = request.POST.get("proposition_id")
-        prop = get_object_or_404(Proposition, pk=prop_id, club=club)
-        Ballot.objects.create(vote=vote, user=request.user, proposition=prop)
-        return redirect("vote_detail", club_id=club.pk)
-    propositions = club.propositions.select_related("book").annotate(
-        ballots_count=Count("ballot", filter=Q(ballot__vote=vote))
-    )
-    return render(
-        request,
-        "clubs/vote.html",
-        {
-            "club": club,
-            "vote": vote,
-            "propositions": propositions,
-            "my_ballot": my_ballot,
-        },
-    )
-
-
 def current_selection(club) -> Vote | None:
     today = date.today()
     return (
@@ -82,5 +54,5 @@ def past_selections(club):
     return (
         Vote.objects.filter(club=club, closed_at__isnull=False, winner__isnull=False)
         .select_related("winner__book")
-        .order_by("-closed_at")
+        .order_by("-cycle_month")
     )

@@ -1,42 +1,71 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{{ club.name }}{% endblock %}
 {% block content %}
 <h1>{{ club.name }}</h1>
 {% if club.description %}<p>{{ club.description }}</p>{% endif %}
 
-<h2>{% translate "Livre du mois" %}</h2>
-{% if current %}
-    <div class="book-row" style="border:0">
-        {% if current.winner.book.cover_id %}<img class="cover" src="{{ current.winner.book.small_cover }}" alt="" style="width:60px">{% endif %}
-        <div>
-            <a href="{% url 'books_detail' book_id=current.winner.book_id %}"><strong>{{ current.winner.book }}</strong></a>
-            <div><em>{% translate "du" %} {{ current.start_date|default:"?" }} {% translate "au" %} {{ current.end_date|default:"?" }}</em></div>
+<h2>{% translate "Livres du mois" %}</h2>
+{% if selections %}
+<ul class="book-list">
+    {% for v in selections %}
+    <li class="book-row">
+        {% if v.winner.book.cover_id %}<img class="cover" src="{{ v.winner.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=v.winner.book_id %}"><strong>{{ v.winner.book }}</strong></a>
+            <div><em>{{ v.start_date|default:"?" }} → {{ v.end_date|default:"?" }}</em></div>
         </div>
-    </div>
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>{% translate "Pas de livre en cours." %}</p>
+    <p>{% translate "Aucun livre du mois pour l'instant." %}</p>
 {% endif %}
 
-<h2>{% translate "Vote" %}</h2>
-{% if open_vote %}
-    <p><a href="{% url 'vote_detail' club_id=club.id %}">{% translate "Un vote est en cours." %}</a></p>
-{% endif %}
-<p>
-    <a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un livre" %}</a>
-    ({{ propositions.count }} {% translate "en lice" %})
-</p>
-<p><em>{% translate "Le vote s'ouvre automatiquement le 1er du mois et se clôt le dernier jour. Le livre gagnant devient le livre du mois suivant." %}</em></p>
-
-<h2>{% translate "Sélections passées" %}</h2>
-{% if past_selections %}
-    <ul>
-        {% for v in past_selections %}
-            <li>{{ v.winner.book }} — {{ v.start_date|default:"?" }} → {{ v.end_date|default:"?" }}</li>
-        {% endfor %}
-    </ul>
+<h2>{% translate "En lice ce mois-ci" %}</h2>
+<p><em>{% translate "Le livre dont la moyenne des notes des membres est la plus haute gagne en fin de mois." %}</em></p>
+{% if propositions %}
+<ul class="book-list">
+    {% for p in propositions %}
+    <li class="book-row">
+        {% if p.book.cover_id %}<img class="cover" src="{{ p.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=p.book_id %}"><strong>{{ p.book }}</strong></a>
+            {% if p.book.authors %}<em> — {{ p.book.authors }}</em>{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>{% translate "Aucune pour l'instant." %}</p>
+    <p>{% translate "Aucune proposition." %}</p>
+{% endif %}
+<p><a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un livre" %}</a></p>
+
+<h2>{% translate "Livres du groupe" %}</h2>
+<form method="get" style="margin-bottom:10px">
+    <label>{% translate "Afficher" %}
+        <select name="statut" onchange="this.form.submit()">
+            {% for v, label in statuses %}
+                <option value="{{ v }}" {% if current_status == v %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </label>
+</form>
+{% if group_readings %}
+<ul class="book-list">
+    {% for r in group_readings %}
+    <li class="book-row">
+        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=r.book_id %}"><strong>{{ r.book }}</strong></a>
+            <em> — {{ r.user }}</em>
+            {% if r.rating is not None %} <span class="stars">{{ r.rating|stars }}</span>{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Personne pour ce statut." %}</p>
 {% endif %}
 
 <h2>{% translate "Membres" %}</h2>

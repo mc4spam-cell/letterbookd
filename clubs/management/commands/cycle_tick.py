@@ -3,6 +3,8 @@
 Un vote = un mois civil, identifié par `cycle_month` (1er du mois).
 À chaque passage (cron quotidien) :
 - si le vote ouvert est d'un mois antérieur → on le clôt (rattrapage inclus),
+  et on désigne le gagnant par la meilleure moyenne de note *des membres du club*
+  sur les livres en lice ;
 - s'il n'existe pas déjà de vote pour le mois courant et qu'il y a des
   propositions → on en ouvre un.
 
@@ -13,10 +15,11 @@ from calendar import monthrange
 from datetime import date
 
 from django.core.management.base import BaseCommand
-from django.db.models import Count
+from django.db.models import Avg
 from django.utils import timezone
 
-from clubs.models import Ballot, Club, Proposition, Vote
+from clubs.models import Club, Membership, Proposition, Vote
+from clubs.review_models import Reading
 
 
 def _next_month_bounds(first_of_month: date) -> tuple[date, date]:
@@ -27,17 +30,24 @@ def _next_month_bounds(first_of_month: date) -> tuple[date, date]:
 
 def _close(vote: Vote) -> None:
     start, end = _next_month_bounds(vote.cycle_month)
-    winner = (
-        Ballot.objects.filter(vote=vote)
-        .values("proposition_id")
-        .annotate(n=Count("id"))
-        .order_by("-n", "proposition_id")
-        .first()
+    club_users = list(
+        Membership.objects.filter(club=vote.club).values_list("user_id", flat=True)
     )
+    best = None
+    best_avg = None
+    for p in Proposition.objects.filter(club=vote.club).order_by("created_at"):
+        agg = Reading.objects.filter(
+            book=p.book, user_id__in=club_users, rating__isnull=False
+        ).aggregate(a=Avg("rating"))
+        avg = agg["a"]
+        if avg is None:
+            continue
+        if best_avg is None or avg > best_avg:
+            best, best_avg = p, avg
     vote.start_date = start
     vote.end_date = end
-    if winner is not None:
-        vote.winner_id = winner["proposition_id"]
+    if best is not None:
+        vote.winner_id = best.pk
         Proposition.objects.filter(club=vote.club).exclude(pk=vote.winner_id).delete()
     vote.closed_at = timezone.now()
     vote.save()

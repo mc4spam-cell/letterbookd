@@ -10,6 +10,7 @@ class Book(models.Model):
     pages = models.PositiveIntegerField(_("pages"), null=True, blank=True)
     cover_id = models.PositiveIntegerField(null=True, blank=True)
     year = models.PositiveIntegerField(_("année"), null=True, blank=True)
+    description = models.TextField(_("résumé"), blank=True)
     fetched_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -36,3 +37,23 @@ class Book(models.Model):
     @property
     def large_cover(self) -> str:
         return self._cover("L")
+
+    def hydrate_from_openlibrary(self) -> None:
+        """Enrichit description et cover_id manquants via /works/{olid}.json.
+
+        Best-effort : les erreurs sont avalées pour ne jamais casser la vue.
+        """
+        from . import openlibrary
+
+        data = openlibrary.fetch_work(self.olid)
+        changed = False
+        desc = data.get("description") or ""
+        if desc and not self.description:
+            self.description = desc[:4000]
+            changed = True
+        cov = data.get("cover_id")
+        if cov and not self.cover_id:
+            self.cover_id = cov
+            changed = True
+        if changed:
+            self.save(update_fields=["description", "cover_id"])

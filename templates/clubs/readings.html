@@ -15,9 +15,10 @@
     </label>
     <label>{% translate "Trier par" %}
         <select name="tri" onchange="this.form.submit()">
-            <option value="" {% if not current_sort %}selected{% endif %}>{% translate "récent" %}</option>
-            <option value="fini" {% if current_sort == "fini" %}selected{% endif %}>{% translate "terminé" %}</option>
+            <option value="date" {% if current_sort == "date" %}selected{% endif %}>{% translate "date" %}</option>
+            <option value="auteur" {% if current_sort == "auteur" %}selected{% endif %}>{% translate "auteur" %}</option>
             <option value="note" {% if current_sort == "note" %}selected{% endif %}>{% translate "note" %}</option>
+            <option value="fini" {% if current_sort == "fini" %}selected{% endif %}>{% translate "terminé" %}</option>
         </select>
     </label>
 </form>

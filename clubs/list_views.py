@@ -5,13 +5,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 from books.models import Book
 
 from .models import ListItem, ReadingList
-from .visibility import visible_lists
+from .visibility import visible_lists, visible_users
 
 
 @login_required
 def lists_index(request):
     lists = visible_lists(request.user).select_related("owner").order_by("-updated_at")
-    return render(request, "clubs/lists_index.html", {"lists": lists})
+    people = visible_users(request.user).order_by("display_name", "email")
+    return render(
+        request,
+        "clubs/lists_index.html",
+        {"lists": lists, "visible_people": people},
+    )
 
 
 @login_required

@@ -10,5 +10,11 @@
     {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
     {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
 </dl>
+{% if book.description %}
+    <div style="clear:both">
+        <h2>{% translate "Résumé" %}</h2>
+        <p>{{ book.description|linebreaksbr }}</p>
+    </div>
+{% endif %}
 <p style="clear:both"><a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a></p>
 {% endblock %}
