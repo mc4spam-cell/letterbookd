@@ -149,7 +149,7 @@ def me_settings(request):
                     "clubs/me.html",
                     {
                         "error": _(
-                            "Tu es le seul animateur de ces clubs ; promeus un autre "
+                            "Tu es le seul animateur de ces groupes ; promeus un autre "
                             "membre avant de supprimer ton compte."
                         ),
                         "blocking_clubs": blocking,

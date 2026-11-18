@@ -3,29 +3,24 @@
 {% block title %}{% translate "Notifications" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Notifications" %}</h1>
-<form method="get" style="margin-bottom:10px">
-    <label>{% translate "Club" %}
-        <select name="club" onchange="this.form.submit()">
-            <option value="" {% if not selected_club %}selected{% endif %}>{% translate "tous mes clubs" %}</option>
-            {% for c in my_clubs %}
-                <option value="{{ c.id }}" {% if selected_club.id == c.id %}selected{% endif %}>{{ c.name }}</option>
-            {% endfor %}
-        </select>
-    </label>
-</form>
-{% if notifications %}
-<ul>
-    {% for n in notifications %}
-    <li>
-        <strong>{{ n.actor }}</strong> — {{ n.get_kind_display }}
-        {% if n.comment %}
-            — <a href="{% url 'review_detail' review_id=n.comment.review_id %}">{% translate "voir" %}</a>
-        {% endif %}
-        · {{ n.created_at|date:"Y-m-d H:i" }}
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>{% translate "Aucune notification." %}</p>
-{% endif %}
+{% for club, notifs in sections %}
+    <h2><a href="{% url 'club_detail' club_id=club.id %}">{{ club.name }}</a></h2>
+    {% if notifs %}
+    <ul>
+        {% for n in notifs %}
+        <li>
+            <strong>{{ n.actor }}</strong> — {{ n.get_kind_display }}
+            {% if n.comment %}
+                — <a href="{% url 'review_detail' review_id=n.comment.review_id %}">{% translate "voir" %}</a>
+            {% endif %}
+            · {{ n.created_at|date:"Y-m-d H:i" }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p><em>{% translate "Rien pour l'instant." %}</em></p>
+    {% endif %}
+{% empty %}
+    <p>{% translate "Tu n'es dans aucun groupe de lecture." %}</p>
+{% endfor %}
 {% endblock %}

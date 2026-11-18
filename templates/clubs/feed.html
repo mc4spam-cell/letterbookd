@@ -3,32 +3,27 @@
 {% block title %}{% translate "Flux" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Flux" %}</h1>
-<form method="get" style="margin-bottom:10px">
-    <label>{% translate "Club" %}
-        <select name="club" onchange="this.form.submit()">
-            <option value="" {% if not selected_club %}selected{% endif %}>{% translate "tous mes clubs" %}</option>
-            {% for c in my_clubs %}
-                <option value="{{ c.id }}" {% if selected_club.id == c.id %}selected{% endif %}>{{ c.name }}</option>
-            {% endfor %}
-        </select>
-    </label>
-</form>
-{% if reviews %}
-<ul class="book-list">
-    {% for r in reviews %}
-    <li class="book-row">
-        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
-        <div style="flex:1">
-            <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
-            {% translate "a écrit sur" %}
-            <a href="{% url 'review_detail' review_id=r.id %}"><strong>{{ r.book }}</strong></a>
-            {% if r.reading.rating is not None %} <span class="stars">{{ r.reading.rating|stars }}</span>{% endif %}
-            <div><em>{{ r.created_at|date:"Y-m-d" }}</em></div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>{% translate "Rien à montrer pour le moment." %}</p>
-{% endif %}
+{% for club, reviews in sections %}
+    <h2><a href="{% url 'club_detail' club_id=club.id %}">{{ club.name }}</a></h2>
+    {% if reviews %}
+    <ul class="book-list">
+        {% for r in reviews %}
+        <li class="book-row">
+            {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+            <div style="flex:1">
+                <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
+                {% translate "a écrit sur" %}
+                <a href="{% url 'review_detail' review_id=r.id %}"><strong>{{ r.book }}</strong></a>
+                {% if r.reading.rating is not None %} <span class="stars">{{ r.reading.rating|stars }}</span>{% endif %}
+                <div><em>{{ r.created_at|date:"Y-m-d" }}</em></div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p><em>{% translate "Rien pour l'instant." %}</em></p>
+    {% endif %}
+{% empty %}
+    <p>{% translate "Tu n'es dans aucun groupe de lecture." %}</p>
+{% endfor %}
 {% endblock %}

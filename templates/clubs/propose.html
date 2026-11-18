@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% translate "Proposer un livre" %}{% endblock %}
 {% block content %}
-<h1>{% translate "Proposer un livre pour" %} {{ club.name }}</h1>
+<h1>{% translate "Proposer un livre pour le groupe" %} {{ club.name }}</h1>
 {% if books %}
 <form method="post">{% csrf_token %}
     <label>{% translate "Livre" %}
@@ -15,5 +15,5 @@
 {% else %}
 <p>{% translate "Catalogue vide." %} <a href="{% url 'books_search' %}">{% translate "Chercher un livre" %}</a></p>
 {% endif %}
-<p><a href="{% url 'club_detail' club_id=club.id %}">{% translate "Retour au club" %}</a></p>
+<p><a href="{% url 'club_detail' club_id=club.id %}">{% translate "Retour au groupe" %}</a></p>
 {% endblock %}

@@ -13,7 +13,7 @@
 
 <h2>{% translate "Supprimer mon compte" %}</h2>
 {% if blocking_clubs %}
-    <p>{% translate "Tu es le seul animateur de" %}
+    <p>{% translate "Tu es le seul animateur du ou des groupes" %}
         {% for n in blocking_clubs %}<em>{{ n }}</em>{% if not forloop.last %}, {% endif %}{% endfor %}.
         {% translate "Promeus un autre membre animateur avant de supprimer ton compte." %}</p>
 {% else %}

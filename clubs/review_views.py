@@ -7,7 +7,7 @@ from django.utils import timezone
 from books.models import Book
 
 from .models import Comment, Notification, Reading, ReadingStatus, Review
-from .visibility import shares_club_with, visible_reviews, visible_users
+from .visibility import shares_club_with, visible_users
 
 
 def _parse_date(raw):
@@ -130,58 +130,38 @@ def _notify_for_comment(comment: Comment) -> None:
     )
 
 
-def _club_filter(request):
-    """Rend (clubs_du_viewer, club_filtré ou None) depuis ?club=<id>."""
-    from .visibility import visible_clubs
-
-    my_clubs = list(visible_clubs(request.user).order_by("name"))
-    raw = request.GET.get("club") or ""
-    selected = None
-    if raw.isdigit():
-        for c in my_clubs:
-            if c.pk == int(raw):
-                selected = c
-                break
-    return my_clubs, selected
-
-
 @login_required
 def feed(request):
-    my_clubs, club = _club_filter(request)
-    qs = visible_reviews(request.user).select_related("reading__user", "reading__book")
-    if club is not None:
-        qs = qs.filter(reading__user__membership__club=club).distinct()
-    reviews = qs.order_by("-created_at")[:50]
-    return render(
-        request,
-        "clubs/feed.html",
-        {"reviews": reviews, "my_clubs": my_clubs, "selected_club": club},
-    )
+    from .visibility import visible_clubs
+
+    sections = []
+    for club in visible_clubs(request.user).order_by("name"):
+        member_ids = club.members.values_list("id", flat=True)
+        reviews = (
+            Review.objects.filter(reading__user_id__in=member_ids)
+            .select_related("reading__user", "reading__book")
+            .order_by("-created_at")[:20]
+        )
+        sections.append((club, list(reviews)))
+    return render(request, "clubs/feed.html", {"sections": sections})
 
 
 @login_required
 def notifications(request):
-    my_clubs, club = _club_filter(request)
-    qs = Notification.objects.filter(recipient=request.user).select_related(
+    from .visibility import visible_clubs
+
+    my_notifs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
     )
-    if club is not None:
-        qs = qs.filter(actor__membership__club=club).distinct()
-    unread = list(qs.filter(read_at__isnull=True))
-    if unread:
-        Notification.objects.filter(pk__in=[n.pk for n in unread]).update(
-            read_at=timezone.now()
-        )
-    return render(
-        request,
-        "clubs/notifications.html",
-        {
-            "notifications": qs[:100],
-            "fresh": unread,
-            "my_clubs": my_clubs,
-            "selected_club": club,
-        },
-    )
+    unread_ids = list(my_notifs.filter(read_at__isnull=True).values_list("pk", flat=True))
+    sections = []
+    for club in visible_clubs(request.user).order_by("name"):
+        member_ids = list(club.members.values_list("id", flat=True))
+        notifs = list(my_notifs.filter(actor_id__in=member_ids).order_by("-created_at")[:50])
+        sections.append((club, notifs))
+    if unread_ids:
+        Notification.objects.filter(pk__in=unread_ids).update(read_at=timezone.now())
+    return render(request, "clubs/notifications.html", {"sections": sections})
 
 
 @login_required

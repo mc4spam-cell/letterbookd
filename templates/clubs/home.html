@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% translate "Accueil" %} · letterbookd{% endblock %}
 {% block content %}
-<h1>{% translate "Tes clubs" %}</h1>
+<h1>{% translate "Tes groupes de lecture" %}</h1>
 {% if clubs %}
     <ul>
         {% for c in clubs %}
@@ -10,10 +10,10 @@
         {% endfor %}
     </ul>
 {% else %}
-    <p>{% translate "Tu n'es encore dans aucun club." %}</p>
+    <p>{% translate "Tu n'es encore dans aucun groupe de lecture." %}</p>
 {% endif %}
 <p>
-    <a href="{% url 'club_create' %}">{% translate "Créer mon club" %}</a>
-    · {% translate "Pour rejoindre un club, suis le lien que l'animateur t'a envoyé." %}
+    <a href="{% url 'club_create' %}">{% translate "Créer un groupe de lecture" %}</a>
+    · {% translate "Pour rejoindre un groupe, suis le lien que l'animateur t'a envoyé." %}
 </p>
 {% endblock %}
