@@ -75,12 +75,14 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 SITE_ID = 1
+LOGIN_URL = "/comptes/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-# django-allauth : e-mail uniquement
+# django-allauth : e-mail uniquement, pas de champ username sur le User.
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/5m"}
 
