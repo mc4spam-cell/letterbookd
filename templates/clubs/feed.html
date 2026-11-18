@@ -1,16 +1,20 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Flux" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Flux" %}</h1>
 {% if reviews %}
-<ul>
+<ul class="book-list">
     {% for r in reviews %}
-    <li>
-        <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
-        {% translate "a écrit sur" %}
-        <a href="{% url 'review_detail' review_id=r.id %}">{{ r.book }}</a>
-        — {{ r.created_at|date:"Y-m-d" }}
+    <li class="book-row">
+        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
+            {% translate "a écrit sur" %}
+            <a href="{% url 'review_detail' review_id=r.id %}"><strong>{{ r.book }}</strong></a>
+            {% if r.reading.rating is not None %} <span class="stars">{{ r.reading.rating|stars }}</span>{% endif %}
+            <div><em>{{ r.created_at|date:"Y-m-d" }}</em></div>
+        </div>
     </li>
     {% endfor %}
 </ul>

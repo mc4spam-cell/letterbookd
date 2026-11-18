@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Lectures de" %} {{ profile_user }}{% endblock %}
 {% block content %}
 <h1>{% translate "Lectures de" %} {{ profile_user }}</h1>
@@ -23,14 +23,17 @@
 </form>
 
 {% if readings %}
-<ul>
+<ul class="book-list">
     {% for r in readings %}
-    <li>
-        <a href="{% url 'books_detail' book_id=r.book.id %}">{{ r.book }}</a>
-        — {{ r.get_status_display }}
-        {% if r.rating is not None %} — {{ r.rating }}/10{% endif %}
-        {% if r.finished_on %} — {% translate "terminé" %} {{ r.finished_on|date:"Y-m-d" }}{% endif %}
-        {% if r.review %} — <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "avis" %}</a>{% endif %}
+    <li class="book-row">
+        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
+            — <em>{{ r.get_status_display }}</em>
+            {% if r.rating is not None %} <span class="stars">{{ r.rating|stars }}</span>{% endif %}
+            {% if r.finished_on %} <em>· {{ r.finished_on|date:"Y-m-d" }}</em>{% endif %}
+            {% if r.review %} · <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "avis" %}</a>{% endif %}
+        </div>
     </li>
     {% endfor %}
 </ul>

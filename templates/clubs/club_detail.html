@@ -7,8 +7,13 @@
 
 <h2>{% translate "Livre du mois" %}</h2>
 {% if current %}
-    <p><a href="{% url 'books_detail' book_id=current.winner.book_id %}">{{ current.winner.book }}</a>
-    — {% translate "du" %} {{ current.start_date|default:"?" }} {% translate "au" %} {{ current.end_date|default:"?" }}</p>
+    <div class="book-row" style="border:0">
+        {% if current.winner.book.cover_id %}<img class="cover" src="{{ current.winner.book.small_cover }}" alt="" style="width:60px">{% endif %}
+        <div>
+            <a href="{% url 'books_detail' book_id=current.winner.book_id %}"><strong>{{ current.winner.book }}</strong></a>
+            <div><em>{% translate "du" %} {{ current.start_date|default:"?" }} {% translate "au" %} {{ current.end_date|default:"?" }}</em></div>
+        </div>
+    </div>
 {% else %}
     <p>{% translate "Pas de livre en cours." %}</p>
 {% endif %}

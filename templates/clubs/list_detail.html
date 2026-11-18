@@ -7,11 +7,14 @@
 {% if list.description %}<p>{{ list.description }}</p>{% endif %}
 
 {% if items %}
-<ul>
+<ul class="book-list">
     {% for it in items %}
-    <li>
-        <a href="{% url 'books_detail' book_id=it.book.id %}">{{ it.book }}</a>
-        {% if it.note %} — {{ it.note }}{% endif %}
+    <li class="book-row">
+        {% if it.book.cover_id %}<img class="cover" src="{{ it.book.small_cover }}" alt="">{% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=it.book.id %}"><strong>{{ it.book }}</strong></a>
+            {% if it.note %} — {{ it.note }}{% endif %}
+        </div>
         {% if is_owner %}
             <form method="post" action="{% url 'list_remove' list_id=list.id item_id=it.id %}" style="display:inline">{% csrf_token %}
                 <button type="submit">{% translate "retirer" %}</button>

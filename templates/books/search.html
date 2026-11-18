@@ -11,12 +11,15 @@
     <p>{% translate "Rien trouvé pour cette recherche." %}</p>
 {% endif %}
 {% if results %}
-<ul>
+<ul class="book-list">
     {% for r in results %}
-    <li>
+    <li class="book-row">
+        {% if r.cover_id %}<img class="cover" src="https://covers.openlibrary.org/b/id/{{ r.cover_id }}-S.jpg" alt="">{% endif %}
+        <div style="flex:1">
         <strong>{{ r.title }}</strong>
         {% if r.authors %} — {{ r.authors }}{% endif %}
         {% if r.year %} ({{ r.year }}){% endif %}
+        </div>
         <form method="post" action="{% url 'books_add' %}" style="display:inline">{% csrf_token %}
             <input type="hidden" name="olid" value="{{ r.olid }}">
             <input type="hidden" name="title" value="{{ r.title }}">

@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Avis de" %} {{ review.author }}{% endblock %}
 {% block content %}
+{% if review.book.cover_id %}<img class="cover-lg" src="{{ review.book.large_cover }}" alt="">{% endif %}
 <h1><a href="{% url 'books_detail' book_id=review.book.id %}">{{ review.book }}</a></h1>
 <p>{% translate "par" %} <a href="{% url 'profile_detail' user_id=review.author.id %}">{{ review.author }}</a>
-   · {% translate "note" %} {{ review.reading.rating|default:"—" }}/10
+   {% if review.reading.rating is not None %} · <span class="stars">{{ review.reading.rating|stars }}</span>{% endif %}
    {% if review.spoiler %} · <strong>{% translate "spoilers" %}</strong>{% endif %}</p>
-<blockquote>{{ review.text|linebreaksbr }}</blockquote>
+<blockquote style="clear:both">{{ review.text|linebreaksbr }}</blockquote>
 
 <h2>{% translate "Commentaires" %}</h2>
 {% for c in roots %}

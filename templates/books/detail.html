@@ -2,13 +2,13 @@
 {% load i18n %}
 {% block title %}{{ book.title }}{% endblock %}
 {% block content %}
+{% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
 <h1>{{ book.title }}</h1>
-{% if book.cover_id %}<img src="{{ book.cover_url }}" alt="{% translate 'couverture' %}">{% endif %}
 <dl>
     {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
     {% if book.year %}<dt>{% translate "Année" %}</dt><dd>{{ book.year }}</dd>{% endif %}
     {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
     {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
 </dl>
-<p><a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a></p>
+<p style="clear:both"><a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a></p>
 {% endblock %}

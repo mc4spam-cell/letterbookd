@@ -18,9 +18,21 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    def cover_url(self, size: str = "M") -> str:
+    def _cover(self, size: str) -> str:
         return (
             f"https://covers.openlibrary.org/b/id/{self.cover_id}-{size}.jpg"
             if self.cover_id
             else ""
         )
+
+    @property
+    def cover_url(self) -> str:
+        return self._cover("M")
+
+    @property
+    def small_cover(self) -> str:
+        return self._cover("S")
+
+    @property
+    def large_cover(self) -> str:
+        return self._cover("L")
