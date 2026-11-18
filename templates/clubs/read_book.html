@@ -2,7 +2,6 @@
 {% load i18n stars %}
 {% block title %}{% translate "Noter" %} — {{ book.title }}{% endblock %}
 {% block content %}
-{% rating_choices as choices %}
 <h1>{{ book.title }}</h1>
 {% if force_new %}<p><em>{% translate "Nouvelle lecture (relecture)" %}</em></p>{% endif %}
 <form method="post">{% csrf_token %}
@@ -20,14 +19,10 @@
     <p><label>{% translate "Terminé le" %}
         <input type="date" name="finished_on" value="{{ reading.finished_on|date:'Y-m-d' }}">
     </label></p>
-    <p><label>{% translate "Note" %}
-        <select name="rating">
-            <option value="">{% translate "— pas de note" %}</option>
-            {% for v, label in choices %}
-                <option value="{{ v }}" {% if reading.rating == v %}selected{% endif %}>{{ label }}</option>
-            {% endfor %}
-        </select>
-    </label></p>
+    <p>
+        <span style="color:var(--muted);font-size:13px">{% translate "Note" %}</span><br>
+        {% star_picker reading.rating %}
+    </p>
     <p><label>{% translate "Avis (optionnel)" %}<br>
         <textarea name="review_text" rows="6" cols="60">{% if review %}{{ review.text }}{% endif %}</textarea>
     </label></p>

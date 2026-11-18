@@ -122,6 +122,35 @@ def test_list_visible_to_any_member(make_user):
 
 
 @pytest.mark.django_db
+def test_book_add_to_existing_list(make_user, book):
+    u = make_user()
+    rl = ReadingList.objects.create(owner=u, name="L")
+    _login(u).post(reverse("book_add_to_list", args=[book.pk]), {"list_id": rl.pk})
+    assert ListItem.objects.filter(list=rl, book=book).exists()
+
+
+@pytest.mark.django_db
+def test_book_add_creates_new_list(make_user, book):
+    u = make_user()
+    _login(u).post(
+        reverse("book_add_to_list", args=[book.pk]),
+        {"new_list_name": "Lus en 2026"},
+    )
+    rl = ReadingList.objects.get(owner=u, name="Lus en 2026")
+    assert ListItem.objects.filter(list=rl, book=book).exists()
+
+
+@pytest.mark.django_db
+def test_book_add_rejects_other_users_list(make_user, book):
+    me = make_user()
+    other = make_user()
+    rl = ReadingList.objects.create(owner=other, name="Pas pour toi")
+    r = _login(me).post(reverse("book_add_to_list", args=[book.pk]), {"list_id": rl.pk})
+    assert r.status_code == 404
+    assert not ListItem.objects.filter(list=rl, book=book).exists()
+
+
+@pytest.mark.django_db
 def test_owner_can_delete_list(make_user):
     u = make_user()
     rl = ReadingList.objects.create(owner=u, name="L")

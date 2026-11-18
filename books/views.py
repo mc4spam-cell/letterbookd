@@ -37,6 +37,11 @@ def add(request):
     )
     if created:
         book.hydrate_from_openlibrary()
+    nxt = request.POST.get("next") or "detail"
+    if nxt == "rate":
+        return redirect("read_book", book_id=book.pk)
+    if nxt == "list":
+        return redirect("book_add_to_list", book_id=book.pk)
     return redirect("books_detail", book_id=book.pk)
 
 

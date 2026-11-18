@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Ajouter à une liste" %}{% endblock %}
+{% block content %}
+<h1>{% blocktranslate with t=book.title %}Ajouter « {{ t }} » à une liste{% endblocktranslate %}</h1>
+
+{% if my_lists %}
+<form method="post">{% csrf_token %}
+    <label>{% translate "Liste existante" %}
+        <select name="list_id" required>
+            {% for l in my_lists %}<option value="{{ l.id }}">{{ l.name }}</option>{% endfor %}
+        </select>
+    </label>
+    <button type="submit">{% translate "Ajouter" %}</button>
+</form>
+{% endif %}
+
+<h2>{% translate "Ou créer une nouvelle liste" %}</h2>
+<form method="post">{% csrf_token %}
+    <label>{% translate "Titre" %}
+        <input type="text" name="new_list_name" maxlength="120" required>
+    </label>
+    <button type="submit">{% translate "Créer et ajouter" %}</button>
+</form>
+
+<p><a href="{% url 'books_detail' book_id=book.id %}">{% translate "Retour à la fiche" %}</a></p>
+{% endblock %}

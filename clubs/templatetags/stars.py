@@ -21,3 +21,13 @@ def stars(rating):
 def rating_choices():
     """Les 11 options (0..10) pour le picker étoiles."""
     return [(i, _stars(i)) for i in range(11)]
+
+
+@register.inclusion_tag("clubs/_star_picker.html")
+def star_picker(current=None):
+    """10 demi-étoiles cliquables façon Letterboxd + option « pas de note »."""
+    halves = [
+        {"value": v, "side": "left" if v % 2 else "right", "checked": current == v}
+        for v in range(10, 0, -1)
+    ]
+    return {"halves": halves, "no_rating": current is None}

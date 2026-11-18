@@ -28,7 +28,9 @@
             <input type="hidden" name="pages" value="{{ r.pages|default_if_none:'' }}">
             <input type="hidden" name="year" value="{{ r.year|default_if_none:'' }}">
             <input type="hidden" name="cover_id" value="{{ r.cover_id|default_if_none:'' }}">
-            <button type="submit">{% translate "Ajouter" %}</button>
+            <button type="submit" name="next" value="detail">{% translate "Consulter" %}</button>
+            <button type="submit" name="next" value="rate">{% translate "Noter" %}</button>
+            <button type="submit" name="next" value="list">{% translate "Ajouter à une liste" %}</button>
         </form>
     </li>
     {% endfor %}

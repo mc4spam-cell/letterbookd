@@ -163,6 +163,57 @@
         .cover { width: 40px; border-radius: 2px; vertical-align: middle; margin-right: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
         .cover-lg { width: 180px; border-radius: 3px; box-shadow: 0 2px 6px rgba(0,0,0,.5); float: left; margin: 0 20px 12px 0; }
         .stars { color: var(--green); letter-spacing: 1px; }
+
+        /* Picker demi-étoiles cliquables façon Letterboxd. */
+        .star-picker {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .star-picker .star-input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            pointer-events: none;
+        }
+        .star-picker label {
+            cursor: pointer;
+            display: inline-block;
+            width: 16px;
+            height: 32px;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+        .star-picker label::before {
+            content: "★";
+            position: absolute;
+            top: 0;
+            font-size: 32px;
+            line-height: 1;
+            color: #3a4550;
+            width: 32px;
+            text-align: center;
+        }
+        .star-picker label.right::before { left: -16px; }
+        .star-picker label.left::before  { left: 0; }
+        .star-picker .star-input:checked ~ label.star-half::before,
+        .star-picker label.star-half:hover::before,
+        .star-picker label.star-half:hover ~ label.star-half::before {
+            color: var(--green);
+        }
+        .star-picker .star-input:focus-visible + label {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+        .no-rating {
+            display: inline-block;
+            margin-left: 14px;
+            color: var(--muted);
+            font-size: 12px;
+        }
         .book-row { list-style: none; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
         ul.book-list { padding-left: 0; }
 

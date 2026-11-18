@@ -28,6 +28,11 @@ urlpatterns = [
         name="list_remove",
     ),
     path("listes/<int:list_id>/supprimer/", list_views.list_delete, name="list_delete"),
+    path(
+        "livres/<int:book_id>/ajouter-liste/",
+        list_views.book_add_to_list,
+        name="book_add_to_list",
+    ),
     path("moi/", views.me_settings, name="me_settings"),
     path("inviter/", views.invites, name="invites"),
     path("invitation/<str:token>/", views.accept_invitation, name="accept_invitation"),

@@ -73,6 +73,29 @@ def test_add_is_idempotent(make_user):
 
 
 @pytest.mark.django_db
+def test_add_with_next_rate_redirects_to_rating(make_user):
+    c = _login(make_user())
+    r = c.post(
+        reverse("books_add"),
+        {"olid": "OLX", "title": "T", "authors": "A", "next": "rate"},
+    )
+    assert r.status_code == 302
+    book = Book.objects.get(olid="OLX")
+    assert r["Location"] == reverse("read_book", args=[book.pk])
+
+
+@pytest.mark.django_db
+def test_add_with_next_list_redirects_to_list_picker(make_user):
+    c = _login(make_user())
+    r = c.post(
+        reverse("books_add"),
+        {"olid": "OLY", "title": "T", "authors": "A", "next": "list"},
+    )
+    book = Book.objects.get(olid="OLY")
+    assert r["Location"] == reverse("book_add_to_list", args=[book.pk])
+
+
+@pytest.mark.django_db
 def test_detail_renders_offline(make_user):
     book = Book.objects.create(olid="OL2W", title="Belle du Seigneur", authors="Cohen")
     r = _login(make_user()).get(reverse("books_detail", args=[book.pk]))

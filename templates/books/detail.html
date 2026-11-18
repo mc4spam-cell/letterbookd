@@ -16,5 +16,8 @@
         <p>{{ book.description|linebreaksbr }}</p>
     </div>
 {% endif %}
-<p style="clear:both"><a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a></p>
+<p style="clear:both">
+    <a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a>
+    · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
+</p>
 {% endblock %}
