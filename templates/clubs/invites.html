@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Mes invitations" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Inviter un·e lecteur·rice" %}</h1>
+<form method="post">{% csrf_token %}
+    <button type="submit">{% translate "Créer un lien d'invitation" %}</button>
+</form>
+{% if invites %}
+<h2>{% translate "Liens envoyés" %}</h2>
+<ul>
+    {% for inv in invites %}
+    <li>
+        {% if inv.is_used %}
+            <em>{% translate "utilisée" %} {{ inv.used_at|date:"Y-m-d" }}</em>
+            — {% translate "par" %} {{ inv.used_by|default:"?" }}
+        {% else %}
+            <code>{{ request.scheme }}://{{ request.get_host }}{% url 'accept_invitation' token=inv.token %}</code>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

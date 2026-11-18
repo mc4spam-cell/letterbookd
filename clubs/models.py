@@ -2,58 +2,62 @@ import secrets
 
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.db.models import F, Q
 
 
-def _new_token() -> str:
+def _new_invite_token() -> str:
     return secrets.token_urlsafe(32)
 
 
-class Club(models.Model):
-    name = models.CharField(_("nom"), max_length=120)
-    description = models.TextField(_("description"), blank=True)
-    invite_token = models.CharField(
-        _("jeton d'invitation"), max_length=64, unique=True, default=_new_token
+class Invitation(models.Model):
+    token = models.CharField(max_length=64, unique=True, default=_new_invite_token)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="invitations_sent",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    used_at = models.DateTimeField(null=True, blank=True)
+    used_by = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="invitation",
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"invitation {self.token[:8]}…"
+
+    @property
+    def is_used(self) -> bool:
+        return self.used_at is not None
+
+
+class Follow(models.Model):
+    follower = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following_set"
+    )
+    followed = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="followers_set"
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-    members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="Membership", related_name="clubs"
-    )
-
-    class Meta:
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-    def rotate_invite(self) -> str:
-        self.invite_token = _new_token()
-        self.save(update_fields=["invite_token"])
-        return self.invite_token
-
-
-class Role(models.TextChoices):
-    HOST = "host", _("animateur")
-    MEMBER = "member", _("membre")
-
-
-class Membership(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=Role.choices, default=Role.MEMBER)
-    joined_at = models.DateTimeField(auto_now_add=True)
-
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["user", "club"], name="uniq_user_club"),
+            models.UniqueConstraint(fields=["follower", "followed"], name="uniq_follow"),
+            models.CheckConstraint(condition=~Q(follower=F("followed")), name="no_self_follow"),
         ]
 
     def __str__(self):
-        return f"{self.user} @ {self.club} ({self.role})"
+        return f"{self.follower} → {self.followed}"
 
 
-from .cycle_models import Proposition, Vote  # noqa: E402, F401
 from .list_models import ListItem, ReadingList  # noqa: E402, F401
 from .review_models import (  # noqa: E402, F401
     Comment,

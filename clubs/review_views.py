@@ -1,23 +1,23 @@
+from datetime import date as _date
+
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count, Prefetch
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
 from books.models import Book
 
 from .models import Comment, Notification, Reading, ReadingStatus, Review
-from .visibility import shares_club_with, visible_users
+from .visibility import visible_reviews
 
 
 def _parse_date(raw):
-    from datetime import date as _d
-
     raw = (raw or "").strip()
     if not raw:
         return None
     try:
-        return _d.fromisoformat(raw)
+        return _date.fromisoformat(raw)
     except ValueError:
         return None
 
@@ -68,7 +68,6 @@ def read_book(request, book_id):
                 reading=reading, defaults={"text": text, "spoiler": spoiler}
             )
         elif hasattr(reading, "review"):
-            # Texte vidé : on retire l'avis, pas la note.
             reading.review.delete()
         return redirect("books_detail", book_id=book.pk)
     return render(
@@ -84,17 +83,11 @@ def read_book(request, book_id):
     )
 
 
-def _can_see_review(viewer, review) -> bool:
-    return shares_club_with(viewer, review.reading.user)
-
-
 @login_required
 def review_detail(request, review_id):
     review = get_object_or_404(
         Review.objects.select_related("reading__user", "reading__book"), pk=review_id
     )
-    if not _can_see_review(request.user, review):
-        raise Http404
     if request.method == "POST":
         text = (request.POST.get("text") or "").strip()
         parent_id = request.POST.get("parent_id") or None
@@ -132,36 +125,23 @@ def _notify_for_comment(comment: Comment) -> None:
 
 @login_required
 def feed(request):
-    from .visibility import visible_clubs
-
-    sections = []
-    for club in visible_clubs(request.user).order_by("name"):
-        member_ids = club.members.values_list("id", flat=True)
-        reviews = (
-            Review.objects.filter(reading__user_id__in=member_ids)
-            .select_related("reading__user", "reading__book")
-            .order_by("-created_at")[:20]
-        )
-        sections.append((club, list(reviews)))
-    return render(request, "clubs/feed.html", {"sections": sections})
+    reviews = (
+        visible_reviews(request.user)
+        .select_related("reading__user", "reading__book")
+        .order_by("-created_at")[:50]
+    )
+    return render(request, "clubs/feed.html", {"reviews": reviews})
 
 
 @login_required
 def notifications(request):
-    from .visibility import visible_clubs
-
-    my_notifs = Notification.objects.filter(recipient=request.user).select_related(
+    qs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
     )
-    unread_ids = list(my_notifs.filter(read_at__isnull=True).values_list("pk", flat=True))
-    sections = []
-    for club in visible_clubs(request.user).order_by("name"):
-        member_ids = list(club.members.values_list("id", flat=True))
-        notifs = list(my_notifs.filter(actor_id__in=member_ids).order_by("-created_at")[:50])
-        sections.append((club, notifs))
+    unread_ids = list(qs.filter(read_at__isnull=True).values_list("pk", flat=True))
     if unread_ids:
         Notification.objects.filter(pk__in=unread_ids).update(read_at=timezone.now())
-    return render(request, "clubs/notifications.html", {"sections": sections})
+    return render(request, "clubs/notifications.html", {"notifications": qs[:100]})
 
 
 @login_required
@@ -186,11 +166,7 @@ def stats(request):
 
 @login_required
 def profile_readings(request, user_id):
-    from django.contrib.auth import get_user_model
-
     other = get_object_or_404(get_user_model(), pk=user_id)
-    if other.pk != request.user.pk and other not in visible_users(request.user):
-        raise Http404
     qs = Reading.objects.filter(user=other).select_related("book")
     status = request.GET.get("status")
     if status in ReadingStatus.values:

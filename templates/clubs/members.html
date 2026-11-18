@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Membres" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Membres" %}</h1>
+{% if people %}
+<ul>
+    {% for u in people %}
+    <li>
+        <a href="{% url 'profile_detail' user_id=u.id %}">{{ u }}</a>
+        {% if u.id in following %}
+            <form method="post" action="{% url 'unfollow' user_id=u.id %}" style="display:inline">{% csrf_token %}
+                <button type="submit">{% translate "Ne plus suivre" %}</button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'follow' user_id=u.id %}" style="display:inline">{% csrf_token %}
+                <button type="submit">{% translate "Suivre" %}</button>
+            </form>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Aucun autre membre pour l'instant." %}</p>
+{% endif %}
+{% endblock %}

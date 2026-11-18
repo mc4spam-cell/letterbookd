@@ -3,7 +3,7 @@ from django.test import Client
 from django.urls import reverse
 
 from books.models import Book
-from clubs.models import ListItem, Membership, Reading, ReadingList, Role
+from clubs.models import ListItem, Reading, ReadingList
 from clubs.visibility import visible_lists
 
 
@@ -21,10 +21,6 @@ def book(db):
 @pytest.fixture
 def book2(db):
     return Book.objects.create(olid="OL2W", title="L'Étranger", authors="Camus")
-
-
-def _member(club, user):
-    Membership.objects.create(user=user, club=club, role=Role.MEMBER)
 
 
 # — Journal & relectures ———————————————————————————————————————————————
@@ -78,7 +74,7 @@ def test_readings_page_filters_by_status(make_user, book, book2):
     c.post(reverse("read_book", args=[book2.pk]), {"status": "to_read"})
     r = c.get(reverse("profile_readings", args=[u.pk]) + "?status=read")
     assert b"Belle du Seigneur" in r.content
-    assert b"L&#x27;" not in r.content and b"Camus" not in r.content
+    assert b"Camus" not in r.content
 
 
 # — Listes ——————————————————————————————————————————————————————————————
@@ -107,31 +103,22 @@ def test_list_add_is_idempotent(make_user, book):
 
 
 @pytest.mark.django_db
-def test_only_owner_adds_or_removes(make_user, make_club, book):
+def test_only_owner_adds_or_removes(make_user, book):
     owner = make_user()
-    mate = make_user()
-    club = make_club(owner)
-    _member(club, mate)
+    other = make_user()
     rl = ReadingList.objects.create(owner=owner, name="L")
-    r = _login(mate).post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
+    r = _login(other).post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
     assert r.status_code == 404
     assert rl.items.count() == 0
 
 
 @pytest.mark.django_db
-def test_list_visibility_follows_shared_club(make_user, make_club):
+def test_list_visible_to_any_member(make_user):
     owner = make_user()
-    mate = make_user()
-    stranger = make_user()
-    club = make_club(owner)
-    _member(club, mate)
-    make_club(stranger, name="autre")
+    other = make_user()
     rl = ReadingList.objects.create(owner=owner, name="Vue")
-
-    assert _login(mate).get(reverse("list_detail", args=[rl.pk])).status_code == 200
-    assert _login(stranger).get(reverse("list_detail", args=[rl.pk])).status_code == 404
-    assert rl in visible_lists(mate)
-    assert rl not in visible_lists(stranger)
+    assert _login(other).get(reverse("list_detail", args=[rl.pk])).status_code == 200
+    assert rl in visible_lists(other)
 
 
 @pytest.mark.django_db

@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 
-from clubs.models import Club, Membership, Role
+from clubs.models import Follow
 
 
 @pytest.fixture
@@ -17,10 +17,8 @@ def make_user(db):
 
 
 @pytest.fixture
-def make_club(db):
-    def _make(host, name="Club"):
-        club = Club.objects.create(name=name)
-        Membership.objects.create(user=host, club=club, role=Role.HOST)
-        return club
+def follow(db):
+    def _follow(follower, followed):
+        return Follow.objects.get_or_create(follower=follower, followed=followed)[0]
 
-    return _make
+    return _follow

@@ -4,11 +4,16 @@
 {% block content %}
 <h1>{{ profile_user }}</h1>
 {% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
+{% if not is_self %}
+    {% if following %}
+    <form method="post" action="{% url 'unfollow' user_id=profile_user.id %}">{% csrf_token %}
+        <button type="submit">{% translate "Ne plus suivre" %}</button>
+    </form>
+    {% else %}
+    <form method="post" action="{% url 'follow' user_id=profile_user.id %}">{% csrf_token %}
+        <button type="submit">{% translate "Suivre" %}</button>
+    </form>
+    {% endif %}
+{% endif %}
 <p><a href="{% url 'profile_readings' user_id=profile_user.id %}">{% translate "Voir ses lectures" %}</a></p>
-<h2>{% translate "Groupes en commun" %}</h2>
-<ul>
-    {% for c in shared_clubs %}
-        <li><a href="{% url 'club_detail' club_id=c.id %}">{{ c.name }}</a></li>
-    {% endfor %}
-</ul>
 {% endblock %}

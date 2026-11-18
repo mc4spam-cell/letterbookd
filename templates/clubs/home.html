@@ -1,19 +1,46 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Accueil" %} · letterbookd{% endblock %}
 {% block content %}
-<h1>{% translate "Tes groupes de lecture" %}</h1>
-{% if clubs %}
-    <ul>
-        {% for c in clubs %}
-            <li><a href="{% url 'club_detail' club_id=c.id %}">{{ c.name }}</a></li>
-        {% endfor %}
-    </ul>
+<style>
+    .tiles { display: flex; flex-wrap: wrap; gap: 14px; list-style: none; padding: 0; margin: 12px 0 0; }
+    .tile { position: relative; width: 160px; }
+    .tile-cover { display: block; }
+    .tile img { width: 100%; border-radius: 3px; box-shadow: 0 2px 6px rgba(0,0,0,.5); display: block; }
+    .tile .placeholder { height: 240px; background: var(--surface-2); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; padding: 6px; text-align: center; }
+    .tile .overlay {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        padding: 6px 8px;
+        background: linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,0));
+        border-radius: 0 0 3px 3px;
+        color: #fff; font-size: 12px; display: block; text-decoration: none;
+    }
+    .tile .overlay strong { color: #fff; }
+    .tile .overlay:hover { background: linear-gradient(to top, rgba(0,192,48,.85), rgba(0,0,0,0)); }
+    .tile .stars { font-size: 11px; }
+</style>
+
+<h1>{% translate "Nouveaux livres" %}</h1>
+{% if readings %}
+<ul class="tiles">
+    {% for r in readings %}
+    <li class="tile">
+        <a class="tile-cover" href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book.title }}">
+            {% if r.book.cover_id %}
+                <img src="{{ r.book.cover_url }}" alt="{{ r.book.title }}">
+            {% else %}
+                <div class="placeholder">{{ r.book.title }}</div>
+            {% endif %}
+        </a>
+        <a class="overlay" href="{% url 'profile_detail' user_id=r.user.id %}">
+            <strong>{{ r.user }}</strong>
+            {% if r.rating is not None %}<br><span class="stars">{{ r.rating|stars }}</span>{% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>{% translate "Tu n'es encore dans aucun groupe de lecture." %}</p>
+    <p>{% translate "Personne à suivre pour le moment." %}
+       <a href="{% url 'members' %}">{% translate "Trouve des membres à suivre" %}</a>.</p>
 {% endif %}
-<p>
-    <a href="{% url 'club_create' %}">{% translate "Créer un groupe de lecture" %}</a>
-    · {% translate "Pour rejoindre un groupe, suis le lien que l'animateur t'a envoyé." %}
-</p>
 {% endblock %}
