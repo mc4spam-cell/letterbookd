@@ -10,4 +10,5 @@
     {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
     {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
 </dl>
+<p><a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a></p>
 {% endblock %}

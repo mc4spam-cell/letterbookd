@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Notifications" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Notifications" %}</h1>
+{% if notifications %}
+<ul>
+    {% for n in notifications %}
+    <li>
+        <strong>{{ n.actor }}</strong> — {{ n.get_kind_display }}
+        {% if n.comment %}
+            — <a href="{% url 'review_detail' review_id=n.comment.review_id %}">{% translate "voir" %}</a>
+        {% endif %}
+        · {{ n.created_at|date:"Y-m-d H:i" }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Aucune notification." %}</p>
+{% endif %}
+{% endblock %}

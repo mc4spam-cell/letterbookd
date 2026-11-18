@@ -4,6 +4,7 @@
 {% block content %}
 <h1>{{ profile_user }}</h1>
 {% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
+<p><a href="{% url 'profile_readings' user_id=profile_user.id %}">{% translate "Voir ses lectures" %}</a></p>
 <h2>{% translate "Clubs en commun" %}</h2>
 <ul>
     {% for c in shared_clubs %}

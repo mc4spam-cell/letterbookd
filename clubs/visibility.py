@@ -42,3 +42,11 @@ def visible_clubs(viewer) -> QuerySet:
     if not getattr(viewer, "is_authenticated", False):
         return Club.objects.none()
     return Club.objects.filter(membership__user=viewer).distinct()
+
+
+def visible_reviews(viewer) -> QuerySet:
+    from .models import Review
+
+    if not getattr(viewer, "is_authenticated", False):
+        return Review.objects.none()
+    return Review.objects.filter(reading__user__in=visible_users(viewer)).distinct()

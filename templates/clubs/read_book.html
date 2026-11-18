@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Noter" %} — {{ book.title }}{% endblock %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<form method="post">{% csrf_token %}
+    <p><label>{% translate "Statut" %}
+        <select name="status">
+            {% for v, label in statuses %}
+                <option value="{{ v }}" {% if reading and reading.status == v %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </label></p>
+    <p><label>{% translate "Note (0 à 10 demi-points, vide = pas de note)" %}
+        <input type="number" name="rating" min="0" max="10" step="1" value="{{ reading.rating|default_if_none:'' }}">
+    </label></p>
+    <p><label>{% translate "Avis (optionnel)" %}<br>
+        <textarea name="review_text" rows="6" cols="60">{% if review %}{{ review.text }}{% endif %}</textarea>
+    </label></p>
+    <p><label><input type="checkbox" name="spoiler" {% if review and review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
+    <button type="submit">{% translate "Enregistrer" %}</button>
+</form>
+{% endblock %}

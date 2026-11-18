@@ -54,3 +54,10 @@ class Membership(models.Model):
 
 
 from .cycle_models import Ballot, Proposition, Vote  # noqa: E402, F401
+from .review_models import (  # noqa: E402, F401
+    Comment,
+    Notification,
+    Reading,
+    ReadingStatus,
+    Review,
+)

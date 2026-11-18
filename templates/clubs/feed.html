@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Flux" %}{% endblock %}
+{% block content %}
+<h1>{% translate "Flux" %}</h1>
+{% if reviews %}
+<ul>
+    {% for r in reviews %}
+    <li>
+        <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
+        {% translate "a écrit sur" %}
+        <a href="{% url 'review_detail' review_id=r.id %}">{{ r.book }}</a>
+        — {{ r.created_at|date:"Y-m-d" }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Rien à montrer pour le moment." %}</p>
+{% endif %}
+{% endblock %}

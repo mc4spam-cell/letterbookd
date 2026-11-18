@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Lectures de" %} {{ profile_user }}{% endblock %}
+{% block content %}
+<h1>{% translate "Lectures de" %} {{ profile_user }}</h1>
+{% if readings %}
+<ul>
+    {% for r in readings %}
+    <li>
+        <a href="{% url 'books_detail' book_id=r.book.id %}">{{ r.book }}</a>
+        — {{ r.get_status_display }}
+        {% if r.rating is not None %} — {{ r.rating }}/10{% endif %}
+        {% if r.review %} — <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "avis" %}</a>{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Aucune lecture pour l'instant." %}</p>
+{% endif %}
+{% endblock %}
