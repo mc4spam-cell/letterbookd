@@ -30,7 +30,8 @@ class Proposition(models.Model):
 
 class Vote(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="votes")
-    opened_at = models.DateTimeField(auto_now_add=True)
+    # Toujours le 1er du mois : un vote = le cycle d'un mois civil.
+    cycle_month = models.DateField()
     closed_at = models.DateTimeField(null=True, blank=True)
     winner = models.ForeignKey(
         Proposition, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
@@ -45,11 +46,14 @@ class Vote(models.Model):
                 condition=Q(closed_at__isnull=True),
                 name="uniq_open_vote_per_club",
             ),
+            models.UniqueConstraint(
+                fields=["club", "cycle_month"], name="uniq_cycle_month_per_club"
+            ),
         ]
-        ordering = ["-opened_at"]
+        ordering = ["-cycle_month"]
 
     def __str__(self):
-        return f"Vote {self.club} ({self.opened_at:%Y-%m-%d})"
+        return f"Vote {self.club} ({self.cycle_month:%Y-%m})"
 
     @property
     def is_open(self) -> bool:
