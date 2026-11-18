@@ -1,14 +1,13 @@
-from datetime import date, datetime
+from datetime import date
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
 
 from books.models import Book
 
-from .models import Ballot, Club, Membership, Proposition, Role, Vote
+from .models import Ballot, Club, Membership, Proposition, Vote
 
 
 def _membership(user, club):
@@ -26,12 +25,6 @@ def _require_member(user, club_id):
 @login_required
 def propose(request, club_id):
     club, me = _require_member(request.user, club_id)
-    if Vote.objects.filter(club=club, closed_at__isnull=True).exists():
-        return render(
-            request,
-            "clubs/propose.html",
-            {"club": club, "locked": True, "books": Book.objects.all()},
-        )
     if request.method == "POST":
         book_id = request.POST.get("book_id")
         book = get_object_or_404(Book, pk=book_id)
@@ -40,23 +33,8 @@ def propose(request, club_id):
         )
         return redirect("club_detail", club_id=club.pk)
     return render(
-        request,
-        "clubs/propose.html",
-        {"club": club, "locked": False, "books": Book.objects.all()},
+        request, "clubs/propose.html", {"club": club, "books": Book.objects.all()}
     )
-
-
-@login_required
-def open_vote(request, club_id):
-    club, me = _require_member(request.user, club_id)
-    if me.role != Role.HOST or request.method != "POST":
-        raise Http404
-    if Vote.objects.filter(club=club, closed_at__isnull=True).exists():
-        return redirect("vote_detail", club_id=club.pk)
-    if not club.propositions.exists():
-        return redirect("club_detail", club_id=club.pk)
-    Vote.objects.create(club=club)
-    return redirect("vote_detail", club_id=club.pk)
 
 
 @login_required
@@ -82,41 +60,8 @@ def vote_detail(request, club_id):
             "vote": vote,
             "propositions": propositions,
             "my_ballot": my_ballot,
-            "is_host": me.role == Role.HOST,
         },
     )
-
-
-@login_required
-def close_vote(request, club_id):
-    club, me = _require_member(request.user, club_id)
-    if me.role != Role.HOST or request.method != "POST":
-        raise Http404
-    vote = get_object_or_404(Vote, club=club, closed_at__isnull=True)
-    start = request.POST.get("start_date") or ""
-    end = request.POST.get("end_date") or ""
-    try:
-        start_d = datetime.strptime(start, "%Y-%m-%d").date() if start else None
-        end_d = datetime.strptime(end, "%Y-%m-%d").date() if end else None
-    except ValueError:
-        return redirect("vote_detail", club_id=club.pk)
-    winner = (
-        Ballot.objects.filter(vote=vote)
-        .values("proposition_id")
-        .annotate(n=Count("id"))
-        .order_by("-n", "proposition_id")
-        .first()
-    )
-    if winner is None:
-        return redirect("vote_detail", club_id=club.pk)
-    vote.winner_id = winner["proposition_id"]
-    vote.start_date = start_d
-    vote.end_date = end_d
-    vote.closed_at = timezone.now()
-    vote.save()
-    # Consomme les propositions du cycle : seule celle qui gagne reste liée au vote.
-    Proposition.objects.filter(club=club).exclude(pk=vote.winner_id).delete()
-    return redirect("club_detail", club_id=club.pk)
 
 
 def current_selection(club) -> Vote | None:

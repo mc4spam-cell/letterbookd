@@ -3,6 +3,7 @@
 {% block title %}{% translate "Vote" %} · {{ club.name }}{% endblock %}
 {% block content %}
 <h1>{% translate "Vote en cours" %} — {{ club.name }}</h1>
+<p>{% translate "Le vote s'ouvre le 1er du mois et se clôt le dernier jour." %}</p>
 
 {% if my_ballot %}
     <p>{% translate "Tu as voté pour" %} <strong>{{ my_ballot.proposition.book }}</strong>.</p>
@@ -23,13 +24,5 @@
         <li>{{ p.book }} : {{ p.ballots_count }}</li>
     {% endfor %}
 </ul>
-
-{% if is_host %}
-<h2>{% translate "Clôturer" %}</h2>
-<form method="post" action="{% url 'close_vote' club_id=club.id %}">{% csrf_token %}
-    <label>{% translate "Début de lecture" %} <input type="date" name="start_date" required></label>
-    <label>{% translate "Fin de lecture" %} <input type="date" name="end_date" required></label>
-    <button type="submit" onclick="return confirm('{% translate "Clôturer le vote et fixer le livre du mois ?" %}');">{% translate "Clôturer" %}</button>
-</form>
-{% endif %}
+<p><a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un autre livre" %}</a></p>
 {% endblock %}

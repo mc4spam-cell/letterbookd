@@ -16,17 +16,12 @@
 <h2>{% translate "Vote" %}</h2>
 {% if open_vote %}
     <p><a href="{% url 'vote_detail' club_id=club.id %}">{% translate "Un vote est en cours." %}</a></p>
-{% else %}
-    <p>
-        <a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un livre" %}</a>
-        ({{ propositions.count }} {% translate "en lice" %})
-    </p>
-    {% if is_host and propositions %}
-    <form method="post" action="{% url 'open_vote' club_id=club.id %}">{% csrf_token %}
-        <button type="submit">{% translate "Ouvrir le vote" %}</button>
-    </form>
-    {% endif %}
 {% endif %}
+<p>
+    <a href="{% url 'propose' club_id=club.id %}">{% translate "Proposer un livre" %}</a>
+    ({{ propositions.count }} {% translate "en lice" %})
+</p>
+<p><em>{% translate "Le vote s'ouvre automatiquement le 1er du mois et se clôt le dernier jour. Le livre gagnant devient le livre du mois suivant." %}</em></p>
 
 <h2>{% translate "Sélections passées" %}</h2>
 {% if past_selections %}

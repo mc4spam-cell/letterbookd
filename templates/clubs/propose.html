@@ -3,22 +3,17 @@
 {% block title %}{% translate "Proposer un livre" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Proposer un livre pour" %} {{ club.name }}</h1>
-{% if locked %}
-    <p>{% translate "Un vote est en cours ; les propositions sont figées." %}</p>
-    <p><a href="{% url 'vote_detail' club_id=club.id %}">{% translate "Voir le vote" %}</a></p>
+{% if books %}
+<form method="post">{% csrf_token %}
+    <label>{% translate "Livre" %}
+        <select name="book_id" required>
+            {% for b in books %}<option value="{{ b.id }}">{{ b }}</option>{% endfor %}
+        </select>
+    </label>
+    <button type="submit">{% translate "Proposer" %}</button>
+</form>
 {% else %}
-    {% if books %}
-    <form method="post">{% csrf_token %}
-        <label>{% translate "Livre" %}
-            <select name="book_id" required>
-                {% for b in books %}<option value="{{ b.id }}">{{ b }}</option>{% endfor %}
-            </select>
-        </label>
-        <button type="submit">{% translate "Proposer" %}</button>
-    </form>
-    {% else %}
-    <p>{% translate "Catalogue vide." %} <a href="{% url 'books_search' %}">{% translate "Chercher un livre" %}</a></p>
-    {% endif %}
+<p>{% translate "Catalogue vide." %} <a href="{% url 'books_search' %}">{% translate "Chercher un livre" %}</a></p>
 {% endif %}
 <p><a href="{% url 'club_detail' club_id=club.id %}">{% translate "Retour au club" %}</a></p>
 {% endblock %}
