@@ -1,23 +1,108 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{{ book.title }}{% endblock %}
 {% block content %}
-{% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
-<h1>{{ book.title }}</h1>
-<dl>
-    {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
-    {% if book.year %}<dt>{% translate "Année" %}</dt><dd>{{ book.year }}</dd>{% endif %}
-    {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
-    {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
-</dl>
-{% if book.description %}
-    <div style="clear:both">
-        <h2>{% translate "Résumé" %}</h2>
-        <p>{{ book.description|linebreaksbr }}</p>
+<style>
+    .book-layout { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+    .book-main { flex: 1 1 500px; min-width: 0; }
+    .book-aside {
+        flex: 0 0 240px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 14px 16px;
+    }
+    .book-aside h3 {
+        margin: 12px 0 6px; font-size: 12px; color: var(--muted);
+        text-transform: uppercase; letter-spacing: .08em;
+    }
+    .book-aside h3:first-child { margin-top: 0; }
+    .avg-line { font-size: 15px; }
+    .avg-line .stars { font-size: 20px; letter-spacing: 1px; }
+    .dist-chart { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+    .dist-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .dist-label { width: 56px; color: var(--green); font-size: 11px; letter-spacing: 1px; }
+    .dist-bar { flex: 1; height: 8px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+    .dist-fill { height: 100%; background: var(--green); }
+    .dist-count { width: 24px; text-align: right; }
+    .entry { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .entry:last-child { border-bottom: 0; }
+    .entry-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .entry-head .stars { color: var(--green); }
+    @media (max-width: 720px) { .book-aside { flex-basis: 100%; } }
+</style>
+
+<div class="book-layout">
+<div class="book-main">
+    {% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
+    <h1>{{ book.title }}</h1>
+    <dl>
+        {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
+        {% if book.year %}<dt>{% translate "Année" %}</dt><dd>{{ book.year }}</dd>{% endif %}
+        {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
+        {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
+    </dl>
+    {% if book.description %}
+        <div style="clear:both">
+            <h2>{% translate "Résumé" %}</h2>
+            <p>{{ book.description|linebreaksbr }}</p>
+        </div>
+    {% endif %}
+    <p style="clear:both">
+        <a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a>
+        · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
+    </p>
+
+    <h2>{% translate "Notes et avis" %}</h2>
+    {% if entries %}
+    <div>
+        {% for r in entries %}
+        <div class="entry">
+            <div class="entry-head">
+                <strong><a href="{% url 'profile_detail' user_id=r.user.id %}">{{ r.user }}</a></strong>
+                {% if r.rating is not None %}<span class="stars">{{ r.rating|stars }}</span>{% endif %}
+                <em>{{ r.updated_at|date:"Y-m-d" }}</em>
+            </div>
+            {% if r.review %}
+                <blockquote>
+                    {% if r.review.spoiler %}<strong>{% translate "Spoilers" %} —</strong> {% endif %}
+                    {{ r.review.text|linebreaksbr }}
+                </blockquote>
+                <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "voir l'avis" %}</a>
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
-{% endif %}
-<p style="clear:both">
-    <a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a>
-    · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
-</p>
+    {% else %}
+    <p><em>{% translate "Pas encore de note ni d'avis sur ce livre." %}</em></p>
+    {% endif %}
+</div>
+
+<aside class="book-aside">
+    <h3>{% translate "Note moyenne" %}</h3>
+    {% if stats.total %}
+        <div class="avg-line">
+            <span class="stars">{{ avg_int|stars }}</span>
+            {{ stats.avg|floatformat:1 }}/10
+        </div>
+        <div style="color:var(--muted);font-size:12px">
+            {{ stats.total }} {% translate "note(s)" %}
+        </div>
+        <h3>{% translate "Répartition" %}</h3>
+        <div class="dist-chart">
+            {% for v, n in distribution %}
+            <div class="dist-row">
+                <span class="dist-label">{{ v|stars }}</span>
+                <div class="dist-bar">
+                    {% if max_count and n %}<div class="dist-fill" style="width: {% widthratio n max_count 100 %}%"></div>{% endif %}
+                </div>
+                <span class="dist-count">{{ n }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p><em>{% translate "Pas encore de note." %}</em></p>
+    {% endif %}
+</aside>
+</div>
 {% endblock %}

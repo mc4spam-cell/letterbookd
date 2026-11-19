@@ -140,6 +140,35 @@ def test_detail_renders_offline(make_user):
     assert b"Belle du Seigneur" in r.content
 
 
+@pytest.mark.django_db
+def test_detail_lists_entries_and_stats(make_user):
+    book = Book.objects.create(olid="OL5W", title="T", authors="A")
+    from clubs.models import Reading, Review
+    a, b, c = make_user(), make_user(), make_user()
+    Reading.objects.create(user=a, book=book, status="read", rating=8)
+    r = Reading.objects.create(user=b, book=book, status="read", rating=6)
+    Review.objects.create(reading=r, text="franchement correct")
+    Reading.objects.create(user=c, book=book, status="read", rating=8)
+    resp = _login(a).get(reverse("books_detail", args=[book.pk]))
+    content = resp.content.decode()
+    # Moyenne (8+6+8)/3 = 7.33 → affiché "7,3/10" (locale fr) avec 3 notes
+    assert "7,3/10" in content
+    assert "3" in content  # total
+    # Notes et avis : l'auteur du review apparaît
+    assert b.email in content
+    assert "franchement correct" in content
+    # Répartition : il y a bien 10 lignes (10 occurrences HTML + 1 CSS)
+    assert content.count('class="dist-row"') == 10
+
+
+@pytest.mark.django_db
+def test_detail_without_ratings(make_user):
+    book = Book.objects.create(olid="OL6W", title="T", authors="A")
+    r = _login(make_user()).get(reverse("books_detail", args=[book.pk]))
+    assert r.status_code == 200
+    assert b"Pas encore de note" in r.content
+
+
 def test_search_requires_login():
     r = Client().get(reverse("books_search"))
     assert r.status_code in (301, 302)

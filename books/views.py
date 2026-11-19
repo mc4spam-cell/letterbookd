@@ -69,7 +69,36 @@ def add(request):
 
 @login_required
 def detail(request, book_id):
+    from django.db.models import Avg, Count, Q
+
+    from clubs.models import Reading
+
     book = get_object_or_404(Book, pk=book_id)
     if not book.description or not book.cover_id:
         book.hydrate_from_openlibrary()
-    return render(request, "books/detail.html", {"book": book})
+
+    rated = Reading.objects.filter(book=book, rating__isnull=False)
+    agg = rated.aggregate(avg=Avg("rating"), total=Count("id"))
+    counts = dict(rated.values_list("rating").annotate(c=Count("id")).values_list("rating", "c"))
+    max_count = max(counts.values(), default=0)
+    distribution = [(v, counts.get(v, 0)) for v in range(10, 0, -1)]
+    avg_int = round(agg["avg"]) if agg["avg"] is not None else None
+
+    entries = (
+        Reading.objects.filter(book=book)
+        .filter(Q(rating__isnull=False) | Q(review__isnull=False))
+        .select_related("user", "review")
+        .order_by("-updated_at")
+    )
+    return render(
+        request,
+        "books/detail.html",
+        {
+            "book": book,
+            "stats": agg,
+            "avg_int": avg_int,
+            "distribution": distribution,
+            "max_count": max_count,
+            "entries": entries,
+        },
+    )

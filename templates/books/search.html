@@ -44,6 +44,20 @@
     <p>{% translate "Rien trouvé pour cette recherche." %}</p>
 {% endif %}
 
+{% if q %}
+<p style="color:var(--muted);font-size:13px;margin-top:10px">
+    {% translate "Le livre manque ?" %}
+    <a href="https://openlibrary.org/search?q={{ q|urlencode }}" target="_blank" rel="noopener">
+        {% translate "chercher sur Open Library" %}
+    </a>
+    —
+    <a href="https://openlibrary.org/account/create" target="_blank" rel="noopener">
+        {% translate "y créer une fiche" %}
+    </a>
+    {% translate "(les livres ajoutés sur Open Library apparaîtront ici après quelques minutes)." %}
+</p>
+{% endif %}
+
 {% if results %}
 <ul class="book-list" id="results">
     {% for r in results %}
