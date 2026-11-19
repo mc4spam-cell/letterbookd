@@ -20,8 +20,8 @@ def test_picker_renders_ten_half_stars(make_user):
     # Chaque valeur de 1..10 est exposée
     for v in range(1, 11):
         assert f'value="{v}"' in content
-    # Option « pas de note »
-    assert "pas de note" in content
+    # Plus d'option « pas de note » : les étoiles seules portent la saisie
+    assert "pas de note" not in content
 
 
 @pytest.mark.django_db

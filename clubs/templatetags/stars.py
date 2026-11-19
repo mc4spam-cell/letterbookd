@@ -30,4 +30,4 @@ def star_picker(current=None, prefix="rate"):
         {"value": v, "side": "left" if v % 2 else "right", "checked": current == v}
         for v in range(10, 0, -1)
     ]
-    return {"halves": halves, "no_rating": current is None, "prefix": prefix}
+    return {"halves": halves, "prefix": prefix}

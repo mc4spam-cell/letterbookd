@@ -47,20 +47,8 @@ def list_detail(request, list_id):
             "list": rl,
             "items": items,
             "is_owner": rl.owner_id == request.user.pk,
-            "catalog": Book.objects.all() if rl.owner_id == request.user.pk else [],
         },
     )
-
-
-@login_required
-def list_add(request, list_id):
-    rl = get_object_or_404(ReadingList, pk=list_id, owner=request.user)
-    if request.method == "POST":
-        book_id = request.POST.get("book_id")
-        book = get_object_or_404(Book, pk=book_id)
-        ListItem.objects.get_or_create(list=rl, book=book)
-        rl.save(update_fields=["updated_at"])
-    return redirect("list_detail", list_id=rl.pk)
 
 
 @login_required

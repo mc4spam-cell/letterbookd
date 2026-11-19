@@ -81,35 +81,32 @@ def test_readings_page_filters_by_status(make_user, book, book2):
 
 
 @pytest.mark.django_db
-def test_create_list_and_add_books(make_user, book, book2):
+def test_create_list(make_user):
     u = make_user()
-    c = _login(u)
-    r = c.post(reverse("list_create"), {"name": "Mes incontournables"})
-    rl = ReadingList.objects.get(name="Mes incontournables", owner=u)
+    r = _login(u).post(reverse("list_create"), {"name": "Mes incontournables"})
     assert r.status_code == 302
-    c.post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
-    c.post(reverse("list_add", args=[rl.pk]), {"book_id": book2.pk})
-    assert rl.items.count() == 2
+    assert ReadingList.objects.filter(name="Mes incontournables", owner=u).exists()
 
 
 @pytest.mark.django_db
-def test_list_add_is_idempotent(make_user, book):
+def test_book_add_to_list_is_idempotent(make_user, book):
     u = make_user()
     rl = ReadingList.objects.create(owner=u, name="L")
     c = _login(u)
-    c.post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
-    c.post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
+    c.post(reverse("book_add_to_list", args=[book.pk]), {"list_id": rl.pk})
+    c.post(reverse("book_add_to_list", args=[book.pk]), {"list_id": rl.pk})
     assert ListItem.objects.filter(list=rl, book=book).count() == 1
 
 
 @pytest.mark.django_db
-def test_only_owner_adds_or_removes(make_user, book):
+def test_remove_is_owner_only(make_user, book):
     owner = make_user()
     other = make_user()
     rl = ReadingList.objects.create(owner=owner, name="L")
-    r = _login(other).post(reverse("list_add", args=[rl.pk]), {"book_id": book.pk})
+    item = ListItem.objects.create(list=rl, book=book)
+    r = _login(other).post(reverse("list_remove", args=[rl.pk, item.pk]))
     assert r.status_code == 404
-    assert rl.items.count() == 0
+    assert ListItem.objects.filter(pk=item.pk).exists()
 
 
 @pytest.mark.django_db

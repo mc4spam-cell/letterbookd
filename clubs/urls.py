@@ -21,7 +21,6 @@ urlpatterns = [
     path("listes/", list_views.lists_index, name="lists_index"),
     path("listes/nouvelle/", list_views.list_create, name="list_create"),
     path("listes/<int:list_id>/", list_views.list_detail, name="list_detail"),
-    path("listes/<int:list_id>/ajouter/", list_views.list_add, name="list_add"),
     path(
         "listes/<int:list_id>/retirer/<int:item_id>/",
         list_views.list_remove,
