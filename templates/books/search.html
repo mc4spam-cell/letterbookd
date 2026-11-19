@@ -3,7 +3,8 @@
 {% block title %}{% translate "Chercher un livre" %}{% endblock %}
 {% block content %}
 <style>
-    .search-row { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .search-row { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .search-row > .result-form { display: flex; align-items: flex-start; gap: 16px; margin: 0; }
     .search-row .as-link { background: none; border: 0; padding: 0; margin: 0; color: var(--text); text-align: left; cursor: pointer; font: inherit; letter-spacing: 0; text-transform: none; }
     .search-row .as-link:hover { background: none; color: var(--green); }
     .search-row .as-link.cover-btn img { display: block; width: 80px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
