@@ -27,7 +27,9 @@
 <ul class="book-list">
     {% for r in readings %}
     <li class="book-row">
-        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+        {% if r.book.cover_id %}
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><img class="cover" src="{{ r.book.small_cover }}" alt=""></a>
+        {% endif %}
         <div style="flex:1">
             <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
             — <em>{{ r.get_status_display }}</em>

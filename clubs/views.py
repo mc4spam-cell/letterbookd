@@ -48,10 +48,20 @@ def unfollow(request, user_id):
 def profile_detail(request, user_id):
     other = get_object_or_404(get_user_model(), pk=user_id)
     following = Follow.objects.filter(follower=request.user, followed=other).exists()
+    readings = (
+        Reading.objects.filter(user=other)
+        .select_related("book")
+        .order_by("-rating", "-updated_at")
+    )
     return render(
         request,
         "clubs/profile.html",
-        {"profile_user": other, "following": following, "is_self": other.pk == request.user.pk},
+        {
+            "profile_user": other,
+            "following": following,
+            "is_self": other.pk == request.user.pk,
+            "readings": readings,
+        },
     )
 
 

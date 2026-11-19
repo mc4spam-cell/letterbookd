@@ -2,7 +2,9 @@
 {% load i18n stars %}
 {% block title %}{% translate "Avis de" %} {{ review.author }}{% endblock %}
 {% block content %}
-{% if review.book.cover_id %}<img class="cover-lg" src="{{ review.book.large_cover }}" alt="">{% endif %}
+{% if review.book.cover_id %}
+    <a href="{% url 'books_detail' book_id=review.book.id %}"><img class="cover-lg" src="{{ review.book.large_cover }}" alt=""></a>
+{% endif %}
 <h1><a href="{% url 'books_detail' book_id=review.book.id %}">{{ review.book }}</a></h1>
 <p>{% translate "par" %} <a href="{% url 'profile_detail' user_id=review.author.id %}">{{ review.author }}</a>
    {% if review.reading.rating is not None %} · <span class="stars">{{ review.reading.rating|stars }}</span>{% endif %}

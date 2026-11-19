@@ -7,12 +7,15 @@
 <ul class="book-list">
     {% for r in reviews %}
     <li class="book-row">
-        {% if r.book.cover_id %}<img class="cover" src="{{ r.book.small_cover }}" alt="">{% endif %}
+        {% if r.book.cover_id %}
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><img class="cover" src="{{ r.book.small_cover }}" alt=""></a>
+        {% endif %}
         <div style="flex:1">
             <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
             {% translate "a écrit sur" %}
-            <a href="{% url 'review_detail' review_id=r.id %}"><strong>{{ r.book }}</strong></a>
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
             {% if r.reading.rating is not None %} <span class="stars">{{ r.reading.rating|stars }}</span>{% endif %}
+            — <a href="{% url 'review_detail' review_id=r.id %}">{% translate "voir l'avis" %}</a>
             <div><em>{{ r.created_at|date:"Y-m-d" }}</em></div>
         </div>
     </li>

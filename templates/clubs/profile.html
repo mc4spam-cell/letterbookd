@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{{ profile_user }}{% endblock %}
 {% block content %}
 <h1>{{ profile_user }}</h1>
@@ -15,5 +15,25 @@
     </form>
     {% endif %}
 {% endif %}
-<p><a href="{% url 'profile_readings' user_id=profile_user.id %}">{% translate "Voir ses lectures" %}</a></p>
+
+<h2>{% translate "Ses livres, par préférence" %}</h2>
+{% if readings %}
+<ul class="book-list">
+    {% for r in readings %}
+    <li class="book-row">
+        {% if r.book.cover_id %}
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><img class="cover" src="{{ r.book.small_cover }}" alt=""></a>
+        {% endif %}
+        <div style="flex:1">
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
+            {% if r.rating is not None %} <span class="stars">{{ r.rating|stars }}</span>{% endif %}
+            <em> — {{ r.get_status_display }}</em>
+            {% if r.review %} · <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "voir l'avis" %}</a>{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p><em>{% translate "Aucune lecture pour l'instant." %}</em></p>
+{% endif %}
 {% endblock %}
