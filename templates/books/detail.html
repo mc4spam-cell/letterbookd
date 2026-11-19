@@ -29,6 +29,16 @@
     .entry:last-child { border-bottom: 0; }
     .entry-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
     .entry-head .stars { color: var(--green); }
+    .react-row { margin-top: 6px; display: flex; align-items: center; gap: 12px; font-size: 13px; }
+    .react-btn {
+        background: none; border: 1px solid var(--border); border-radius: 4px;
+        color: var(--muted); padding: 3px 8px; margin-right: 4px; cursor: pointer;
+        font: inherit; letter-spacing: 0; text-transform: none;
+    }
+    .react-btn:hover { background: none; border-color: var(--muted); color: var(--text); }
+    .react-btn.approve.active { color: var(--green); border-color: var(--green); }
+    .react-btn.question.active { color: var(--orange); border-color: var(--orange); }
+    .react-btn.disapprove.active { color: #e46; border-color: #e46; }
     @media (max-width: 720px) { .book-aside { flex-basis: 100%; } }
 </style>
 
@@ -68,7 +78,20 @@
                     {% if r.review.spoiler %}<strong>{% translate "Spoilers" %} —</strong> {% endif %}
                     {{ r.review.text|linebreaksbr }}
                 </blockquote>
-                <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "voir l'avis" %}</a>
+                <div class="react-row">
+                    <form method="post" action="{% url 'react_to_review' review_id=r.review.id %}" style="display:inline;margin-right:8px">{% csrf_token %}
+                        <button type="submit" name="kind" value="approve"
+                                class="react-btn approve {% if r.my_reaction == 'approve' %}active{% endif %}"
+                                title="{% translate 'Approuver' %}">✓ <span>{{ r.reaction_counts.approve|default:0 }}</span></button>
+                        <button type="submit" name="kind" value="question"
+                                class="react-btn question {% if r.my_reaction == 'question' %}active{% endif %}"
+                                title="{% translate 'Interroger' %}">? <span>{{ r.reaction_counts.question|default:0 }}</span></button>
+                        <button type="submit" name="kind" value="disapprove"
+                                class="react-btn disapprove {% if r.my_reaction == 'disapprove' %}active{% endif %}"
+                                title="{% translate 'Réprouver' %}">✗ <span>{{ r.reaction_counts.disapprove|default:0 }}</span></button>
+                    </form>
+                    <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "voir l'avis" %}</a>
+                </div>
             {% endif %}
         </div>
         {% endfor %}

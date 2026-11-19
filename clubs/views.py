@@ -48,10 +48,12 @@ def unfollow(request, user_id):
 def profile_detail(request, user_id):
     other = get_object_or_404(get_user_model(), pk=user_id)
     following = Follow.objects.filter(follower=request.user, followed=other).exists()
+    from django.db.models import F
+
     readings = (
         Reading.objects.filter(user=other)
         .select_related("book")
-        .order_by("-rating", "-updated_at")
+        .order_by(F("rating").desc(nulls_last=True), "-updated_at")
     )
     return render(
         request,

@@ -84,12 +84,34 @@ def detail(request, book_id):
     distribution = [(v, counts.get(v, 0)) for v in range(10, 0, -1)]
     avg_int = round(agg["avg"]) if agg["avg"] is not None else None
 
-    entries = (
+    entries = list(
         Reading.objects.filter(book=book)
         .filter(Q(rating__isnull=False) | Q(review__isnull=False))
         .select_related("user", "review")
         .order_by("-updated_at")
     )
+    # Pour chaque Review visible, compter les réactions et repérer la mienne.
+    from clubs.models import ReviewReaction
+
+    review_ids = [e.review.pk for e in entries if getattr(e, "review", None)]
+    my_reactions = dict(
+        ReviewReaction.objects.filter(
+            user=request.user, review_id__in=review_ids
+        ).values_list("review_id", "kind")
+    )
+    counts_rows = (
+        ReviewReaction.objects.filter(review_id__in=review_ids)
+        .values("review_id", "kind")
+        .annotate(n=Count("id"))
+    )
+    counts_by_review = {}
+    for row in counts_rows:
+        counts_by_review.setdefault(row["review_id"], {})[row["kind"]] = row["n"]
+    for e in entries:
+        if getattr(e, "review", None):
+            e.my_reaction = my_reactions.get(e.review.pk)
+            e.reaction_counts = counts_by_review.get(e.review.pk, {})
+
     return render(
         request,
         "books/detail.html",

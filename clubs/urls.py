@@ -15,6 +15,7 @@ urlpatterns = [
     ),
     path("livres/<int:book_id>/lire/", review_views.read_book, name="read_book"),
     path("avis/<int:review_id>/", review_views.review_detail, name="review_detail"),
+    path("avis/<int:review_id>/reagir/", review_views.react_to_review, name="react_to_review"),
     path("flux/", review_views.feed, name="feed"),
     path("notifications/", review_views.notifications, name="notifications"),
     path("stats/", review_views.stats, name="stats"),

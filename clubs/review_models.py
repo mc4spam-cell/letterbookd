@@ -78,6 +78,28 @@ class Comment(models.Model):
         return f"{self.author} → {self.review_id}"
 
 
+class ReviewReaction(models.Model):
+    class Kind(models.TextChoices):
+        APPROVE = "approve", _("Approuver")
+        QUESTION = "question", _("Interroger")
+        DISAPPROVE = "disapprove", _("Réprouver")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="reactions")
+    kind = models.CharField(max_length=10, choices=Kind.choices)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "review"], name="uniq_reaction_per_review"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user} {self.kind} {self.review_id}"
+
+
 class Notification(models.Model):
     class Kind(models.TextChoices):
         COMMENT = "comment", _("Nouveau commentaire sur ton avis")

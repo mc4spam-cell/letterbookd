@@ -4,11 +4,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count, Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 
 from books.models import Book
 
-from .models import Comment, Notification, Reading, ReadingStatus, Review
+from .models import Comment, Notification, Reading, ReadingStatus, Review, ReviewReaction
 from .visibility import visible_reviews
 
 
@@ -107,6 +108,27 @@ def review_detail(request, review_id):
         .select_related("author")
     )
     return render(request, "clubs/review_detail.html", {"review": review, "roots": roots})
+
+
+@login_required
+def react_to_review(request, review_id):
+    review = get_object_or_404(Review.objects.select_related("reading__book"), pk=review_id)
+    if request.method == "POST":
+        kind = request.POST.get("kind") or ""
+        valid = {k for k, _ in ReviewReaction.Kind.choices}
+        if kind in valid:
+            existing = ReviewReaction.objects.filter(user=request.user, review=review).first()
+            if existing is None:
+                ReviewReaction.objects.create(user=request.user, review=review, kind=kind)
+            elif existing.kind == kind:
+                existing.delete()  # toggle off
+            else:
+                existing.kind = kind
+                existing.save(update_fields=["kind"])
+    return redirect(
+        request.META.get("HTTP_REFERER")
+        or reverse("books_detail", args=[review.reading.book_id])
+    )
 
 
 def _notify_for_comment(comment: Comment) -> None:
