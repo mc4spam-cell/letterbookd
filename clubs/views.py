@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from .models import Follow, Invitation, Reading
 from .visibility import followed_ids
@@ -78,7 +81,19 @@ def accept_invitation(request, token):
 @login_required
 def invites(request):
     if request.method == "POST":
-        Invitation.objects.create(created_by=request.user)
+        email = (request.POST.get("email") or "").strip()
+        if email:
+            inv = Invitation.objects.create(created_by=request.user, email=email)
+            url = request.build_absolute_uri(
+                reverse("accept_invitation", args=[inv.token])
+            )
+            send_mail(
+                subject=_("Invitation à rejoindre letterbookd"),
+                message=_("Suis ce lien pour créer ton compte :\n\n%s") % url,
+                from_email=None,
+                recipient_list=[email],
+                fail_silently=True,
+            )
         return redirect("invites")
     my_invites = Invitation.objects.filter(created_by=request.user)
     return render(request, "clubs/invites.html", {"invites": my_invites})

@@ -11,6 +11,7 @@ def _new_invite_token() -> str:
 
 class Invitation(models.Model):
     token = models.CharField(max_length=64, unique=True, default=_new_invite_token)
+    email = models.EmailField(blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,

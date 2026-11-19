@@ -3,18 +3,24 @@
 {% block title %}{% translate "Mes invitations" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Inviter un·e lecteur·rice" %}</h1>
+<p><em>{% translate "Indique son adresse : un e-mail est envoyé avec le lien, et le lien reste affiché ci-dessous pour un partage direct (SMS, messagerie, réseau social)." %}</em></p>
 <form method="post">{% csrf_token %}
-    <button type="submit">{% translate "Créer un lien d'invitation" %}</button>
+    <label>{% translate "Adresse e-mail" %}
+        <input type="email" name="email" required>
+    </label>
+    <button type="submit">{% translate "Générer et envoyer le lien" %}</button>
 </form>
+
 {% if invites %}
 <h2>{% translate "Liens envoyés" %}</h2>
 <ul>
     {% for inv in invites %}
     <li>
         {% if inv.is_used %}
-            <em>{% translate "utilisée" %} {{ inv.used_at|date:"Y-m-d" }}</em>
-            — {% translate "par" %} {{ inv.used_by|default:"?" }}
+            <em>{% translate "utilisée" %} {{ inv.used_at|date:"Y-m-d" }}</em> —
+            {% translate "par" %} {{ inv.used_by|default:"?" }}
         {% else %}
+            {% if inv.email %}<strong>{{ inv.email }}</strong> — {% endif %}
             <code>{{ request.scheme }}://{{ request.get_host }}{% url 'accept_invitation' token=inv.token %}</code>
         {% endif %}
     </li>

@@ -243,11 +243,15 @@
         {% else %}
             <span style="flex:1"></span>
             <a href="{% url 'account_login' %}">{% translate "connexion" %}</a>
-            <a href="{% url 'account_signup' %}">{% translate "créer un compte" %}</a>
         {% endif %}
     </header>
     <main id="main">
         {% if messages %}<ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+        {% if not user.is_authenticated %}
+            <p style="color:var(--muted);font-size:13px">
+                {% translate "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le pour créer ton compte." %}
+            </p>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 </body>
