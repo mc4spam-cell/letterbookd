@@ -37,7 +37,7 @@
 <h1>{% translate "Chercher un livre" %}</h1>
 <form method="get" id="search-form">
     <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'titre, auteur, ISBN' %}" autofocus>
-    <button type="submit">{% translate "Chercher" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Chercher' %}" aria-label="{% translate 'Chercher' %}">🔍</button>
     <span id="spinner" hidden></span>
 </form>
 

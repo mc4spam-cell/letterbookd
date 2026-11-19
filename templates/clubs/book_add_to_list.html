@@ -11,7 +11,7 @@
             {% for l in my_lists %}<option value="{{ l.id }}">{{ l.name }}</option>{% endfor %}
         </select>
     </label>
-    <button type="submit">{% translate "Ajouter" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Ajouter' %}" aria-label="{% translate 'Ajouter' %}">＋</button>
 </form>
 {% endif %}
 
@@ -20,7 +20,7 @@
     <label>{% translate "Titre" %}
         <input type="text" name="new_list_name" maxlength="120" required>
     </label>
-    <button type="submit">{% translate "Créer et ajouter" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Créer et ajouter' %}" aria-label="{% translate 'Créer et ajouter' %}">＋</button>
 </form>
 
 <p><a href="{% url 'books_detail' book_id=book.id %}">{% translate "Retour à la fiche" %}</a></p>

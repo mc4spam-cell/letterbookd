@@ -34,7 +34,7 @@
         <textarea name="review_text" rows="6" cols="60">{% if review %}{{ review.text }}{% endif %}</textarea>
     </label></p>
     <p><label><input type="checkbox" name="spoiler" {% if review and review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
-    <button type="submit">{% translate "Enregistrer" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Enregistrer' %}" aria-label="{% translate 'Enregistrer' %}">✓</button>
 </form>
 {% if reading and not force_new %}
     <p><a href="?nouvelle=1">{% translate "Ou enregistrer une relecture" %}</a></p>

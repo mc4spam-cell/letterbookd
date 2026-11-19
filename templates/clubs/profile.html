@@ -6,12 +6,12 @@
 {% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
 {% if not is_self %}
     {% if following %}
-    <form method="post" action="{% url 'unfollow' user_id=profile_user.id %}">{% csrf_token %}
-        <button type="submit">{% translate "Ne plus suivre" %}</button>
+    <form method="post" action="{% url 'unfollow' user_id=profile_user.id %}" style="display:inline">{% csrf_token %}
+        <button type="submit" class="icon-btn" title="{% translate 'Ne plus suivre' %}" aria-label="{% translate 'Ne plus suivre' %}">✓</button>
     </form>
     {% else %}
-    <form method="post" action="{% url 'follow' user_id=profile_user.id %}">{% csrf_token %}
-        <button type="submit">{% translate "Suivre" %}</button>
+    <form method="post" action="{% url 'follow' user_id=profile_user.id %}" style="display:inline">{% csrf_token %}
+        <button type="submit" class="icon-btn primary" title="{% translate 'Suivre' %}" aria-label="{% translate 'Suivre' %}">＋</button>
     </form>
     {% endif %}
 {% endif %}

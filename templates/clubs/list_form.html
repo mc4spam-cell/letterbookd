@@ -6,6 +6,6 @@
 <form method="post">{% csrf_token %}
     <p><label>{% translate "Titre" %} <input type="text" name="name" maxlength="120" required></label></p>
     <p><label>{% translate "Description" %}<br><textarea name="description" rows="3" cols="60"></textarea></label></p>
-    <button type="submit">{% translate "Créer" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Créer' %}" aria-label="{% translate 'Créer' %}">＋</button>
 </form>
 {% endblock %}

@@ -34,7 +34,7 @@
 <form method="post" action="{% url 'list_delete' list_id=list.id %}"
       onsubmit="return confirm('{% translate "Supprimer cette liste ?" %}');"
       style="margin-top:20px">{% csrf_token %}
-    <button type="submit">{% translate "Supprimer la liste" %}</button>
+    <button type="submit" class="icon-btn danger" title="{% translate 'Supprimer la liste' %}" aria-label="{% translate 'Supprimer la liste' %}">🗑</button>
 </form>
 {% endif %}
 {% endblock %}

@@ -21,7 +21,7 @@
             <form method="post">{% csrf_token %}
                 <input type="hidden" name="parent_id" value="{{ c.id }}">
                 <textarea name="text" rows="2" cols="50" required></textarea>
-                <button type="submit">{% translate "Répondre" %}</button>
+                <button type="submit" class="icon-btn primary" title="{% translate 'Répondre' %}" aria-label="{% translate 'Répondre' %}">➤</button>
             </form>
         </details>
         {% for r in c.replies.all %}
@@ -38,6 +38,6 @@
 <h3>{% translate "Nouveau commentaire" %}</h3>
 <form method="post">{% csrf_token %}
     <textarea name="text" rows="3" cols="60" required></textarea>
-    <button type="submit">{% translate "Publier" %}</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Publier' %}" aria-label="{% translate 'Publier' %}">➤</button>
 </form>
 {% endblock %}
