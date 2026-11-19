@@ -1,9 +1,9 @@
 {% load i18n %}
 <div class="star-picker" role="radiogroup" aria-label="{% translate 'Note' %}">
     {% for h in halves %}
-        <input class="star-input" type="radio" name="rating" id="rate-{{ h.value }}"
+        <input class="star-input" type="radio" name="rating" id="{{ prefix }}-{{ h.value }}"
                value="{{ h.value }}" {% if h.checked %}checked{% endif %}>
-        <label for="rate-{{ h.value }}" class="star-half {{ h.side }}"
+        <label for="{{ prefix }}-{{ h.value }}" class="star-half {{ h.side }}"
                aria-label="{{ h.value }}/10"></label>
     {% endfor %}
 </div>

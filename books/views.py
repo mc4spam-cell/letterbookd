@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from . import openlibrary
@@ -38,6 +39,27 @@ def add(request):
     if created:
         book.hydrate_from_openlibrary()
     nxt = request.POST.get("next") or "detail"
+    if nxt == "inline_rate":
+        from clubs.models import Reading
+        rating_raw = (request.POST.get("rating") or "").strip()
+        rating = (
+            int(rating_raw)
+            if rating_raw.isdigit() and 0 <= int(rating_raw) <= 10
+            else None
+        )
+        reading = (
+            Reading.objects.filter(user=request.user, book=book)
+            .order_by("-updated_at")
+            .first()
+        )
+        if reading is None:
+            Reading.objects.create(
+                user=request.user, book=book, status="read", rating=rating
+            )
+        else:
+            reading.rating = rating
+            reading.save(update_fields=["rating", "updated_at"])
+        return JsonResponse({"book_id": book.pk, "rating": rating})
     if nxt == "rate":
         return redirect("read_book", book_id=book.pk)
     if nxt == "list":

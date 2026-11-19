@@ -2,7 +2,14 @@
 {% load i18n stars %}
 {% block title %}{% translate "Noter" %} — {{ book.title }}{% endblock %}
 {% block content %}
+{% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
 <h1>{{ book.title }}</h1>
+<dl>
+    {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
+    {% if book.year %}<dt>{% translate "Année" %}</dt><dd>{{ book.year }}</dd>{% endif %}
+    {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
+</dl>
+<div style="clear:both"></div>
 {% if force_new %}<p><em>{% translate "Nouvelle lecture (relecture)" %}</em></p>{% endif %}
 <form method="post">{% csrf_token %}
     {% if force_new %}<input type="hidden" name="nouvelle" value="1">{% endif %}

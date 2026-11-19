@@ -24,10 +24,10 @@ def rating_choices():
 
 
 @register.inclusion_tag("clubs/_star_picker.html")
-def star_picker(current=None):
+def star_picker(current=None, prefix="rate"):
     """10 demi-étoiles cliquables façon Letterboxd + option « pas de note »."""
     halves = [
         {"value": v, "side": "left" if v % 2 else "right", "checked": current == v}
         for v in range(10, 0, -1)
     ]
-    return {"halves": halves, "no_rating": current is None}
+    return {"halves": halves, "no_rating": current is None, "prefix": prefix}

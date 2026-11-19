@@ -1,26 +1,52 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Chercher un livre" %}{% endblock %}
 {% block content %}
+<style>
+    .search-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .search-row .as-link { background: none; border: 0; padding: 0; margin: 0; color: var(--text); text-align: left; cursor: pointer; font: inherit; letter-spacing: 0; text-transform: none; }
+    .search-row .as-link:hover { background: none; color: var(--green); }
+    .search-row .as-link.cover-btn img { display: block; width: 48px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+    .search-row .as-link.cover-btn .placeholder { width: 48px; height: 72px; background: var(--surface-2); border-radius: 2px; }
+    .search-row .body { flex: 1; min-width: 0; }
+    .search-row .actions { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .icon-btn {
+        background: none; border: 1px solid var(--border); border-radius: 4px;
+        width: 32px; height: 32px; padding: 0;
+        color: var(--muted); font-size: 18px; cursor: pointer;
+    }
+    .icon-btn:hover { color: var(--green); border-color: var(--green); background: none; }
+    .rate-ok { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .rate-ok .stars { color: var(--green); }
+    #spinner {
+        display: inline-block;
+        width: 16px; height: 16px;
+        border: 2px solid var(--border);
+        border-top-color: var(--green);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
 <h1>{% translate "Chercher un livre" %}</h1>
-<form method="get">
+<form method="get" id="search-form">
     <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'titre, auteur, ISBN' %}" autofocus>
     <button type="submit">{% translate "Chercher" %}</button>
+    <span id="spinner" hidden></span>
 </form>
+
 {% if q and not results %}
     <p>{% translate "Rien trouvé pour cette recherche." %}</p>
 {% endif %}
+
 {% if results %}
-<ul class="book-list">
+<ul class="book-list" id="results">
     {% for r in results %}
-    <li class="book-row">
-        {% if r.cover_id %}<img class="cover" src="https://covers.openlibrary.org/b/id/{{ r.cover_id }}-S.jpg" alt="">{% endif %}
-        <div style="flex:1">
-        <strong>{{ r.title }}</strong>
-        {% if r.authors %} — {{ r.authors }}{% endif %}
-        {% if r.year %} ({{ r.year }}){% endif %}
-        </div>
-        <form method="post" action="{% url 'books_add' %}" style="display:inline">{% csrf_token %}
+    <li class="search-row" data-olid="{{ r.olid }}">
+        <form method="post" action="{% url 'books_add' %}" class="result-form">{% csrf_token %}
             <input type="hidden" name="olid" value="{{ r.olid }}">
             <input type="hidden" name="title" value="{{ r.title }}">
             <input type="hidden" name="authors" value="{{ r.authors }}">
@@ -28,12 +54,67 @@
             <input type="hidden" name="pages" value="{{ r.pages|default_if_none:'' }}">
             <input type="hidden" name="year" value="{{ r.year|default_if_none:'' }}">
             <input type="hidden" name="cover_id" value="{{ r.cover_id|default_if_none:'' }}">
-            <button type="submit" name="next" value="detail">{% translate "Consulter" %}</button>
-            <button type="submit" name="next" value="rate">{% translate "Noter" %}</button>
-            <button type="submit" name="next" value="list">{% translate "Ajouter à une liste" %}</button>
+
+            <button type="submit" name="next" value="detail" class="as-link cover-btn" aria-label="{% translate 'Consulter' %}">
+                {% if r.cover_id %}<img src="https://covers.openlibrary.org/b/id/{{ r.cover_id }}-S.jpg" alt="">{% else %}<span class="placeholder"></span>{% endif %}
+            </button>
+
+            <div class="body">
+                <button type="submit" name="next" value="detail" class="as-link"><strong>{{ r.title }}</strong></button>
+                {% if r.authors %}<em> — {{ r.authors }}</em>{% endif %}
+                {% if r.year %}<em> ({{ r.year }})</em>{% endif %}
+
+                <div class="actions">
+                    {% star_picker None prefix=r.olid %}
+                    <button type="submit" name="next" value="list" class="icon-btn" title="{% translate 'Ajouter à une liste' %}">＋</button>
+                </div>
+
+                <div class="rate-ok" hidden>
+                    {% translate "Note enregistrée" %} <span class="stars"></span>
+                    — <a href="#" class="write-comment">{% translate "ajouter un avis" %}</a>
+                </div>
+            </div>
         </form>
     </li>
     {% endfor %}
 </ul>
 {% endif %}
+
+<script>
+(function () {
+    const form = document.getElementById('search-form');
+    const spinner = document.getElementById('spinner');
+    if (form && spinner) form.addEventListener('submit', () => { spinner.hidden = false; });
+
+    function starsOf(v) {
+        v = Math.max(0, Math.min(10, parseInt(v, 10) || 0));
+        const full = Math.floor(v / 2), half = v % 2;
+        return "★".repeat(full) + (half ? "½" : "") + "☆".repeat(5 - full - half);
+    }
+
+    document.querySelectorAll('.search-row').forEach(function (row) {
+        const form = row.querySelector('.result-form');
+        const picker = row.querySelector('.star-picker');
+        const ok = row.querySelector('.rate-ok');
+        const okStars = ok.querySelector('.stars');
+        const writeLink = ok.querySelector('.write-comment');
+
+        picker.addEventListener('change', async function (e) {
+            if (!e.target.classList.contains('star-input')) return;
+            const rating = e.target.value;
+            const fd = new FormData(form);
+            fd.set('next', 'inline_rate');
+            fd.set('rating', rating);
+            try {
+                const resp = await fetch(form.action, { method: 'POST', body: fd });
+                if (!resp.ok) return;
+                const data = await resp.json();
+                okStars.textContent = starsOf(data.rating);
+                writeLink.href = '/livres/' + data.book_id + '/lire/';
+                ok.hidden = false;
+            } catch (_) { /* silencieux */ }
+        });
+    });
+})();
+</script>
 {% endblock %}

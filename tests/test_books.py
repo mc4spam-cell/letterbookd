@@ -96,6 +96,43 @@ def test_add_with_next_list_redirects_to_list_picker(make_user):
 
 
 @pytest.mark.django_db
+def test_inline_rate_creates_book_reading_and_returns_json(make_user):
+    import json
+
+    u = make_user()
+    r = _login(u).post(
+        reverse("books_add"),
+        {
+            "olid": "OLZ",
+            "title": "T",
+            "authors": "A",
+            "next": "inline_rate",
+            "rating": "7",
+        },
+    )
+    assert r.status_code == 200
+    data = json.loads(r.content)
+    assert data["rating"] == 7
+    book = Book.objects.get(olid="OLZ")
+    assert data["book_id"] == book.pk
+    from clubs.models import Reading
+    assert Reading.objects.get(user=u, book=book).rating == 7
+
+
+@pytest.mark.django_db
+def test_inline_rate_updates_existing_reading(make_user):
+    u = make_user()
+    book = Book.objects.create(olid="OLY2", title="T", authors="A")
+    from clubs.models import Reading
+    Reading.objects.create(user=u, book=book, status="read", rating=3)
+    _login(u).post(
+        reverse("books_add"),
+        {"olid": "OLY2", "title": "T", "next": "inline_rate", "rating": "9"},
+    )
+    assert Reading.objects.get(user=u, book=book).rating == 9
+
+
+@pytest.mark.django_db
 def test_detail_renders_offline(make_user):
     book = Book.objects.create(olid="OL2W", title="Belle du Seigneur", authors="Cohen")
     r = _login(make_user()).get(reverse("books_detail", args=[book.pk]))
