@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,13 +10,10 @@ from .visibility import visible_lists
 
 @login_required
 def lists_index(request):
-    lists = visible_lists(request.user).select_related("owner").order_by("-updated_at")
-    people = get_user_model().objects.order_by("display_name", "email")
-    return render(
-        request,
-        "clubs/lists_index.html",
-        {"lists": lists, "visible_people": people},
+    my_lists = (
+        ReadingList.objects.filter(owner=request.user).order_by("-updated_at")
     )
+    return render(request, "clubs/lists_index.html", {"lists": my_lists})
 
 
 @login_required
