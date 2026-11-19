@@ -73,20 +73,10 @@ def test_invalid_token_is_rejected():
 
 
 @pytest.mark.django_db
-def test_create_invitation_requires_email_and_sends_mail(make_user, settings):
-    settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
-    from django.core import mail
+def test_post_creates_invitation(make_user):
     u = make_user()
     c = Client()
     c.force_login(u)
-    # Sans e-mail : rien n'est créé
-    c.post(reverse("invites"))
-    assert Invitation.objects.filter(created_by=u).count() == 0
-    # Avec e-mail : création + mail
-    r = c.post(reverse("invites"), {"email": "nouveau@example.com"})
+    r = c.post(reverse("invites"))
     assert r.status_code == 302
-    inv = Invitation.objects.get(created_by=u)
-    assert inv.email == "nouveau@example.com"
-    assert len(mail.outbox) == 1
-    assert "nouveau@example.com" in mail.outbox[0].to
-    assert inv.token in mail.outbox[0].body
+    assert Invitation.objects.filter(created_by=u, used_at__isnull=True).count() == 1

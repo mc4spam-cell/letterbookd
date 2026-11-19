@@ -2,26 +2,25 @@
 {% load i18n %}
 {% block title %}{% translate "Mes invitations" %}{% endblock %}
 {% block content %}
-<h1>{% translate "Inviter un·e lecteur·rice" %}</h1>
-<p><em>{% translate "Indique son adresse : un e-mail est envoyé avec le lien, et le lien reste affiché ci-dessous pour un partage direct (SMS, messagerie, réseau social)." %}</em></p>
-<form method="post">{% csrf_token %}
-    <label>{% translate "Adresse e-mail" %}
-        <input type="email" name="email" required>
-    </label>
-    <button type="submit">{% translate "Générer et envoyer le lien" %}</button>
-</form>
+<h1>
+    {% translate "Invitations" %}
+    <form method="post" style="display:inline">{% csrf_token %}
+        <button type="submit" class="icon-btn" title="{% translate 'Générer un lien' %}" aria-label="{% translate 'Générer un lien' %}">+</button>
+    </form>
+</h1>
+<p><em>{% translate "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme tu veux." %}</em></p>
 
 {% if invites %}
-<h2>{% translate "Liens envoyés" %}</h2>
-<ul>
+<ul class="invite-list">
     {% for inv in invites %}
     <li>
         {% if inv.is_used %}
-            <em>{% translate "utilisée" %} {{ inv.used_at|date:"Y-m-d" }}</em> —
-            {% translate "par" %} {{ inv.used_by|default:"?" }}
+            <em>{% translate "utilisée" %} {{ inv.used_at|date:"Y-m-d" }}</em>
+            — {% translate "par" %} {{ inv.used_by|default:"?" }}
         {% else %}
-            {% if inv.email %}<strong>{{ inv.email }}</strong> — {% endif %}
-            <code>{{ request.scheme }}://{{ request.get_host }}{% url 'accept_invitation' token=inv.token %}</code>
+            <code class="invite-url" id="inv-{{ inv.pk }}">{{ request.scheme }}://{{ request.get_host }}{% url 'accept_invitation' token=inv.token %}</code>
+            <button type="button" class="icon-btn" title="{% translate 'Copier' %}" aria-label="{% translate 'Copier' %}"
+                    onclick="navigator.clipboard.writeText(document.getElementById('inv-{{ inv.pk }}').textContent);this.textContent='✓';setTimeout(()=>this.textContent='⧉',1200)">⧉</button>
         {% endif %}
     </li>
     {% endfor %}

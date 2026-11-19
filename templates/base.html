@@ -145,6 +145,19 @@
         button:hover { background: #00e040; }
         button[type="submit"][value="delete"], form[onsubmit*="supprim"] button { background: #c14; color: #fff; }
         form[onsubmit*="supprim"] button:hover { background: #e24; }
+        .icon-btn {
+            background: transparent;
+            color: var(--muted);
+            padding: 2px 6px;
+            font: 16px/1 inherit;
+            text-transform: none;
+            letter-spacing: 0;
+            border-radius: 3px;
+        }
+        .icon-btn:hover { background: var(--surface-2); color: #fff; }
+        .invite-list { list-style: none; padding-left: 0; }
+        .invite-list li { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+        .invite-url { font-size: 12px; }
 
         article {
             background: var(--surface);
