@@ -1,0 +1,1 @@
+{% load static %}{% if book.cover_id %}{% if size == 'sm' %}<img class="cover" src="{{ book.small_cover }}" alt="">{% elif size == 'lg' %}<img class="cover-lg" src="{{ book.large_cover }}" alt="">{% else %}<img src="{{ book.cover_url }}" alt="{{ book }}">{% endif %}{% else %}<span class="no-cover no-cover-{{ size|default:'md' }}"><span>{{ book }}</span></span>{% endif %}

@@ -1,0 +1,18 @@
+{% load i18n %}
+<form method="post" action="{% url 'react_to_review' review_id=r.review.id %}">{% csrf_token %}
+    <button type="submit" name="kind" value="approve"
+            class="react-btn approve {% if r.my_reaction == 'approve' %}active{% endif %}"
+            title="{% translate 'Approuver' %}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        <span>{{ r.reaction_counts.approve|default:0 }}</span>
+    </button>
+    <button type="submit" name="kind" value="question"
+            class="react-btn question {% if r.my_reaction == 'question' %}active{% endif %}"
+            title="{% translate 'Interroger' %}">? <span>{{ r.reaction_counts.question|default:0 }}</span></button>
+    <button type="submit" name="kind" value="disapprove"
+            class="react-btn disapprove {% if r.my_reaction == 'disapprove' %}active{% endif %}"
+            title="{% translate 'Réprouver' %}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>
+        <span>{{ r.reaction_counts.disapprove|default:0 }}</span>
+    </button>
+</form>

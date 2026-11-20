@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n stars %}
+{% load i18n stars static %}
 {% block title %}{% translate "Accueil" %} · letterbookd{% endblock %}
 {% block content %}
 <style>
@@ -7,7 +7,7 @@
     .tile { position: relative; width: 160px; }
     .tile-cover { display: block; }
     .tile img { width: 100%; border-radius: 3px; box-shadow: 0 2px 6px rgba(0,0,0,.5); display: block; }
-    .tile .placeholder { height: 240px; background: var(--surface-2); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; padding: 6px; text-align: center; }
+    .tile .placeholder { height: 240px; background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.7)), url("{% static 'images/default-cover.jpg' %}") center/cover no-repeat, #2a2015; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.9); font-weight: 600; font-size: 14px; line-height: 1.2; padding: 10px; text-align: center; }
     .tile .overlay {
         position: absolute; left: 0; right: 0; bottom: 0;
         padding: 6px 8px;

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil — letterbookd</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f6f3ee;color:#2a2622;line-height:1.5}
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px}
+header{border-bottom:1px solid #d8cfc1;padding-bottom:16px;margin-bottom:24px}
+h1{font-family:Georgia,serif;font-weight:400;margin:0 0 8px;color:#8b3a2c}
+h2{font-family:Georgia,serif;font-weight:400;margin:28px 0 10px;color:#5a3220;border-bottom:1px solid #e5ddd1;padding-bottom:6px}
+.back{color:#8b3a2c;text-decoration:none;font-size:14px}
+.back:hover{text-decoration:underline}
+img.shot{width:100%;max-width:800px;border:1px solid #d8cfc1;border-radius:4px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+dl{margin:8px 0 0}
+dt{font-weight:600;color:#3b2a20;margin-top:10px}
+dd{margin:2px 0 0 16px;color:#5a4a40}
+footer{border-top:1px solid #d8cfc1;margin-top:40px;padding-top:12px;font-size:12px;color:#8a7868}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
+.card{background:#fff;border:1px solid #d8cfc1;border-radius:6px;overflow:hidden;text-decoration:none;color:#2a2622;transition:transform .1s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border-bottom:1px solid #d8cfc1}
+.card .body{padding:12px 14px}
+.card h3{margin:0 0 4px;font-family:Georgia,serif;font-weight:400;color:#8b3a2c;font-size:18px}
+.card p{margin:0;font-size:13px;color:#5a4a40}
+.lang-selector{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px;margin:40px auto}
+.lang-selector a{display:block;background:#fff;border:1px solid #d8cfc1;border-radius:8px;padding:28px;text-align:center;text-decoration:none;color:#2a2622;transition:transform .1s}
+.lang-selector a:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.lang-selector .flag{font-size:48px;line-height:1;margin-bottom:12px}
+.lang-selector .name{font-family:Georgia,serif;font-size:22px;color:#8b3a2c}
+.subtitle{text-align:center;color:#8a7868;font-size:14px;max-width:700px;margin:10px auto 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="back" href="fr_index.html">← Retour à l'index</a>
+<h1>Accueil</h1>
+<p>Première page une fois connecté. Donne un aperçu des dernières activités du club.</p>
+</header>
+<h2>Vue d'ensemble</h2>
+<img class="shot" src="screenshots/fr_home.jpg" alt="Accueil">
+<h2>Nouveaux livres</h2><dl><dt>Section</dt><dd>les livres récemment ajoutés au catalogue partagé (si présents).</dd></dl>
+<h2>Membres que je suis</h2><dl><dt>Tuiles</dt><dd>jusqu'à 10 lectures récentes des membres suivis, cliquables pour aller sur la fiche livre.</dd><dt>Overlay nom + note</dt><dd>en bas de chaque tuile : le nom du membre et sa note en étoiles ; cliquer ouvre son profil.</dd><dt>Lien « Trouve des membres à suivre »</dt><dd>si on ne suit personne encore, raccourci vers la page Membres.</dd></dl>
+<h2>Autres membres</h2><dl><dt>Tuiles</dt><dd>jusqu'à 2 lectures récentes d'autres membres (hors ceux suivis et soi).</dd></dl>
+<h2>Barre de navigation</h2><dl><dt>Menus</dt><dd>Livres · Membres · Listes · Flux · Notifs · Inviter · (Modération) · nom · Déconnexion.</dd></dl>
+<footer>Générée le 2026-11-20 · letterbookd</footer>
+</div>
+</body>
+</html>

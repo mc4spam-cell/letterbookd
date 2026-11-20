@@ -13,6 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 
+RUN date +%s > /app/.build_date
+
+RUN SECRET_KEY=build-only DATABASE_URL=sqlite:///tmp/build.sqlite python manage.py compilemessages
+
 RUN SECRET_KEY=build-only DATABASE_URL=sqlite:///tmp/build.sqlite python manage.py collectstatic --noinput
 
 EXPOSE 8000

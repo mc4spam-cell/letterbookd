@@ -2,7 +2,7 @@
 {% load i18n stars %}
 {% block title %}{% translate "Noter" %} — {{ book.title }}{% endblock %}
 {% block content %}
-{% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
+{% include "books/_cover.html" with book=book size='lg' %}
 <h1>{{ book.title }}</h1>
 <dl>
     {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
@@ -34,7 +34,7 @@
         <textarea name="review_text" rows="6" cols="60">{% if review %}{{ review.text }}{% endif %}</textarea>
     </label></p>
     <p><label><input type="checkbox" name="spoiler" {% if review and review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
-    <button type="submit" class="icon-btn primary" title="{% translate 'Enregistrer' %}" aria-label="{% translate 'Enregistrer' %}">✓</button>
+    <button type="submit">{% translate "Publier" %}</button>
 </form>
 {% if reading and not force_new %}
     <p><a href="?nouvelle=1">{% translate "Ou enregistrer une relecture" %}</a></p>

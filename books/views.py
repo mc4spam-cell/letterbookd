@@ -117,10 +117,26 @@ def detail(request, book_id):
     counts_by_review = {}
     for row in counts_rows:
         counts_by_review.setdefault(row["review_id"], {})[row["kind"]] = row["n"]
+    from clubs.models import Comment
+    comments_by_review = {}
+    for c in (
+        Comment.objects.filter(review_id__in=review_ids)
+        .select_related("author")
+        .order_by("created_at")
+    ):
+        comments_by_review.setdefault(c.review_id, []).append(c)
+    my_entry = None
+    other_entries = []
     for e in entries:
+        e.is_mine = e.user_id == request.user.pk
         if getattr(e, "review", None):
             e.my_reaction = my_reactions.get(e.review.pk)
             e.reaction_counts = counts_by_review.get(e.review.pk, {})
+            e.comments_list = comments_by_review.get(e.review.pk, [])
+        if e.is_mine:
+            my_entry = e
+        else:
+            other_entries.append(e)
 
     return render(
         request,
@@ -131,6 +147,7 @@ def detail(request, book_id):
             "avg_int": avg_int,
             "distribution": distribution,
             "max_count": max_count,
-            "entries": entries,
+            "my_entry": my_entry,
+            "other_entries": other_entries,
         },
     )

@@ -2,28 +2,26 @@
 {% load i18n stars %}
 {% block title %}{{ profile_user }}{% endblock %}
 {% block content %}
-<h1>{{ profile_user }}</h1>
-{% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
-{% if not is_self %}
-    {% if following %}
-    <form method="post" action="{% url 'unfollow' user_id=profile_user.id %}" style="display:inline">{% csrf_token %}
-        <button type="submit" class="icon-btn" title="{% translate 'Ne plus suivre' %}" aria-label="{% translate 'Ne plus suivre' %}">✓</button>
-    </form>
-    {% else %}
-    <form method="post" action="{% url 'follow' user_id=profile_user.id %}" style="display:inline">{% csrf_token %}
-        <button type="submit" class="icon-btn primary" title="{% translate 'Suivre' %}" aria-label="{% translate 'Suivre' %}">＋</button>
+<h1 style="display:flex;align-items:center;gap:8px">
+    <span>{{ profile_user }}</span>
+    {% if not is_self %}
+    <form method="post" action="{% if following %}{% url 'unfollow' user_id=profile_user.id %}{% else %}{% url 'follow' user_id=profile_user.id %}{% endif %}" style="margin:0">{% csrf_token %}
+        <button type="submit" class="heart-btn {% if following %}on{% endif %}"
+                title="{% if following %}{% translate 'Ne plus suivre' %}{% else %}{% translate 'Suivre' %}{% endif %}"
+                aria-pressed="{% if following %}true{% else %}false{% endif %}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
     </form>
     {% endif %}
-{% endif %}
+</h1>
+{% if profile_user.bio %}<p>{{ profile_user.bio }}</p>{% endif %}
 
 <h2>{% translate "Ses livres, par préférence" %}</h2>
 {% if readings %}
 <ul class="book-list">
     {% for r in readings %}
     <li class="book-row">
-        {% if r.book.cover_id %}
-            <a href="{% url 'books_detail' book_id=r.book.id %}"><img class="cover" src="{{ r.book.small_cover }}" alt=""></a>
-        {% endif %}
+        <a href="{% url 'books_detail' book_id=r.book.id %}">{% include "books/_cover.html" with book=r.book size='sm' %}</a>
         <div style="flex:1">
             <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
             {% if r.rating is not None %} <span class="stars">{{ r.rating|stars }}</span>{% endif %}
@@ -36,4 +34,22 @@
 {% else %}
     <p><em>{% translate "Aucune lecture pour l'instant." %}</em></p>
 {% endif %}
+
+{% for l in lists %}
+<section>
+    <h2 style="display:flex;align-items:center;gap:12px;margin-top:24px">
+        <span>{{ l.name }}</span>
+        <em style="font-weight:normal;color:var(--muted);font-size:14px">{{ l.items.count }} {% translate "livre(s)" %}</em>
+    </h2>
+    {% if l.items.all %}
+    <div class="cover-grid">
+        {% for it in l.items.all %}
+        <a href="{% url 'books_detail' book_id=it.book_id %}" title="{{ it.book }}">{% include "books/_cover.html" with book=it.book %}</a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p><em>{% translate "Liste vide." %}</em></p>
+    {% endif %}
+</section>
+{% endfor %}
 {% endblock %}

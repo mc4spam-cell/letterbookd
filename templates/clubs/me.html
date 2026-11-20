@@ -8,15 +8,18 @@
     <a href="{% url 'account_change_password' %}">{% translate "Changer mon mot de passe" %}</a>
 </p>
 <form method="post">{% csrf_token %}
-    <p><label>{% translate "Nom affiché" %} <input type="text" name="display_name" value="{{ user.display_name }}" maxlength="80"></label></p>
+    {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+    <p><label>{% translate "Nom affiché" %} <input type="text" name="display_name" value="{{ user.display_name }}" maxlength="80" required></label></p>
     <p><label>{% translate "Bio" %}<br><textarea name="bio">{{ user.bio }}</textarea></label></p>
-    <button type="submit" class="icon-btn primary" title="{% translate 'Enregistrer' %}" aria-label="{% translate 'Enregistrer' %}">✓</button>
+    <button type="submit">{% translate "Enregistrer" %}</button>
 </form>
 
 <h2>{% translate "Supprimer mon compte" %}</h2>
 <p>{% translate "Cela efface ton profil et tes lectures, sans retour en arrière." %}</p>
 <form method="post" onsubmit="return confirm('{% translate "Confirmer la suppression définitive de ton compte ?" %}');">{% csrf_token %}
     <input type="hidden" name="action" value="delete">
-    <button type="submit" class="icon-btn danger" title="{% translate 'Supprimer définitivement' %}" aria-label="{% translate 'Supprimer définitivement' %}">🗑</button>
+    <button type="submit" class="icon-btn trash-btn" title="{% translate 'Supprimer définitivement' %}" aria-label="{% translate 'Supprimer définitivement' %}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width:20px;height:20px;stroke:#e46;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+    </button>
 </form>
 {% endblock %}

@@ -60,10 +60,16 @@ def profile_detail(request, user_id):
     following = Follow.objects.filter(follower=request.user, followed=other).exists()
     from django.db.models import F
 
+    from .models import ReadingList
     readings = (
         Reading.objects.filter(user=other)
         .select_related("book")
         .order_by(F("rating").desc(nulls_last=True), "-updated_at")
+    )
+    lists = (
+        ReadingList.objects.filter(owner=other)
+        .order_by("-updated_at")
+        .prefetch_related("items__book")
     )
     return render(
         request,
@@ -73,6 +79,7 @@ def profile_detail(request, user_id):
             "following": following,
             "is_self": other.pk == request.user.pk,
             "readings": readings,
+            "lists": lists,
         },
     )
 
@@ -98,12 +105,19 @@ def invites(request):
 @login_required
 def me_settings(request):
     user = request.user
+    error = None
     if request.method == "POST":
         if request.POST.get("action") == "delete":
             user.delete()
             return redirect("home")
-        user.display_name = (request.POST.get("display_name") or "").strip()[:80]
-        user.bio = (request.POST.get("bio") or "").strip()
-        user.save(update_fields=["display_name", "bio"])
-        return redirect("me_settings")
-    return render(request, "clubs/me.html", {})
+        new_name = (request.POST.get("display_name") or "").strip()[:80]
+        if not new_name:
+            error = "Le nom de membre est obligatoire."
+        elif get_user_model().objects.filter(display_name__iexact=new_name).exclude(pk=user.pk).exists():
+            error = "Ce nom est déjà pris, choisis-en un autre."
+        else:
+            user.display_name = new_name
+            user.bio = (request.POST.get("bio") or "").strip()
+            user.save(update_fields=["display_name", "bio"])
+            return redirect("me_settings")
+    return render(request, "clubs/me.html", {"error": error})

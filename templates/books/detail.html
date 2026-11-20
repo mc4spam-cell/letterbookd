@@ -19,12 +19,10 @@
     .book-aside h3:first-child { margin-top: 0; }
     .avg-line { font-size: 15px; }
     .avg-line .stars { font-size: 20px; letter-spacing: 1px; }
-    .dist-chart { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
-    .dist-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
-    .dist-label { width: 56px; color: var(--accent); font-size: 11px; letter-spacing: 1px; }
-    .dist-bar { flex: 1; height: 8px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
-    .dist-fill { height: 100%; background: var(--accent); }
-    .dist-count { width: 24px; text-align: right; }
+    .dist-chart { display: flex; align-items: flex-end; gap: 2px; height: 48px; margin-top: 6px; }
+    .dist-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; background: var(--surface-2); border-radius: 2px 2px 0 0; overflow: hidden; }
+    .dist-col .dist-fill { width: 100%; background: var(--accent); }
+    .dist-scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; margin-top: 2px; letter-spacing: 1px; }
     .entry { padding: 10px 0; border-bottom: 1px solid var(--border); }
     .entry:last-child { border-bottom: 0; }
     .entry-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -36,15 +34,31 @@
         font: inherit; letter-spacing: 0; text-transform: none;
     }
     .react-btn:hover { background: none; border-color: var(--muted); color: var(--text); }
-    .react-btn.approve.active { color: var(--accent); border-color: var(--accent); }
+    .react-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+    .react-btn.approve.active { color: var(--blue); border-color: var(--blue); }
     .react-btn.question.active { color: var(--orange); border-color: var(--orange); }
     .react-btn.disapprove.active { color: #e46; border-color: #e46; }
-    @media (max-width: 720px) { .book-aside { flex-basis: 100%; } }
+    .entry-comments { margin: 6px 0 0 24px; border-left: 2px solid var(--border); padding-left: 10px; font-size: 13px; color: var(--muted); }
+    .entry-comments li { margin: 4px 0; }
+    .entry-comments strong { color: var(--text); }
+    .entry { display: flex; gap: 14px; align-items: flex-start; }
+    .entry-body { flex: 1; min-width: 0; }
+    .entry-actions { flex: 0 0 auto; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; font-size: 13px; padding-top: 6px; }
+    .entry-actions form { margin: 0; display: flex; gap: 2px; }
+    .entry-actions .entry-link { color: var(--muted); }
+    .entry-actions .entry-link:hover { color: var(--accent); }
+    .entry-mine blockquote { border-left-color: var(--accent); }
+    .quick-review textarea { width: 100%; max-width: 100%; }
+    @media (max-width: 720px) {
+        .book-aside { flex-basis: 100%; }
+        .entry { flex-direction: column; gap: 6px; }
+        .entry-actions { flex-direction: row; align-items: center; width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+    }
 </style>
 
 <div class="book-layout">
 <div class="book-main">
-    {% if book.cover_id %}<img class="cover-lg" src="{{ book.large_cover }}" alt="{% translate 'couverture' %}">{% endif %}
+    {% include "books/_cover.html" with book=book size='lg' %}
     <h1>{{ book.title }}</h1>
     <dl>
         {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
@@ -63,41 +77,77 @@
         · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
     </p>
 
-    <h2>{% translate "Notes et avis" %}</h2>
-    {% if entries %}
-    <div>
-        {% for r in entries %}
-        <div class="entry">
-            <div class="entry-head">
-                <strong><a href="{% url 'profile_detail' user_id=r.user.id %}">{{ r.user }}</a></strong>
-                {% if r.rating is not None %}<span class="stars">{{ r.rating|stars }}</span>{% endif %}
-                <em>{{ r.updated_at|date:"Y-m-d" }}</em>
+    <h2>{% translate "Mon avis" %}</h2>
+    {% if my_entry and my_entry.review %}
+        <div class="entry entry-mine">
+            <div class="entry-body">
+                <div class="entry-head">
+                    {% if my_entry.rating is not None %}<span class="stars">{{ my_entry.rating|stars }}</span>{% endif %}
+                    <em>{{ my_entry.updated_at|date:"Y-m-d" }}</em>
+                </div>
+                <blockquote>
+                    {% if my_entry.review.spoiler %}<strong>{% translate "Spoilers" %} —</strong> {% endif %}
+                    {{ my_entry.review.text|linebreaksbr }}
+                </blockquote>
+                {% if my_entry.comments_list %}
+                <ul class="entry-comments">
+                    {% for c in my_entry.comments_list %}
+                    <li><strong>{{ c.author }}</strong> : {{ c.text|linebreaksbr }} <em>{{ c.created_at|date:"j M" }}</em></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
-            {% if r.review %}
+            <div class="entry-actions">
+                {% include "clubs/_review_reactions.html" with r=my_entry %}
+                <a href="{% url 'read_book' book_id=book.id %}" class="entry-link">{% translate "Modifier" %}</a>
+                <a href="{% url 'review_detail' review_id=my_entry.review.id %}" class="entry-link">{% translate "Réagir" %}</a>
+            </div>
+        </div>
+    {% else %}
+        <form method="post" action="{% url 'read_book' book_id=book.id %}" class="quick-review">{% csrf_token %}
+            <textarea name="review_text" rows="3" placeholder="{% translate 'Écris ton avis…' %}" required></textarea>
+            <div style="margin-top:6px"><button type="submit">{% translate "Publier" %}</button>
+                <a href="{% url 'read_book' book_id=book.id %}" style="margin-left:10px;font-size:13px">{% translate "Avis complet (note, dates, spoiler)" %}</a>
+            </div>
+        </form>
+    {% endif %}
+
+    <h2>{% translate "Avis des autres membres" %}</h2>
+    {% if other_entries %}
+    <div>
+        {% for r in other_entries %}
+        <div class="entry">
+            <div class="entry-body">
+                <div class="entry-head">
+                    <strong><a href="{% url 'profile_detail' user_id=r.user.id %}">{{ r.user }}</a></strong>
+                    {% if r.rating is not None %}<span class="stars">{{ r.rating|stars }}</span>{% endif %}
+                    <em>{{ r.updated_at|date:"Y-m-d" }}</em>
+                </div>
+                {% if r.review %}
                 <blockquote>
                     {% if r.review.spoiler %}<strong>{% translate "Spoilers" %} —</strong> {% endif %}
                     {{ r.review.text|linebreaksbr }}
                 </blockquote>
-                <div class="react-row">
-                    <form method="post" action="{% url 'react_to_review' review_id=r.review.id %}" style="display:inline;margin-right:8px">{% csrf_token %}
-                        <button type="submit" name="kind" value="approve"
-                                class="react-btn approve {% if r.my_reaction == 'approve' %}active{% endif %}"
-                                title="{% translate 'Approuver' %}">✓ <span>{{ r.reaction_counts.approve|default:0 }}</span></button>
-                        <button type="submit" name="kind" value="question"
-                                class="react-btn question {% if r.my_reaction == 'question' %}active{% endif %}"
-                                title="{% translate 'Interroger' %}">? <span>{{ r.reaction_counts.question|default:0 }}</span></button>
-                        <button type="submit" name="kind" value="disapprove"
-                                class="react-btn disapprove {% if r.my_reaction == 'disapprove' %}active{% endif %}"
-                                title="{% translate 'Réprouver' %}">✗ <span>{{ r.reaction_counts.disapprove|default:0 }}</span></button>
-                    </form>
-                    <a href="{% url 'review_detail' review_id=r.review.id %}">{% translate "voir l'avis" %}</a>
-                </div>
+                {% if r.comments_list %}
+                <ul class="entry-comments">
+                    {% for c in r.comments_list %}
+                    <li><strong>{{ c.author }}</strong> : {{ c.text|linebreaksbr }} <em>{{ c.created_at|date:"j M" }}</em></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% if r.review %}
+            <div class="entry-actions">
+                {% include "clubs/_review_reactions.html" with r=r %}
+                <a href="{% url 'review_detail' review_id=r.review.id %}" class="entry-link">{% translate "Réagir" %}</a>
+            </div>
             {% endif %}
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <p><em>{% translate "Pas encore de note ni d'avis sur ce livre." %}</em></p>
+    <p><em>{% translate "Personne d'autre n'a encore écrit sur ce livre." %}</em></p>
     {% endif %}
 </div>
 
@@ -113,16 +163,13 @@
         </div>
         <h3>{% translate "Répartition" %}</h3>
         <div class="dist-chart">
-            {% for v, n in distribution %}
-            <div class="dist-row">
-                <span class="dist-label">{{ v|stars }}</span>
-                <div class="dist-bar">
-                    {% if max_count and n %}<div class="dist-fill" style="width: {% widthratio n max_count 100 %}%"></div>{% endif %}
-                </div>
-                <span class="dist-count">{{ n }}</span>
+            {% for v, n in distribution reversed %}
+            <div class="dist-col" title="{{ v|stars }} — {{ n }}">
+                {% if max_count and n %}<div class="dist-fill" style="height: {% widthratio n max_count 100 %}%"></div>{% endif %}
             </div>
             {% endfor %}
         </div>
+        <div class="dist-scale"><span>★</span><span>★★★★★</span></div>
     {% else %}
         <p><em>{% translate "Pas encore de note." %}</em></p>
     {% endif %}

@@ -147,8 +147,10 @@ def _notify_for_comment(comment: Comment) -> None:
 
 @login_required
 def feed(request):
+    from .visibility import followed_ids
     reviews = (
         visible_reviews(request.user)
+        .filter(reading__user_id__in=followed_ids(request.user))
         .select_related("reading__user", "reading__book")
         .order_by("-created_at")[:50]
     )

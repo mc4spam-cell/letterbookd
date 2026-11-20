@@ -2,25 +2,46 @@
 {% load i18n %}
 {% block title %}{% translate "Ajouter à une liste" %}{% endblock %}
 {% block content %}
+<style>
+    .list-picker { list-style: none; padding: 0; margin: 12px 0; display: flex; flex-direction: column; gap: 6px; }
+    .list-picker form { margin: 0; }
+    .list-picker button {
+        display: flex; align-items: center; gap: 10px;
+        width: 100%; padding: 10px 14px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 4px;
+        text-align: left; cursor: pointer; font: inherit;
+    }
+    .list-picker button:hover { border-color: var(--accent); color: var(--accent); background: var(--surface-2); }
+    .list-picker em { color: var(--muted); font-size: 12px; margin-left: auto; }
+</style>
+
 <h1>{% blocktranslate with t=book.title %}Ajouter « {{ t }} » à une liste{% endblocktranslate %}</h1>
 
 {% if my_lists %}
-<form method="post">{% csrf_token %}
-    <label>{% translate "Liste existante" %}
-        <select name="list_id" required>
-            {% for l in my_lists %}<option value="{{ l.id }}">{{ l.name }}</option>{% endfor %}
-        </select>
-    </label>
-    <button type="submit" class="icon-btn primary" title="{% translate 'Ajouter' %}" aria-label="{% translate 'Ajouter' %}">＋</button>
-</form>
+<ul class="list-picker">
+    {% for l in my_lists %}
+    <li>
+        <form method="post">{% csrf_token %}
+            {% if request.GET.from %}<input type="hidden" name="from_list_id" value="{{ request.GET.from }}">{% endif %}
+            <input type="hidden" name="list_id" value="{{ l.id }}">
+            <button type="submit">
+                <span>{{ l.name }}</span>
+                <em>{{ l.items_count }} {% translate "livre(s)" %}</em>
+            </button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 <h2>{% translate "Ou créer une nouvelle liste" %}</h2>
 <form method="post">{% csrf_token %}
+    {% if request.GET.from %}<input type="hidden" name="from_list_id" value="{{ request.GET.from }}">{% endif %}
     <label>{% translate "Titre" %}
         <input type="text" name="new_list_name" maxlength="120" required>
     </label>
-    <button type="submit" class="icon-btn primary" title="{% translate 'Créer et ajouter' %}" aria-label="{% translate 'Créer et ajouter' %}">＋</button>
+    <button type="submit">{% translate "Publier" %}</button>
 </form>
 
 <p><a href="{% url 'books_detail' book_id=book.id %}">{% translate "Retour à la fiche" %}</a></p>

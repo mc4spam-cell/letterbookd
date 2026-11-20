@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Book page (example: Le Horla) — letterbookd</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f6f3ee;color:#2a2622;line-height:1.5}
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px}
+header{border-bottom:1px solid #d8cfc1;padding-bottom:16px;margin-bottom:24px}
+h1{font-family:Georgia,serif;font-weight:400;margin:0 0 8px;color:#8b3a2c}
+h2{font-family:Georgia,serif;font-weight:400;margin:28px 0 10px;color:#5a3220;border-bottom:1px solid #e5ddd1;padding-bottom:6px}
+.back{color:#8b3a2c;text-decoration:none;font-size:14px}
+.back:hover{text-decoration:underline}
+img.shot{width:100%;max-width:800px;border:1px solid #d8cfc1;border-radius:4px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+dl{margin:8px 0 0}
+dt{font-weight:600;color:#3b2a20;margin-top:10px}
+dd{margin:2px 0 0 16px;color:#5a4a40}
+footer{border-top:1px solid #d8cfc1;margin-top:40px;padding-top:12px;font-size:12px;color:#8a7868}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
+.card{background:#fff;border:1px solid #d8cfc1;border-radius:6px;overflow:hidden;text-decoration:none;color:#2a2622;transition:transform .1s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border-bottom:1px solid #d8cfc1}
+.card .body{padding:12px 14px}
+.card h3{margin:0 0 4px;font-family:Georgia,serif;font-weight:400;color:#8b3a2c;font-size:18px}
+.card p{margin:0;font-size:13px;color:#5a4a40}
+.lang-selector{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px;margin:40px auto}
+.lang-selector a{display:block;background:#fff;border:1px solid #d8cfc1;border-radius:8px;padding:28px;text-align:center;text-decoration:none;color:#2a2622;transition:transform .1s}
+.lang-selector a:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.lang-selector .flag{font-size:48px;line-height:1;margin-bottom:12px}
+.lang-selector .name{font-family:Georgia,serif;font-size:22px;color:#8b3a2c}
+.subtitle{text-align:center;color:#8a7868;font-size:14px;max-width:700px;margin:10px auto 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="back" href="en_index.html">← Back to Documentation Index</a>
+<h1>Book page (example: Le Horla)</h1>
+<p>A book's main page: metadata, your review, other members' reviews, reactions and collective stats.</p>
+</header>
+<h2>Interface overview</h2>
+<img class="shot" src="screenshots/en_book-detail.jpg" alt="Book page (example: Le Horla)">
+<h2>Header</h2><dl><dt>Large cover</dt><dd>Open Library cover or default cover.</dd><dt>Title, Authors, Year, Pages, ISBN</dt><dd>book metadata.</dd><dt>Summary</dt><dd>Open Library description (when available).</dd><dt>Rate / write a review</dt><dd>link — opens the rating page (status, rating, dates, text, spoiler).</dd><dt>Add to a list</dt><dd>link — opens the list picker.</dd></dl>
+<h2>My review</h2><dl><dt>If you haven't written one</dt><dd>inline textarea + Publish button for a quick review, or “Full review” link for the detailed page.</dd><dt>If you already have one</dt><dd>your star rating, the date and your text as a quote, followed by any comments others left.</dd><dt>Blue thumb / ? / red thumb</dt><dd>reaction buttons on your own review — reflect what others think.</dd><dt>Edit</dt><dd>opens the review edit page.</dd><dt>React</dt><dd>opens the dedicated review page to add a comment.</dd></dl>
+<h2>Other members' reviews</h2><dl><dt>Reverse-chronological order</dt><dd>newest first, up to all existing entries.</dd><dt>Each review</dt><dd>username + rating + date, then the text, then nested comments.</dd><dt>Reaction buttons</dt><dd>blue thumb (approve), ? (question), red thumb (disapprove). One vote per review, editable.</dd><dt>React</dt><dd>opens the review in its dedicated page to comment.</dd></dl>
+<h2>Right sidebar</h2><dl><dt>Average rating</dt><dd>numeric average out of 10 + stars.</dd><dt>Rating count</dt><dd>how many members rated.</dd><dt>Distribution chart</dt><dd>10 vertical bars (ratings 1 to 10) — hover a bar to see the rating and vote count.</dd></dl>
+<footer>Generated on 2026-11-20 · letterbookd</footer>
+</div>
+</body>
+</html>

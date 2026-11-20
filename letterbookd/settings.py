@@ -60,6 +60,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
+                "clubs.context_processors.build_date",
             ],
         },
     },
@@ -93,6 +94,7 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/5m"}
 ACCOUNT_ADAPTER = "clubs.adapter.InvitationOnlyAdapter"
+ACCOUNT_FORMS = {"signup": "users.forms.SignupForm"}
 # En dev, dire franchement « ce compte n'existe pas » plutôt que d'envoyer
 # un mail silencieux ; à repasser à True en prod.
 ACCOUNT_PREVENT_ENUMERATION = DEBUG is False
@@ -113,7 +115,7 @@ LANGUAGE_CODE = "fr"
 TIME_ZONE = "Europe/Paris"
 USE_I18N = True
 USE_TZ = True
-LANGUAGES = [("fr", "Français")]
+LANGUAGES = [("fr", "Français"), ("en", "English")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
 STATIC_URL = "static/"
