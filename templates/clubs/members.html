@@ -6,25 +6,62 @@
 {% if people %}
 <ul class="member-list">
     {% for u in people %}
+    {% if u.id in following %}
     <li>
-        {% if u.id in following %}<span class="follow-heart" title="{% translate 'Tu suis ce membre' %}" aria-label="{% translate 'Tu suis ce membre' %}">♥</span>{% endif %}
-        <a href="{% url 'profile_detail' user_id=u.id %}">{{ u }}</a>
-        {% if u.id in following %}
-            <form method="post" action="{% url 'unfollow' user_id=u.id %}" style="display:inline">{% csrf_token %}
-                <button type="submit" class="icon-btn" title="{% translate 'Ne plus suivre' %}" aria-label="{% translate 'Ne plus suivre' %}">✓</button>
-            </form>
-        {% else %}
-            <form method="post" action="{% url 'follow' user_id=u.id %}" style="display:inline">{% csrf_token %}
-                <button type="submit" class="icon-btn primary" title="{% translate 'Suivre' %}" aria-label="{% translate 'Suivre' %}">＋</button>
-            </form>
-        {% endif %}
+        <a href="{% url 'profile_detail' user_id=u.id %}" class="member-name">{{ u }}</a>
+        <form method="post" action="{% url 'unfollow' user_id=u.id %}">{% csrf_token %}
+            <button type="submit" class="heart-btn on"
+                    title="{% translate 'Ne plus suivre' %}" aria-label="{% translate 'Ne plus suivre' %}"
+                    aria-pressed="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+        </form>
     </li>
+    {% else %}
+    <li>
+        <a href="{% url 'profile_detail' user_id=u.id %}" class="member-name">{{ u }}</a>
+        <form method="post" action="{% url 'follow' user_id=u.id %}">{% csrf_token %}
+            <button type="submit" class="heart-btn"
+                    title="{% translate 'Suivre' %}" aria-label="{% translate 'Suivre' %}"
+                    aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+        </form>
+    </li>
+    {% endif %}
     {% endfor %}
 </ul>
 <style>
     .member-list { list-style: none; padding-left: 0; }
-    .member-list li { padding: 6px 0; display: flex; align-items: center; gap: 8px; }
-    .follow-heart { color: var(--accent); font-size: 14px; }
+    .member-list li {
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid var(--border);
+    }
+    .member-list .member-name { flex: 1; min-width: 0; }
+    .member-list form { margin: 0; }
+    .heart-btn {
+        background: none;
+        border: 0;
+        padding: 4px;
+        cursor: pointer;
+        line-height: 0;
+    }
+    .heart-btn svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--accent);
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: #3a4550; /* coloriage gris, sans suivi */
+        transition: fill .15s ease;
+    }
+    .heart-btn.on svg { fill: var(--accent); }
+    .heart-btn:hover svg { fill: #5a6672; }
+    .heart-btn.on:hover svg { fill: #e8503e; }
 </style>
 {% else %}
     <p>{% translate "Aucun autre membre pour l'instant." %}</p>

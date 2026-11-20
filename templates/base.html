@@ -21,7 +21,8 @@
         * { box-sizing: border-box; }
         ul, ol { list-style: none; padding-left: 0; }
         .cover-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin: 8px 0 24px; }
-        .cover-grid a { display: block; text-decoration: none; color: var(--muted); font-size: 12px; line-height: 1.2; }
+        .cover-grid a { display: block; text-decoration: none; color: var(--muted); font-size: 12px; line-height: 1.2; position: relative; }
+        .cover-grid .stars-overlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 6px; background: linear-gradient(180deg, transparent, rgba(0,0,0,.85)); color: #ffb400; font-size: 13px; letter-spacing: 1px; text-align: center; border-radius: 0 0 4px 4px; }
         .cover-grid img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 4px; background: var(--surface-2); display: block; }
         .cover-grid .no-cover { width: 100%; aspect-ratio: 2/3; border-radius: 4px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; padding: 6px; text-align: center; }
         html { background: var(--bg); }
@@ -74,10 +75,17 @@
         header .nav-ico {
             color: var(--accent);
             margin-right: 5px;
-            font-size: 1.15em;
-            font-family: "Apple Symbols", "Segoe UI Symbol", "DejaVu Sans", sans-serif;
             display: inline-block;
-            vertical-align: -1px;
+            vertical-align: -4px;
+        }
+        svg.nav-ico {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         header a.brand {
             display: inline-flex;
@@ -102,6 +110,75 @@
             display: inline-block;
         }
         header button:hover { color: var(--muted); }
+
+        /* Boutons info + langue dans l'angle supérieur droit */
+        .corner-tools {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 12px;
+        }
+        .corner-tools button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font: inherit;
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1;
+        }
+        .corner-tools button:hover { color: var(--accent); border-color: var(--accent); }
+        .corner-tools button svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .corner-tools .flag { font-size: 18px; line-height: 1; }
+
+        dialog.sheet {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 20px 22px;
+            max-width: 480px;
+            width: calc(100% - 32px);
+            box-shadow: 0 10px 40px rgba(0,0,0,.6);
+        }
+        dialog.sheet::backdrop { background: rgba(0,0,0,.6); }
+        dialog.sheet h2 {
+            margin: 0 0 12px;
+            border: 0;
+            padding: 0;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--text);
+            font-size: 18px;
+        }
+        dialog.sheet p { margin: 8px 0; color: var(--muted); font-size: 14px; }
+        dialog.sheet p strong, dialog.sheet a { color: var(--text); }
+        dialog.sheet .lang-list { list-style: none; padding: 0; margin: 0; }
+        dialog.sheet .lang-list li { margin: 6px 0; }
+        dialog.sheet .lang-list label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 14px;
+        }
+        dialog.sheet .lang-list label:hover { border-color: var(--accent); }
+        dialog.sheet .lang-list input[type="radio"] { margin: 0; accent-color: var(--accent); }
+        dialog.sheet .lang-list .flag { font-size: 22px; line-height: 1; }
+        dialog.sheet .lang-list em { color: var(--muted); font-size: 12px; margin-left: auto; }
+        dialog.sheet .close-row { text-align: right; margin-top: 14px; }
 
         main {
             max-width: 900px;
@@ -180,7 +257,14 @@
         .icon-btn.primary:hover { background: var(--surface-2); color: #e8503e; }
         .invite-list { list-style: none; padding-left: 0; }
         .invite-list li { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
-        .invite-url { font-size: 12px; }
+        .invite-url {
+            font-size: 12px;
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         article {
             background: var(--surface);
@@ -260,6 +344,112 @@
             border-radius: 4px;
             color: #fdd;
         }
+
+        /* ───── Tablette (≤1023px) ───── */
+        @media (max-width: 1023px) {
+            header { padding: 10px 16px; gap: 4px 14px; font-size: 14px; }
+            header a.brand img { height: 56px; }
+            header a.brand { margin-right: 10px; }
+            main { padding: 18px 16px 60px; max-width: 100%; }
+            .cover-lg { width: 140px; margin: 0 16px 10px 0; }
+            .cover-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+            textarea { max-width: 100%; }
+        }
+
+        /* ───── Mobile (≤640px) ───── */
+        @media (max-width: 640px) {
+            header {
+                padding: 8px 10px;
+                gap: 2px 10px;
+                font-size: 13px;
+                justify-content: center;
+            }
+            header a.brand img { height: 44px; }
+            header a.brand { margin-right: 6px; width: 100%; justify-content: center; }
+            header .nav-ico { margin-right: 3px; }
+            header span[style*="flex:1"] { display: none; }
+            header form { margin-left: auto; }
+
+            main { padding: 14px 12px 40px; }
+
+            h1 { font-size: 18px; letter-spacing: .04em; }
+            h2 { font-size: 13px; margin-top: 20px; }
+
+            .cover-lg {
+                float: none;
+                display: block;
+                width: 55%;
+                max-width: 220px;
+                margin: 0 auto 14px;
+            }
+            /* Grille → liste verticale sur mobile */
+            .cover-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+            .cover-grid a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px 0;
+                border-bottom: 1px solid var(--border);
+                font-size: 14px;
+                color: var(--text);
+            }
+            .cover-grid a::after {
+                content: attr(title);
+                flex: 1;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .cover-grid img,
+            .cover-grid .no-cover {
+                width: 40px;
+                flex: 0 0 40px;
+                aspect-ratio: 2/3;
+            }
+            .cover-grid .no-cover {
+                font-size: 9px;
+                padding: 2px;
+                /* Le titre est déjà affiché via ::after, on cache le texte dans la vignette */
+                overflow: hidden;
+                text-indent: -9999px;
+            }
+            .cover-grid .stars-overlay {
+                position: static;
+                padding: 0;
+                background: none;
+                font-size: 12px;
+                flex: 0 0 auto;
+                order: 3;
+            }
+
+            article { padding: 10px 12px; }
+
+            .book-row { flex-wrap: wrap; gap: 8px; }
+            .cover { width: 36px; }
+
+            input[type="text"], input[type="email"], input[type="password"],
+            input[type="number"], input[type="date"], input[type="search"],
+            textarea, select {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 4px;
+                font-size: 16px; /* évite le zoom auto iOS */
+            }
+            form p { display: flex; flex-direction: column; }
+            label { font-size: 13px; }
+
+            button, input[type="submit"] { padding: 8px 14px; font-size: 14px; min-height: 40px; }
+            .icon-btn { font-size: 20px; padding: 6px 10px; min-height: 36px; min-width: 36px; }
+
+            .star-picker label { width: 20px; height: 40px; }
+            .star-picker label::before { font-size: 40px; width: 40px; }
+            .star-picker label.right::before { left: -20px; }
+        }
     </style>
 </head>
 <body>
@@ -267,20 +457,50 @@
     <header>
         <a href="{% url 'home' %}" class="brand" aria-label="letterbookd"><img src="{% static 'img/logo.gif' %}" alt="letterbookd"></a>
         {% if user.is_authenticated %}
-            <a href="{% url 'books_search' %}"><span class="nav-ico">❖</span>{% translate "livres" %}</a>
-            <a href="{% url 'members' %}"><span class="nav-ico">◉</span>{% translate "membres" %}</a>
-            <a href="{% url 'lists_index' %}"><span class="nav-ico">☰</span>{% translate "listes" %}</a>
-            <a href="{% url 'feed' %}"><span class="nav-ico">≋</span>{% translate "flux" %}</a>
-            <a href="{% url 'notifications' %}"><span class="nav-ico">⚐</span>{% translate "notifs" %}</a>
-            <a href="{% url 'invites' %}"><span class="nav-ico">✉</span>{% translate "inviter" %}</a>
+            <a href="{% url 'books_search' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>{% translate "livres" %}</a>
+            <a href="{% url 'members' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>{% translate "membres" %}</a>
+            <a href="{% url 'lists_index' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>{% translate "listes" %}</a>
+            <a href="{% url 'feed' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>{% translate "flux" %}</a>
+            <a href="{% url 'notifications' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>{% translate "notifs" %}</a>
+            <a href="{% url 'invites' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>{% translate "inviter" %}</a>
             <span style="flex:1"></span>
-            <a href="{% url 'me_settings' %}"><span class="nav-ico">☻</span>{{ user.display_name|default:user.email }}</a>
-            <form action="{% url 'account_logout' %}" method="post">{% csrf_token %}<button type="submit"><span class="nav-ico">⏻</span>{% translate "déconnexion" %}</button></form>
+            <a href="{% url 'me_settings' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>{{ user.display_name|default:user.email }}</a>
+            <form action="{% url 'account_logout' %}" method="post">{% csrf_token %}<button type="submit"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>{% translate "déconnexion" %}</button></form>
         {% else %}
             <span style="flex:1"></span>
-            <a href="{% url 'account_login' %}"><span class="nav-ico">⏻</span>{% translate "connexion" %}</a>
+            <a href="{% url 'account_login' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>{% translate "connexion" %}</a>
         {% endif %}
+        <span class="corner-tools">
+            <button type="button" id="btn-info" aria-haspopup="dialog" title="{% translate 'À propos' %}" aria-label="{% translate 'À propos' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </button>
+            <button type="button" id="btn-lang" aria-haspopup="dialog" title="{% translate 'Langue' %}" aria-label="{% translate 'Langue' %}">
+                <span class="flag" aria-hidden="true">🇫🇷</span>
+            </button>
+        </span>
     </header>
+
+    <dialog class="sheet" id="dlg-info">
+        <h2>{% translate "À propos de letterbookd" %}</h2>
+        <p>{% translate "Un outil pour animer un club de lecture privé : choisir le livre du mois, noter, écrire des avis, en discuter." %}</p>
+        <p>{% translate "Tout est privé : rien n'est lisible sans compte, ni en dehors d'un club." %}</p>
+        <p><em>{% translate "Inspiré de Letterboxd, pas une copie." %}</em></p>
+        <div class="close-row"><button type="button" onclick="this.closest('dialog').close()">{% translate "Fermer" %}</button></div>
+    </dialog>
+
+    <dialog class="sheet" id="dlg-lang">
+        <h2>{% translate "Langue" %}</h2>
+        <ul class="lang-list">
+            <li><label><input type="radio" name="lang" value="fr" checked><span class="flag">🇫🇷</span>Français<em>{% translate "par défaut" %}</em></label></li>
+        </ul>
+        <p><em>{% translate "D'autres langues viendront plus tard." %}</em></p>
+        <div class="close-row"><button type="button" onclick="this.closest('dialog').close()">{% translate "Fermer" %}</button></div>
+    </dialog>
+
+    <script>
+        document.getElementById('btn-info').addEventListener('click', function () { document.getElementById('dlg-info').showModal(); });
+        document.getElementById('btn-lang').addEventListener('click', function () { document.getElementById('dlg-lang').showModal(); });
+    </script>
     <main id="main">
         {% if messages %}<ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
         {% if not user.is_authenticated %}

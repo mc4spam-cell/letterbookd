@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Listes" %}{% endblock %}
 {% block content %}
 <h1 style="display:flex;align-items:center;gap:12px">
@@ -22,12 +22,18 @@
     {% if l.items.all %}
     <div class="cover-grid">
         {% for it in l.items.all %}
-        <a href="{% url 'books_detail' book_id=it.book_id %}" title="{{ it.book }}">
+        <a href="{% url 'books_detail' book_id=it.book_id %}" title="{{ it.book }}"
+           class="list-item"
+           data-list-id="{{ l.id }}"
+           data-item-id="{{ it.id }}"
+           data-book-id="{{ it.book_id }}"
+           data-book-title="{{ it.book }}">
             {% if it.book.cover_id %}
                 <img src="{{ it.book.cover_url }}" alt="{{ it.book }}">
             {% else %}
                 <div class="no-cover">{{ it.book }}</div>
             {% endif %}
+            {% if it.my_rating %}<span class="stars-overlay">{{ it.my_rating|stars }}</span>{% endif %}
         </a>
         {% endfor %}
     </div>
@@ -38,9 +44,117 @@
 {% endfor %}
 
 <section>
-    <h2 style="margin-top:24px">
+    <h2 style="display:flex;align-items:center;gap:12px;margin-top:24px">
         <a href="{% url 'profile_readings' user_id=user.id %}" style="text-decoration:none">{% translate "Tous mes livres" %}</a>
-        <em style="font-weight:normal;color:var(--muted);font-size:14px"> — {% translate "liste par défaut" %}</em>
+        <em style="font-weight:normal;color:var(--muted);font-size:14px">{{ all_readings|length }} {% translate "livre(s)" %}</em>
     </h2>
+    {% if all_readings %}
+    <div class="cover-grid">
+        {% for rd in all_readings %}
+        <a href="{% url 'books_detail' book_id=rd.book_id %}" title="{{ rd.book }}">
+            {% if rd.book.cover_id %}
+                <img src="{{ rd.book.cover_url }}" alt="{{ rd.book }}">
+            {% else %}
+                <div class="no-cover">{{ rd.book }}</div>
+            {% endif %}
+            {% if rd.my_rating %}<span class="stars-overlay">{{ rd.my_rating|stars }}</span>{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p><em>{% translate "Aucun livre pour l'instant." %}</em></p>
+    {% endif %}
 </section>
+
+<div id="ctx-menu" hidden role="menu">
+    <form method="post" id="ctx-remove">{% csrf_token %}
+        <button type="submit" role="menuitem">{% translate "Retirer de la liste" %}</button>
+    </form>
+    <a href="#" id="ctx-move" role="menuitem">{% translate "Changer de liste…" %}</a>
+</div>
+<style>
+    #ctx-menu {
+        position: absolute;
+        z-index: 1000;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        box-shadow: 0 4px 16px rgba(0,0,0,.5);
+        min-width: 180px;
+        padding: 4px 0;
+    }
+    #ctx-menu[hidden] { display: none; }
+    #ctx-menu button, #ctx-menu a {
+        display: block;
+        width: 100%;
+        background: none;
+        border: 0;
+        text-align: left;
+        padding: 8px 14px;
+        color: var(--text);
+        font: inherit;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    #ctx-menu button:hover, #ctx-menu a:hover {
+        background: var(--surface-2);
+        color: var(--accent);
+    }
+    #ctx-menu form { margin: 0; }
+</style>
+<script>
+(function () {
+    const menu = document.getElementById('ctx-menu');
+    const removeForm = document.getElementById('ctx-remove');
+    const moveLink = document.getElementById('ctx-move');
+    let current = null;
+
+    function openAt(x, y, el) {
+        current = el;
+        removeForm.action = '/listes/' + el.dataset.listId + '/retirer/' + el.dataset.itemId + '/';
+        moveLink.href = '/livres/' + el.dataset.bookId + '/ajouter-liste/';
+        menu.hidden = false;
+        // Clamp to viewport
+        const r = menu.getBoundingClientRect();
+        const maxX = window.innerWidth - r.width - 8 + window.scrollX;
+        const maxY = window.innerHeight - r.height - 8 + window.scrollY;
+        menu.style.left = Math.min(x + window.scrollX, maxX) + 'px';
+        menu.style.top  = Math.min(y + window.scrollY, maxY) + 'px';
+    }
+    function close() { menu.hidden = true; current = null; }
+
+    document.querySelectorAll('a.list-item').forEach(function (a) {
+        a.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            openAt(e.clientX, e.clientY, a);
+        });
+        // Long-press (mobile)
+        let timer = null, sx = 0, sy = 0;
+        a.addEventListener('touchstart', function (e) {
+            const t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+            timer = setTimeout(function () {
+                timer = null;
+                e.preventDefault();
+                openAt(sx, sy, a);
+            }, 550);
+        }, { passive: true });
+        a.addEventListener('touchmove', function (e) {
+            const t = e.touches[0];
+            if (Math.abs(t.clientX - sx) > 10 || Math.abs(t.clientY - sy) > 10) {
+                clearTimeout(timer); timer = null;
+            }
+        }, { passive: true });
+        a.addEventListener('touchend', function () { clearTimeout(timer); });
+        a.addEventListener('touchcancel', function () { clearTimeout(timer); });
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!menu.hidden && !menu.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+    });
+    window.addEventListener('scroll', close, { passive: true });
+})();
+</script>
 {% endblock %}

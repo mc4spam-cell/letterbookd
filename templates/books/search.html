@@ -35,12 +35,15 @@
     #search-form input[type="search"],
     #search-form input[type="search"]:hover,
     #search-form input[type="search"]:focus { outline: none; border-color: var(--border); }
+    #search-form { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+    #search-form input[type="search"] { flex: 1 1 auto; min-width: 0; margin: 0; }
+    #search-form .icon-btn { flex: 0 0 auto; }
 </style>
 
 <h1>{% translate "Chercher un livre" %}</h1>
 <form method="get" id="search-form">
     <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'titre, auteur, ISBN' %}" autofocus>
-    <button type="submit" class="icon-btn primary" title="{% translate 'Chercher' %}" aria-label="{% translate 'Chercher' %}">🔍</button>
+    <button type="submit" class="icon-btn primary" title="{% translate 'Chercher' %}" aria-label="{% translate 'Chercher' %}"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px;vertical-align:middle;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
     <span id="spinner" hidden></span>
 </form>
 
@@ -87,7 +90,7 @@
                 </div>
 
                 <div class="actions">
-                    {% star_picker None prefix=r.olid %}
+                    {% star_picker r.rating prefix=r.olid %}
                     <button type="submit" name="next" value="list" class="icon-btn" title="{% translate 'Ajouter à une liste' %}">＋</button>
                 </div>
 
