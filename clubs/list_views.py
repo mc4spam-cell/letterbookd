@@ -15,7 +15,26 @@ def lists_index(request):
         .order_by("-updated_at")
         .prefetch_related("items__book")
     )
-    return render(request, "clubs/lists_index.html", {"lists": my_lists})
+    from .models import Reading
+    my_ratings = dict(
+        Reading.objects.filter(user=request.user, rating__isnull=False)
+        .values_list("book_id", "rating")
+    )
+    for l in my_lists:
+        for it in l.items.all():
+            it.my_rating = my_ratings.get(it.book_id)
+    all_readings = (
+        Reading.objects.filter(user=request.user)
+        .select_related("book")
+        .order_by("-updated_at")
+    )
+    for rd in all_readings:
+        rd.my_rating = rd.rating
+    return render(
+        request,
+        "clubs/lists_index.html",
+        {"lists": my_lists, "all_readings": all_readings},
+    )
 
 
 @login_required

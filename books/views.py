@@ -10,6 +10,16 @@ from .models import Book
 def search(request):
     q = (request.GET.get("q") or "").strip()
     results = openlibrary.search(q) if q else []
+    if results:
+        from clubs.models import Reading
+        olids = [r["olid"] for r in results if r.get("olid")]
+        ratings = dict(
+            Reading.objects.filter(
+                user=request.user, book__olid__in=olids, rating__isnull=False
+            ).values_list("book__olid", "rating")
+        )
+        for r in results:
+            r["rating"] = ratings.get(r.get("olid"))
     return render(request, "books/search.html", {"q": q, "results": results})
 
 

@@ -21,9 +21,11 @@
 </style>
 
 <h1>{% translate "Nouveaux livres" %}</h1>
-{% if readings %}
+
+<h2>{% translate "Membres que je suis" %}</h2>
+{% if followed_readings %}
 <ul class="tiles">
-    {% for r in readings %}
+    {% for r in followed_readings %}
     <li class="tile">
         <a class="tile-cover" href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book.title }}">
             {% if r.book.cover_id %}
@@ -42,5 +44,26 @@
 {% else %}
     <p>{% translate "Personne à suivre pour le moment." %}
        <a href="{% url 'members' %}">{% translate "Trouve des membres à suivre" %}</a>.</p>
+{% endif %}
+
+{% if others_readings %}
+<h2>{% translate "Autres membres" %}</h2>
+<ul class="tiles">
+    {% for r in others_readings %}
+    <li class="tile">
+        <a class="tile-cover" href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book.title }}">
+            {% if r.book.cover_id %}
+                <img src="{{ r.book.cover_url }}" alt="{{ r.book.title }}">
+            {% else %}
+                <div class="placeholder">{{ r.book.title }}</div>
+            {% endif %}
+        </a>
+        <a class="overlay" href="{% url 'profile_detail' user_id=r.user.id %}">
+            <strong>{{ r.user }}</strong>
+            {% if r.rating is not None %}<br><span class="stars">{{ r.rating|stars }}</span>{% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endif %}
 {% endblock %}

@@ -8,14 +8,24 @@ from .visibility import followed_ids
 
 @login_required
 def home(request):
-    """Accueil : les lectures récentes des membres que je suis."""
+    """Accueil : lectures récentes, suivis d'abord, puis les autres."""
     ids = followed_ids(request.user)
-    readings = (
+    followed_readings = (
         Reading.objects.filter(user_id__in=ids)
         .select_related("user", "book")
-        .order_by("-created_at")[:60]
+        .order_by("-created_at")[:10]
     )
-    return render(request, "clubs/home.html", {"readings": readings})
+    others_readings = (
+        Reading.objects.exclude(user_id__in=ids)
+        .exclude(user=request.user)
+        .select_related("user", "book")
+        .order_by("-created_at")[:2]
+    )
+    return render(
+        request,
+        "clubs/home.html",
+        {"followed_readings": followed_readings, "others_readings": others_readings},
+    )
 
 
 @login_required

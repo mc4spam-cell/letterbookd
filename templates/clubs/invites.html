@@ -5,7 +5,7 @@
 <h1 style="display:flex;align-items:center;gap:12px">
     {% translate "Invitations" %}
     <form method="post" style="display:inline;margin:0">{% csrf_token %}
-        <button type="submit" class="icon-btn" title="{% translate 'Générer un lien' %}" aria-label="{% translate 'Générer un lien' %}">＋</button>
+        <button type="submit" class="icon-btn" style="font-size:inherit" title="{% translate 'Générer un lien' %}" aria-label="{% translate 'Générer un lien' %}">＋</button>
     </form>
 </h1>
 <p><em>{% translate "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme tu veux." %}</em></p>
