@@ -3,7 +3,10 @@
 {% block title %}{% translate "Mon compte" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Mon compte" %}</h1>
-<p><a href="{% url 'stats' %}">{% translate "Voir mes stats" %}</a></p>
+<p>
+    <a href="{% url 'stats' %}">{% translate "Voir mes stats" %}</a> ·
+    <a href="{% url 'account_change_password' %}">{% translate "Changer mon mot de passe" %}</a>
+</p>
 <form method="post">{% csrf_token %}
     <p><label>{% translate "Nom affiché" %} <input type="text" name="display_name" value="{{ user.display_name }}" maxlength="80"></label></p>
     <p><label>{% translate "Bio" %}<br><textarea name="bio">{{ user.bio }}</textarea></label></p>

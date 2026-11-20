@@ -87,6 +87,9 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/5m"}
 ACCOUNT_ADAPTER = "clubs.adapter.InvitationOnlyAdapter"
+# En dev, dire franchement « ce compte n'existe pas » plutôt que d'envoyer
+# un mail silencieux ; à repasser à True en prod.
+ACCOUNT_PREVENT_ENUMERATION = DEBUG is False
 
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend"
