@@ -65,9 +65,15 @@
             letter-spacing: .02em;
         }
         header a { color: #fff; text-transform: lowercase; }
-        header a::first-letter { color: var(--accent); text-transform: uppercase; }
         header a:hover { color: var(--muted); }
-        header a:hover::first-letter { color: var(--accent); }
+        header .nav-ico {
+            color: var(--accent);
+            margin-right: 5px;
+            font-size: 1.15em;
+            font-family: "Apple Symbols", "Segoe UI Symbol", "DejaVu Sans", sans-serif;
+            display: inline-block;
+            vertical-align: -1px;
+        }
         header a.brand {
             display: inline-flex;
             align-items: center;
@@ -90,9 +96,7 @@
             text-transform: lowercase;
             display: inline-block;
         }
-        header button::first-letter { color: var(--accent); text-transform: uppercase; }
         header button:hover { color: var(--muted); }
-        header button:hover::first-letter { color: var(--accent); }
 
         main {
             max-width: 900px;
@@ -256,18 +260,18 @@
     <header>
         <a href="{% url 'home' %}" class="brand" aria-label="letterbookd"><img src="{% static 'img/logo.gif' %}" alt="letterbookd"></a>
         {% if user.is_authenticated %}
-            <a href="{% url 'books_search' %}">{% translate "livres" %}</a>
-            <a href="{% url 'members' %}">{% translate "membres" %}</a>
-            <a href="{% url 'lists_index' %}">{% translate "listes" %}</a>
-            <a href="{% url 'feed' %}">{% translate "flux" %}</a>
-            <a href="{% url 'notifications' %}">{% translate "notifs" %}</a>
-            <a href="{% url 'invites' %}">{% translate "inviter" %}</a>
+            <a href="{% url 'books_search' %}"><span class="nav-ico">❖</span>{% translate "livres" %}</a>
+            <a href="{% url 'members' %}"><span class="nav-ico">◉</span>{% translate "membres" %}</a>
+            <a href="{% url 'lists_index' %}"><span class="nav-ico">☰</span>{% translate "listes" %}</a>
+            <a href="{% url 'feed' %}"><span class="nav-ico">≋</span>{% translate "flux" %}</a>
+            <a href="{% url 'notifications' %}"><span class="nav-ico">⚐</span>{% translate "notifs" %}</a>
+            <a href="{% url 'invites' %}"><span class="nav-ico">✉</span>{% translate "inviter" %}</a>
             <span style="flex:1"></span>
-            <a href="{% url 'me_settings' %}">{{ user.display_name|default:user.email }}</a>
-            <form action="{% url 'account_logout' %}" method="post">{% csrf_token %}<button type="submit">{% translate "déconnexion" %}</button></form>
+            <a href="{% url 'me_settings' %}"><span class="nav-ico">☻</span>{{ user.display_name|default:user.email }}</a>
+            <form action="{% url 'account_logout' %}" method="post">{% csrf_token %}<button type="submit"><span class="nav-ico">⏻</span>{% translate "déconnexion" %}</button></form>
         {% else %}
             <span style="flex:1"></span>
-            <a href="{% url 'account_login' %}">{% translate "connexion" %}</a>
+            <a href="{% url 'account_login' %}"><span class="nav-ico">⏻</span>{% translate "connexion" %}</a>
         {% endif %}
     </header>
     <main id="main">
