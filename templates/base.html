@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 <!doctype html>
 <html lang="fr">
 <head>
@@ -22,7 +22,11 @@
         html { background: var(--bg); }
         body {
             margin: 0;
-            background: var(--bg);
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%, #1b2128 0%, var(--bg) 60%),
+                linear-gradient(180deg, var(--bg) 0%, #0f1317 100%);
+            background-attachment: fixed;
             color: var(--text);
             font: 15px/1.5 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
@@ -49,26 +53,29 @@
         }
 
         header {
-            background: var(--surface);
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
-            padding: 10px 20px;
+            padding: 14px 24px;
             display: flex;
             flex-wrap: wrap;
-            gap: 4px 14px;
+            gap: 6px 20px;
             align-items: center;
-            font-size: 13px;
+            font-size: 15px;
             text-transform: lowercase;
             letter-spacing: .02em;
         }
         header a { color: var(--muted); }
         header a:hover { color: #fff; }
-        header a:first-child {
-            color: var(--green);
-            font-weight: 700;
-            font-size: 18px;
-            text-transform: lowercase;
-            letter-spacing: -.02em;
-            margin-right: 16px;
+        header a.brand {
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+            margin-right: 20px;
+        }
+        header a.brand img {
+            height: 56px;
+            width: auto;
+            display: block;
         }
         header form { margin: 0; }
         header button {
@@ -246,7 +253,7 @@
 <body>
     <a href="#main" class="skip">{% translate "Aller au contenu" %}</a>
     <header>
-        <a href="{% url 'home' %}">letterbookd</a>
+        <a href="{% url 'home' %}" class="brand" aria-label="letterbookd"><img src="{% static 'img/logo.jpg' %}" alt="letterbookd"></a>
         {% if user.is_authenticated %}
             <a href="{% url 'books_search' %}">{% translate "livres" %}</a>
             <a href="{% url 'members' %}">{% translate "membres" %}</a>
