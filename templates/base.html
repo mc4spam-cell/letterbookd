@@ -249,7 +249,7 @@
 <body>
     <a href="#main" class="skip">{% translate "Aller au contenu" %}</a>
     <header>
-        <a href="{% url 'home' %}" class="brand" aria-label="letterbookd"><img src="{% static 'img/logo.webp' %}" alt="letterbookd"></a>
+        <a href="{% url 'home' %}" class="brand" aria-label="letterbookd"><img src="{% static 'img/logo.gif' %}" alt="letterbookd"></a>
         {% if user.is_authenticated %}
             <a href="{% url 'books_search' %}">{% translate "livres" %}</a>
             <a href="{% url 'members' %}">{% translate "membres" %}</a>
