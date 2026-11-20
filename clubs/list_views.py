@@ -11,7 +11,9 @@ from .visibility import visible_lists
 @login_required
 def lists_index(request):
     my_lists = (
-        ReadingList.objects.filter(owner=request.user).order_by("-updated_at")
+        ReadingList.objects.filter(owner=request.user)
+        .order_by("-updated_at")
+        .prefetch_related("items__book")
     )
     return render(request, "clubs/lists_index.html", {"lists": my_lists})
 

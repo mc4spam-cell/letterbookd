@@ -8,25 +8,39 @@
        title="{% translate 'Créer une liste' %}" style="text-decoration:none">＋</a>
 </h1>
 
-<ul class="book-list">
-    {% for l in lists %}
-    <li class="book-row">
-        <div style="flex:1">
-            <a href="{% url 'list_detail' list_id=l.id %}"><strong>{{ l.name }}</strong></a>
-            <em> — {{ l.items.count }} {% translate "livre(s)" %}</em>
-        </div>
+{% for l in lists %}
+<section>
+    <h2 style="display:flex;align-items:center;gap:12px;margin-top:24px">
+        <a href="{% url 'list_detail' list_id=l.id %}" style="text-decoration:none">{{ l.name }}</a>
+        <em style="font-weight:normal;color:var(--muted);font-size:14px">{{ l.items.count }} {% translate "livre(s)" %}</em>
         <form method="post" action="{% url 'list_delete' list_id=l.id %}"
               onsubmit="return confirm('{% blocktranslate with n=l.name %}Supprimer la liste « {{ n }} » ?{% endblocktranslate %}');"
               style="margin:0">{% csrf_token %}
             <button type="submit" class="icon-btn" title="{% translate 'Supprimer la liste' %}">×</button>
         </form>
-    </li>
-    {% endfor %}
-    <li class="book-row">
-        <div style="flex:1">
-            <a href="{% url 'profile_readings' user_id=user.id %}"><strong>{% translate "Tous mes livres" %}</strong></a>
-            <em> — {% translate "liste par défaut" %}</em>
-        </div>
-    </li>
-</ul>
+    </h2>
+    {% if l.items.all %}
+    <div class="cover-grid">
+        {% for it in l.items.all %}
+        <a href="{% url 'books_detail' book_id=it.book_id %}" title="{{ it.book }}">
+            {% if it.book.cover_id %}
+                <img src="{{ it.book.cover_url }}" alt="{{ it.book }}">
+            {% else %}
+                <div class="no-cover">{{ it.book }}</div>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p><em>{% translate "Liste vide." %}</em></p>
+    {% endif %}
+</section>
+{% endfor %}
+
+<section>
+    <h2 style="margin-top:24px">
+        <a href="{% url 'profile_readings' user_id=user.id %}" style="text-decoration:none">{% translate "Tous mes livres" %}</a>
+        <em style="font-weight:normal;color:var(--muted);font-size:14px"> — {% translate "liste par défaut" %}</em>
+    </h2>
+</section>
 {% endblock %}

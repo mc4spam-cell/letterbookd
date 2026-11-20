@@ -78,6 +78,7 @@ def accept_invitation(request, token):
 @login_required
 def invites(request):
     if request.method == "POST":
+        Invitation.objects.filter(created_by=request.user, used_at__isnull=True).delete()
         Invitation.objects.create(created_by=request.user)
         return redirect("invites")
     my_invites = Invitation.objects.filter(created_by=request.user)

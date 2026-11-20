@@ -20,7 +20,7 @@
         {% else %}
             <code class="invite-url" id="inv-{{ inv.pk }}">{{ request.scheme }}://{{ request.get_host }}{% url 'accept_invitation' token=inv.token %}</code>
             <button type="button" class="icon-btn" title="{% translate 'Copier' %}" aria-label="{% translate 'Copier' %}"
-                    onclick="navigator.clipboard.writeText(document.getElementById('inv-{{ inv.pk }}').textContent);this.textContent='✓';setTimeout(()=>this.textContent='⧉',1200)">⧉</button>
+                    onclick="(function(b){var t=document.getElementById('inv-{{ inv.pk }}').textContent;var done=function(){b.textContent='✓';setTimeout(function(){b.textContent='⧉'},1200)};if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done)}else{var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}finally{document.body.removeChild(ta)}}})(this)">⧉</button>
         {% endif %}
     </li>
     {% endfor %}
