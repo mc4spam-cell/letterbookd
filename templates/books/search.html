@@ -32,6 +32,9 @@
         margin-left: 10px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    #search-form input[type="search"],
+    #search-form input[type="search"]:hover,
+    #search-form input[type="search"]:focus { outline: none; border-color: var(--border); }
 </style>
 
 <h1>{% translate "Chercher un livre" %}</h1>

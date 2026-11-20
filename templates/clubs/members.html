@@ -4,9 +4,10 @@
 {% block content %}
 <h1>{% translate "Membres" %}</h1>
 {% if people %}
-<ul>
+<ul class="member-list">
     {% for u in people %}
     <li>
+        {% if u.id in following %}<span class="follow-heart" title="{% translate 'Tu suis ce membre' %}" aria-label="{% translate 'Tu suis ce membre' %}">♥</span>{% endif %}
         <a href="{% url 'profile_detail' user_id=u.id %}">{{ u }}</a>
         {% if u.id in following %}
             <form method="post" action="{% url 'unfollow' user_id=u.id %}" style="display:inline">{% csrf_token %}
@@ -20,6 +21,11 @@
     </li>
     {% endfor %}
 </ul>
+<style>
+    .member-list { list-style: none; padding-left: 0; }
+    .member-list li { padding: 6px 0; display: flex; align-items: center; gap: 8px; }
+    .follow-heart { color: var(--accent); font-size: 14px; }
+</style>
 {% else %}
     <p>{% translate "Aucun autre membre pour l'instant." %}</p>
 {% endif %}
