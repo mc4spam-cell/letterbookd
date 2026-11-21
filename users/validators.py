@@ -18,12 +18,14 @@ class CharacterClassesValidator:
         if not re.search(r"[^A-Za-z0-9]", password):
             missing.append(_("un caractère spécial"))
         if missing:
+            items = ", ".join(str(m) for m in missing)
             raise ValidationError(
-                _("Le mot de passe doit contenir %(items)s.") % {"items": ", ".join(str(m) for m in missing)},
+                _("Le mot de passe doit contenir %(items)s.") % {"items": items},
                 code="password_character_classes",
             )
 
     def get_help_text(self):
         return _(
-            "Doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
+            "Doit contenir au moins une minuscule, une majuscule, "
+            "un chiffre et un caractère spécial."
         )

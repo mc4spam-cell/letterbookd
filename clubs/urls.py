@@ -27,7 +27,11 @@ urlpatterns = [
         name="list_remove",
     ),
     path("listes/<int:list_id>/supprimer/", list_views.list_delete, name="list_delete"),
-    path("mes-lectures/<int:reading_id>/supprimer/", list_views.reading_delete, name="reading_delete"),
+    path(
+        "mes-lectures/<int:reading_id>/supprimer/",
+        list_views.reading_delete,
+        name="reading_delete",
+    ),
     path(
         "livres/<int:book_id>/ajouter-liste/",
         list_views.book_add_to_list,

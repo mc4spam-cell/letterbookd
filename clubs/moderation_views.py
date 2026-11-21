@@ -15,9 +15,16 @@ def moderation(request):
         User.objects.annotate(nb_readings=Count("reading", distinct=True))
         .order_by("-date_joined")
     )
-    recent_readings = Reading.objects.select_related("user", "book").order_by("-created_at")[:20]
-    recent_reviews = Review.objects.select_related("reading__user", "reading__book").order_by("-created_at")[:20]
-    recent_comments = Comment.objects.select_related("author", "review").order_by("-created_at")[:20]
+    recent_readings = (
+        Reading.objects.select_related("user", "book").order_by("-created_at")[:20]
+    )
+    recent_reviews = (
+        Review.objects.select_related("reading__user", "reading__book")
+        .order_by("-created_at")[:20]
+    )
+    recent_comments = (
+        Comment.objects.select_related("author", "review").order_by("-created_at")[:20]
+    )
     return render(
         request,
         "clubs/moderation.html",

@@ -19,8 +19,8 @@ def lists_index(request):
         Reading.objects.filter(user=request.user, rating__isnull=False)
         .values_list("book_id", "rating")
     )
-    for l in my_lists:
-        for it in l.items.all():
+    for rl in my_lists:
+        for it in rl.items.all():
             it.my_rating = my_ratings.get(it.book_id)
     all_readings = (
         Reading.objects.filter(user=request.user)

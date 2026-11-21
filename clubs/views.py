@@ -113,7 +113,11 @@ def me_settings(request):
         new_name = (request.POST.get("display_name") or "").strip()[:80]
         if not new_name:
             error = "Le nom de membre est obligatoire."
-        elif get_user_model().objects.filter(display_name__iexact=new_name).exclude(pk=user.pk).exists():
+        elif (
+            get_user_model().objects.filter(display_name__iexact=new_name)
+            .exclude(pk=user.pk)
+            .exists()
+        ):
             error = "Ce nom est déjà pris, choisis-en un autre."
         else:
             user.display_name = new_name

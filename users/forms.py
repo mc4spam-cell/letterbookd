@@ -8,7 +8,10 @@ class SignupForm(AllauthSignupForm):
         label=_("Nom de membre"),
         max_length=80,
         required=True,
-        help_text=_("C'est ce nom que les autres membres verront. Les adresses e-mail restent privées."),
+        help_text=_(
+            "C'est ce nom que les autres membres verront. "
+            "Les adresses e-mail restent privées."
+        ),
     )
 
     field_order = ["display_name", "email", "password1", "password2"]
