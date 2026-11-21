@@ -155,7 +155,7 @@ def test_detail_lists_entries_and_stats(make_user):
     assert "7,3/10" in content
     assert "3" in content  # total
     # Notes et avis : l'auteur du review apparaît
-    assert b.email in content
+    assert b.display_name in content
     assert "franchement correct" in content
     # Répartition : il y a bien 10 lignes (10 occurrences HTML + 1 CSS)
     assert content.count('class="dist-row"') == 10

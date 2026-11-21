@@ -111,10 +111,10 @@ def test_remove_is_owner_only(make_user, book):
 
 @pytest.mark.django_db
 def test_list_visible_to_any_member(make_user):
+    # list_detail a été supprimée ; visibilité vérifiée via la règle centrale.
     owner = make_user()
     other = make_user()
     rl = ReadingList.objects.create(owner=owner, name="Vue")
-    assert _login(other).get(reverse("list_detail", args=[rl.pk])).status_code == 200
     assert rl in visible_lists(other)
 
 

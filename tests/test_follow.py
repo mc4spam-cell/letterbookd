@@ -45,8 +45,8 @@ def test_follow_db_constraint_rejects_self(make_user):
 @pytest.mark.django_db
 def test_home_shows_only_followed_users_readings(make_user, follow, book):
     me = make_user()
-    friend = make_user(email="friend@x.y")
-    stranger = make_user(email="stranger@x.y")
+    friend = make_user(email="friend@x.y", display_name="friend")
+    stranger = make_user(email="stranger@x.y", display_name="stranger")
     follow(me, friend)
 
     book2 = Book.objects.create(olid="OL2W", title="Autre", authors="z")
@@ -55,8 +55,8 @@ def test_home_shows_only_followed_users_readings(make_user, follow, book):
 
     r = _login(me).get(reverse("home"))
     assert b"Belle" not in r.content  # ignore (pas défini)
-    assert friend.email.encode() in r.content
-    assert stranger.email.encode() not in r.content
+    assert friend.display_name.encode() in r.content
+    assert stranger.display_name.encode() not in r.content
     assert book.title.encode() in r.content
     assert book2.title.encode() not in r.content
 
@@ -72,10 +72,10 @@ def test_home_empty_state_when_following_nobody(make_user, book):
 @pytest.mark.django_db
 def test_members_page_lists_others(make_user):
     me = make_user()
-    make_user(email="other@x.y")
+    other = make_user(email="other@x.y", display_name="other")
     r = _login(me).get(reverse("members"))
     content = r.content.decode()
     # Isole la liste des membres (après <main>)
     body = content.split('id="main"', 1)[1]
-    assert "other@x.y" in body
-    assert me.email not in body
+    assert other.display_name in body
+    assert me.display_name not in body

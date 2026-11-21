@@ -13,11 +13,17 @@ def _csrf(client, url):
     return m.group(1).decode() if m else ""
 
 
-def _signup(email="new@example.com", password="motdepasselong123"):
+def _signup(email="new@example.com", password="Motdepasselongvalide123!", display_name=None):
     c = Client(enforce_csrf_checks=False)
+    name = display_name or email.split("@")[0]
     return c, c.post(
         reverse("account_signup"),
-        {"email": email, "password1": password, "password2": password},
+        {
+            "email": email,
+            "password1": password,
+            "password2": password,
+            "display_name": name,
+        },
     )
 
 
@@ -48,8 +54,9 @@ def test_signup_with_valid_invitation(make_user):
         reverse("account_signup"),
         {
             "email": "nouveau@example.com",
-            "password1": "motdepasselong123",
-            "password2": "motdepasselong123",
+            "password1": "Motdepasselongvalide123!",
+            "password2": "Motdepasselongvalide123!",
+            "display_name": "nouveau",
         },
     )
     u = get_user_model().objects.filter(email="nouveau@example.com").first()
