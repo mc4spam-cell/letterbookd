@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 
 from books.models import Book
 
-from .models import ListItem, ReadingList
+from .models import ListItem, Reading, ReadingList
 
 
 @login_required
@@ -61,7 +62,6 @@ def list_remove(request, list_id, item_id):
 def book_add_to_list(request, book_id):
     """Ajoute un livre à une liste, ou l'y déplace depuis une autre."""
     book = get_object_or_404(Book, pk=book_id)
-    from django.db.models import Count
     my_lists = (
         ReadingList.objects.filter(owner=request.user)
         .annotate(items_count=Count("items"))
@@ -91,7 +91,6 @@ def book_add_to_list(request, book_id):
 
 @login_required
 def reading_delete(request, reading_id):
-    from .models import Reading
     if request.method == "POST":
         Reading.objects.filter(pk=reading_id, user=request.user).delete()
     return redirect("lists_index")
@@ -102,5 +101,4 @@ def list_delete(request, list_id):
     rl = get_object_or_404(ReadingList, pk=list_id, owner=request.user)
     if request.method == "POST":
         rl.delete()
-        return redirect("lists_index")
-    return redirect("list_detail", list_id=rl.pk)
+    return redirect("lists_index")

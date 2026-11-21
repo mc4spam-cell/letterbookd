@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
+from clubs.models import Comment, Reading, ReviewReaction
+
 from . import openlibrary
 from .models import Book
 
@@ -11,7 +13,6 @@ def search(request):
     q = (request.GET.get("q") or "").strip()
     results = openlibrary.search(q) if q else []
     if results:
-        from clubs.models import Reading
         olids = [r["olid"] for r in results if r.get("olid")]
         ratings = dict(
             Reading.objects.filter(
@@ -50,7 +51,6 @@ def add(request):
         book.hydrate_from_openlibrary()
     nxt = request.POST.get("next") or "detail"
     if nxt == "inline_rate":
-        from clubs.models import Reading
         rating_raw = (request.POST.get("rating") or "").strip()
         rating = (
             int(rating_raw)
@@ -81,8 +81,6 @@ def add(request):
 def detail(request, book_id):
     from django.db.models import Avg, Count, Q
 
-    from clubs.models import Reading
-
     book = get_object_or_404(Book, pk=book_id)
     if not book.description or not book.cover_id:
         book.hydrate_from_openlibrary()
@@ -101,8 +99,6 @@ def detail(request, book_id):
         .order_by("-updated_at")
     )
     # Pour chaque Review visible, compter les réactions et repérer la mienne.
-    from clubs.models import ReviewReaction
-
     review_ids = [e.review.pk for e in entries if getattr(e, "review", None)]
     my_reactions = dict(
         ReviewReaction.objects.filter(
@@ -117,7 +113,6 @@ def detail(request, book_id):
     counts_by_review = {}
     for row in counts_rows:
         counts_by_review.setdefault(row["review_id"], {})[row["kind"]] = row["n"]
-    from clubs.models import Comment
     comments_by_review = {}
     for c in (
         Comment.objects.filter(review_id__in=review_ids)

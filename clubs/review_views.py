@@ -10,7 +10,7 @@ from django.utils import timezone
 from books.models import Book
 
 from .models import Comment, Notification, Reading, ReadingStatus, Review, ReviewReaction
-from .visibility import visible_reviews
+from .visibility import followed_ids, visible_reviews
 
 
 def _parse_date(raw):
@@ -147,10 +147,10 @@ def _notify_for_comment(comment: Comment) -> None:
 
 @login_required
 def feed(request):
-    from .visibility import followed_ids
+    author_ids = followed_ids(request.user) + [request.user.pk]
     reviews = (
         visible_reviews(request.user)
-        .filter(reading__user_id__in=followed_ids(request.user))
+        .filter(reading__user_id__in=author_ids)
         .select_related("reading__user", "reading__book")
         .order_by("-created_at")[:50]
     )

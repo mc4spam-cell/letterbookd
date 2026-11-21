@@ -31,7 +31,7 @@
                 {% else %}<em>{% translate "actif" %}</em>{% endif %}
             </td>
             <td style="padding:6px 8px;display:flex;gap:6px;flex-wrap:wrap">
-                {% if u.id != user.id and u.id != 1 %}
+                {% if u.id != user.id and not u.is_superuser %}
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='suspend' %}" style="margin:0">{% csrf_token %}
                     <button class="icon-btn" type="submit" title="{% if u.is_active %}{% translate 'Suspendre' %}{% else %}{% translate 'Réactiver' %}{% endif %}">
                         {% if u.is_active %}⏸{% else %}▶{% endif %}

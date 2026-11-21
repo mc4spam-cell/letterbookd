@@ -30,13 +30,10 @@ def moderation(request):
     )
 
 
-PROTECTED_USER_IDS = {1}  # mc-admin
-
-
 def _action(request, user_id, action):
     User = get_user_model()
     target = get_object_or_404(User, pk=user_id)
-    if target.pk == request.user.pk or target.pk in PROTECTED_USER_IDS:
+    if target.pk == request.user.pk or target.is_superuser:
         return redirect("moderation")
     if action == "suspend":
         target.is_active = not target.is_active
