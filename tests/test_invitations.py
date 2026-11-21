@@ -13,31 +13,36 @@ def _csrf(client, url):
     return m.group(1).decode() if m else ""
 
 
-def _signup(email="new@example.com", password="Motdepasselongvalide123!", display_name=None):
+# Mot de passe neutre qui passe tous les validateurs (14 car., 4 classes,
+# dissemblance avec l'email et le display_name).
+_PWD = "Zx9!KbqmPr7Lv2n$a8Q"
+
+
+def _signup(email="brandnew@example.com", password=_PWD, display_name="brandnew"):
     c = Client(enforce_csrf_checks=False)
-    name = display_name or email.split("@")[0]
-    return c, c.post(
+    r = c.post(
         reverse("account_signup"),
         {
             "email": email,
             "password1": password,
             "password2": password,
-            "display_name": name,
+            "display_name": display_name,
         },
     )
+    return c, r
 
 
 @pytest.mark.django_db
 def test_first_user_can_signup_without_token():
     assert get_user_model().objects.count() == 0
     _, r = _signup()
-    assert get_user_model().objects.filter(email="new@example.com").exists()
+    assert get_user_model().objects.filter(email="brandnew@example.com").exists()
 
 
 @pytest.mark.django_db
 def test_second_signup_blocked_without_invitation(make_user):
     make_user()
-    _, r = _signup(email="autre@example.com")
+    _, r = _signup(email="autre@example.com", display_name="autre")
     assert not get_user_model().objects.filter(email="autre@example.com").exists()
 
 
@@ -54,13 +59,15 @@ def test_signup_with_valid_invitation(make_user):
         reverse("account_signup"),
         {
             "email": "nouveau@example.com",
-            "password1": "Motdepasselongvalide123!",
-            "password2": "Motdepasselongvalide123!",
-            "display_name": "nouveau",
+            "password1": _PWD,
+            "password2": _PWD,
+            "display_name": "membrenouveau",
         },
     )
     u = get_user_model().objects.filter(email="nouveau@example.com").first()
-    assert u is not None
+    assert u is not None, (
+        f"signup failed, status={r.status_code} content={r.content[:400]!r}"
+    )
     inv.refresh_from_db()
     assert inv.used_at is not None and inv.used_by_id == u.pk
 

@@ -157,8 +157,8 @@ def test_detail_lists_entries_and_stats(make_user):
     # Notes et avis : l'auteur du review apparaît
     assert b.display_name in content
     assert "franchement correct" in content
-    # Répartition : il y a bien 10 lignes (10 occurrences HTML + 1 CSS)
-    assert content.count('class="dist-row"') == 10
+    # Répartition : 10 colonnes verticales (nouvelle histogramme compact)
+    assert content.count('class="dist-col"') == 10
 
 
 @pytest.mark.django_db

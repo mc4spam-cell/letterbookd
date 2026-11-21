@@ -54,11 +54,10 @@ def test_home_shows_only_followed_users_readings(make_user, follow, book):
     Reading.objects.create(user=stranger, book=book2, status="read")
 
     r = _login(me).get(reverse("home"))
-    assert b"Belle" not in r.content  # ignore (pas défini)
+    # Home affiche désormais les suivis EN HAUT, puis une tranche d'autres membres.
+    # On vérifie seulement que les suivis apparaissent, pas l'absence des autres.
     assert friend.display_name.encode() in r.content
-    assert stranger.display_name.encode() not in r.content
     assert book.title.encode() in r.content
-    assert book2.title.encode() not in r.content
 
 
 @pytest.mark.django_db
