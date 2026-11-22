@@ -23,17 +23,22 @@ def _enrich_book(title: str, author: str) -> dict:
 
 
 def _get_book(book_qid: str, title: str, author: str) -> Book | None:
-    """Crée/récupère un Book (enrichi OL si possible) pour favori/liste."""
-    if not title:
+    """Crée/récupère un Book (enrichi OL si possible) pour favori/liste.
+
+    Quand l'ouvrage n'est pas connu (titre vide), on crée un Book sur le
+    nom du lauréat pour garder coeur + liste disponibles côté interface.
+    """
+    if not title and not author:
         return None
-    enr = _enrich_book(title, author)
+    search_title = title or author
+    enr = _enrich_book(search_title, author if title else "")
     if enr["olid"]:
         olid = enr["olid"]
     elif book_qid and not book_qid.startswith("nowork:"):
         olid = f"wd:{book_qid}"
     else:
         olid = f"wdn:{abs(hash((title, author))) % 10**10}"
-    defaults = {"title": title[:500], "authors": author[:500]}
+    defaults = {"title": (title or author)[:500], "authors": author[:500]}
     if enr["cover_id"]:
         defaults["cover_id"] = enr["cover_id"]
     if enr["description"]:
