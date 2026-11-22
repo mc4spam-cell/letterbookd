@@ -76,9 +76,39 @@
         </div>
     {% endif %}
     <p style="clear:both">
-        <a href="{% url 'read_book' book_id=book.id %}">{% translate "Noter / écrire un avis" %}</a>
+        <a href="#" onclick="document.getElementById('d-full').showModal(); return false">{% translate "Noter / écrire un avis" %}</a>
         · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
     </p>
+
+    <dialog class="m" id="d-full">
+        <form method="post" action="{% url 'read_book' book_id=book.id %}">{% csrf_token %}
+            <p><label>{% translate "Statut" %}
+                <select name="status">
+                    {% for v, label in statuses %}
+                        <option value="{{ v }}" {% if my_entry and my_entry.status == v %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </label></p>
+            <p><label>{% translate "Commencé le" %}
+                <input type="date" name="started_on" value="{{ my_entry.started_on|date:'Y-m-d' }}">
+            </label></p>
+            <p><label>{% translate "Terminé le" %}
+                <input type="date" name="finished_on" value="{{ my_entry.finished_on|date:'Y-m-d' }}">
+            </label></p>
+            <p>
+                <span style="color:var(--muted);font-size:13px">{% translate "Note" %}</span><br>
+                {% star_picker my_entry.rating %}
+            </p>
+            <p><label>{% translate "Avis (optionnel)" %}<br>
+                <textarea name="review_text" rows="6">{% if my_entry.review %}{{ my_entry.review.text }}{% endif %}</textarea>
+            </label></p>
+            <p><label><input type="checkbox" name="spoiler" {% if my_entry.review and my_entry.review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
+            <div class="actions">
+                <button type="submit">{% translate "Publier" %}</button>
+                <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+            </div>
+        </form>
+    </dialog>
 
     <h2>{% translate "Mon avis" %}</h2>
     {% if my_entry and my_entry.review %}
@@ -102,7 +132,7 @@
             </div>
             <div class="entry-actions">
                 {% include "clubs/_review_reactions.html" with r=my_entry %}
-                <a href="{% url 'read_book' book_id=book.id %}">{% translate "Modifier" %}</a>
+                <a href="#" onclick="document.getElementById('d-full').showModal(); return false">{% translate "Modifier" %}</a>
                 <a href="#" onclick="document.getElementById('d-reply-{{ my_entry.review.id }}').showModal(); return false">{% translate "Réagir" %}</a>
             </div>
             <dialog class="m" id="d-reply-{{ my_entry.review.id }}">
@@ -116,18 +146,7 @@
             </dialog>
         </div>
     {% else %}
-        <p><button type="button" onclick="document.getElementById('d-review').showModal()">{% translate "Écrire un avis" %}</button>
-            <a href="{% url 'read_book' book_id=book.id %}" style="margin-left:10px">{% translate "Avis complet (note, dates, spoiler)" %}</a>
-        </p>
-        <dialog class="m" id="d-review">
-            <form method="post" action="{% url 'read_book' book_id=book.id %}">{% csrf_token %}
-                <textarea name="review_text" rows="4" placeholder="{% translate 'Écris ton avis…' %}" required></textarea>
-                <div class="actions">
-                    <button type="submit">{% translate "Publier" %}</button>
-                    <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
-                </div>
-            </form>
-        </dialog>
+        <p><em>{% translate "Tu n'as pas encore noté ce livre." %}</em></p>
     {% endif %}
 
     <h2>{% translate "Avis des autres membres" %}</h2>

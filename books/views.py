@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from clubs.models import Comment, Reading, ReviewReaction
+from clubs.models import Comment, Reading, ReadingStatus, ReviewReaction
 
 from . import openlibrary
 from .models import Book
@@ -152,5 +152,6 @@ def detail(request, book_id):
             "my_entry": my_entry,
             "other_entries": other_entries,
             "highlighted_review_id": highlighted_id,
+            "statuses": ReadingStatus.choices,
         },
     )
