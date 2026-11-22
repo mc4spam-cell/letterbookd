@@ -94,7 +94,10 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_RATE_LIMITS = {"login_failed": "5/5m"}
 ACCOUNT_ADAPTER = "clubs.adapter.InvitationOnlyAdapter"
-ACCOUNT_FORMS = {"signup": "users.forms.SignupForm"}
+ACCOUNT_FORMS = {
+    "signup": "users.forms.SignupForm",
+    "change_password": "users.forms.ChangePasswordForm",
+}
 # En dev, dire franchement « ce compte n'existe pas » plutôt que d'envoyer
 # un mail silencieux ; à repasser à True en prod.
 ACCOUNT_PREVENT_ENUMERATION = DEBUG is False
@@ -105,20 +108,19 @@ EMAIL_BACKEND = os.environ.get(
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@letterbookd.local")
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "users.validators.ExplicitSimilarityValidator",
-        "OPTIONS": {
-            "user_attributes": ("email", "display_name"),
-            "max_similarity": 0.5,
-        },
-    },
+    {"NAME": "users.validators.CharacterClassesValidator"},
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {"min_length": 14},
     },
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-    {"NAME": "users.validators.CharacterClassesValidator"},
+    {
+        "NAME": "users.validators.ConsecutiveSubstringValidator",
+        "OPTIONS": {
+            "max_run": 7,
+            "user_attributes": ("email", "display_name"),
+        },
+    },
+    {"NAME": "users.validators.PreviousPasswordRuleValidator"},
 ]
 
 LANGUAGE_CODE = "fr"
