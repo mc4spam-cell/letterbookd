@@ -3,9 +3,28 @@ from allauth.account.forms import (
 )
 from allauth.account.forms import SignupForm as AllauthSignupForm
 from django import forms
+from django.contrib.auth.password_validation import password_validators_help_texts
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from users.validators import MAX_SHARED_RUN, shares_run
+
+
+def _password_rules_html():
+    lines = "<br>".join(f"&bull; {t}" for t in password_validators_help_texts())
+    return mark_safe(
+        '<small style="display:block;font-weight:normal;margin:6px 0;'
+        f'color:var(--muted);">{lines}</small>'
+    )
+
+
+def _move_rules_into_label(form):
+    """Affiche les règles entre le label « Mot de passe » et le champ."""
+    f = form.fields.get("password1")
+    if f is None:
+        return
+    f.help_text = ""
+    f.label = mark_safe(f"{f.label}{_password_rules_html()}")
 
 
 class SignupForm(AllauthSignupForm):
@@ -20,6 +39,10 @@ class SignupForm(AllauthSignupForm):
     )
 
     field_order = ["display_name", "email", "password1", "password2"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _move_rules_into_label(self)
 
     def clean_display_name(self):
         from users.models import User
@@ -39,6 +62,10 @@ class SignupForm(AllauthSignupForm):
 
 class ChangePasswordForm(AllauthChangePasswordForm):
     """Ajoute la règle « mdp précédent » (allauth ne la connaît pas)."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _move_rules_into_label(self)
 
     def clean(self):
         cleaned = super().clean()
