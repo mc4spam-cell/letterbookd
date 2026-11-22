@@ -133,7 +133,6 @@ LANGUAGES = [
     ("es", "Español"),
     ("de", "Deutsch"),
     ("ru", "Русский"),
-    ("zh-hans", "中文"),
 ]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
