@@ -33,7 +33,10 @@ def members(request):
     User = get_user_model()
     me = request.user
     following = set(followed_ids(me))
-    people = User.objects.exclude(pk=me.pk).order_by("display_name", "email")
+    people = (
+        User.objects.filter(pk__in=following)
+        .order_by("display_name", "email")
+    )
     return render(
         request, "clubs/members.html", {"people": people, "following": following}
     )
