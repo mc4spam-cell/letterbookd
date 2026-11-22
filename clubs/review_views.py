@@ -142,18 +142,6 @@ def _notify_for_comment(comment: Comment) -> None:
 
 
 @login_required
-def feed(request):
-    author_ids = followed_ids(request.user) + [request.user.pk]
-    reviews = (
-        visible_reviews(request.user)
-        .filter(reading__user_id__in=author_ids)
-        .select_related("reading__user", "reading__book")
-        .order_by("-created_at")[:50]
-    )
-    return render(request, "clubs/feed.html", {"reviews": reviews})
-
-
-@login_required
 def notifications(request):
     qs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
@@ -161,7 +149,18 @@ def notifications(request):
     unread_ids = list(qs.filter(read_at__isnull=True).values_list("pk", flat=True))
     if unread_ids:
         Notification.objects.filter(pk__in=unread_ids).update(read_at=timezone.now())
-    return render(request, "clubs/notifications.html", {"notifications": qs[:100]})
+    author_ids = followed_ids(request.user) + [request.user.pk]
+    reviews = (
+        visible_reviews(request.user)
+        .filter(reading__user_id__in=author_ids)
+        .select_related("reading__user", "reading__book")
+        .order_by("-created_at")[:50]
+    )
+    return render(
+        request,
+        "clubs/notifications.html",
+        {"notifications": qs[:100], "reviews": reviews},
+    )
 
 
 @login_required

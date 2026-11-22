@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n stars %}
 {% block title %}{% translate "Notifications" %}{% endblock %}
 {% block content %}
 <h1>{% translate "Notifications" %}</h1>
@@ -17,5 +17,26 @@
 </ul>
 {% else %}
     <p>{% translate "Aucune notification." %}</p>
+{% endif %}
+
+<h2 style="margin-top:28px">{% translate "Flux des avis" %}</h2>
+{% if reviews %}
+<ul class="book-list">
+    {% for r in reviews %}
+    <li class="book-row">
+        <a href="{% url 'books_detail' book_id=r.book.id %}">{% include "books/_cover.html" with book=r.book size='sm' %}</a>
+        <div style="flex:1">
+            <a href="{% url 'profile_detail' user_id=r.author.id %}">{{ r.author }}</a>
+            {% translate "a écrit sur" %}
+            <a href="{% url 'books_detail' book_id=r.book.id %}"><strong>{{ r.book }}</strong></a>
+            {% if r.reading.rating is not None %} <span class="stars">{{ r.reading.rating|stars }}</span>{% endif %}
+            — <a href="{% url 'review_detail' review_id=r.id %}">{% translate "voir l'avis" %}</a>
+            <div><em>{{ r.created_at|date:"Y-m-d" }}</em></div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>{% translate "Rien à montrer pour le moment." %}</p>
 {% endif %}
 {% endblock %}
