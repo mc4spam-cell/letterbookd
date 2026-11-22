@@ -201,9 +201,8 @@
 {% endwith %}
 
 <div class="mod-pager">
-    <button type="submit" class="icon-btn" title="{% translate 'Appliquer les filtres' %}">⟲ {% translate "Filtrer" %}</button>
     {% if page.has_previous %}<a class="pager-btn" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.previous_page_number }}" title="{% translate 'Page précédente' %}">«</a>{% else %}<span class="pager-btn disabled">«</span>{% endif %}
-    <label>{% translate "Aller à" %} <input type="number" name="page" min="1" max="{{ page.paginator.num_pages }}" value="{{ page.number }}"> / {{ page.paginator.num_pages }}</label>
+    <label>{% translate "Aller à" %} <input type="text" inputmode="numeric" pattern="[0-9]*" name="page" value="{{ page.number }}"> / {{ page.paginator.num_pages }}</label>
     {% if page.has_next %}<a class="pager-btn" href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.next_page_number }}" title="{% translate 'Page suivante' %}">»</a>{% else %}<span class="pager-btn disabled">»</span>{% endif %}
     <span>· {{ page.paginator.count }} {% translate "item(s)" %}</span>
 </div>
