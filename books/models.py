@@ -38,6 +38,46 @@ class Book(models.Model):
     def large_cover(self) -> str:
         return self._cover("L")
 
+
+class NewRelease(models.Model):
+    """Nouveautés aspirées sur une source externe (Fnac pour l'instant)."""
+    source = models.CharField(max_length=20, default="fnac")
+    source_url = models.URLField(max_length=500, blank=True)
+    title = models.CharField(_("titre"), max_length=500)
+    author = models.CharField(_("auteur"), max_length=300, blank=True)
+    cover_url = models.URLField(max_length=500, blank=True)
+    summary = models.TextField(_("résumé"), blank=True)
+    fetched_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-fetched_at", "title"]
+        constraints = [
+            models.UniqueConstraint(fields=["source", "title", "author"], name="uniq_release"),
+        ]
+
+    def __str__(self):
+        return f"{self.title} — {self.author}"
+
+
+class PrizeWinner(models.Model):
+    """Lauréats de prix littéraires récupérés via Wikidata."""
+    prize_qid = models.CharField(max_length=16)
+    prize_name = models.CharField(max_length=120)
+    book_qid = models.CharField(max_length=16)
+    title = models.CharField(_("titre"), max_length=500)
+    author = models.CharField(_("auteur"), max_length=300, blank=True)
+    year = models.PositiveSmallIntegerField(null=True, blank=True)
+    fetched_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-year", "prize_name", "title"]
+        constraints = [
+            models.UniqueConstraint(fields=["prize_qid", "book_qid"], name="uniq_prize_book"),
+        ]
+
+    def __str__(self):
+        return f"{self.prize_name} {self.year}: {self.title}"
+
     def hydrate_from_openlibrary(self) -> None:
         """Enrichit description et cover_id manquants via /works/{olid}.json.
 

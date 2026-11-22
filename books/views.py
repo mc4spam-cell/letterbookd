@@ -7,7 +7,7 @@ from clubs.list_views import ensure_default_lists
 from clubs.models import Comment, ListItem, Reading, ReadingList, ReadingStatus, ReviewReaction
 
 from . import openlibrary
-from .models import Book
+from .models import Book, NewRelease, PrizeWinner
 
 
 @login_required
@@ -191,3 +191,18 @@ def detail(request, book_id):
                 .annotate(items_count=Count("items")).order_by("name"),
         },
     )
+
+
+@login_required
+def releases(request):
+    items = NewRelease.objects.all()
+    return render(request, "books/releases.html", {"items": items})
+
+
+@login_required
+def prizes(request):
+    items = PrizeWinner.objects.all()
+    grouped = {}
+    for p in items:
+        grouped.setdefault(p.prize_name, []).append(p)
+    return render(request, "books/prizes.html", {"grouped": grouped})

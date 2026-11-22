@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Prix littéraires" %}{% endblock %}
+{% block content %}
+<style>
+    .prz-table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:24px; }
+    .prz-table th, .prz-table td { padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+    .prz-table th { color:var(--muted); }
+    .prz-year { width:60px; color:var(--muted); }
+    .prz-author { color:var(--muted); }
+</style>
+<h1>{% translate "Prix littéraires" %}</h1>
+<p style="color:var(--muted)">{% translate "Lauréats depuis 2020, via Wikidata." %}</p>
+{% for prize, rows in grouped.items %}
+<h2 style="margin-top:20px">{{ prize }}</h2>
+<table class="prz-table">
+    <thead><tr><th class="prz-year">{% translate "Année" %}</th><th>{% translate "Titre" %}</th><th>{% translate "Auteur" %}</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+        <tr>
+            <td class="prz-year">{{ r.year|default:"—" }}</td>
+            <td>{{ r.title }}</td>
+            <td class="prz-author">{{ r.author|default:"—" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% empty %}
+<p><em>{% translate "Aucun lauréat enregistré pour l'instant." %}</em></p>
+{% endfor %}
+{% endblock %}
