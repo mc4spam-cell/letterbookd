@@ -36,7 +36,4 @@
     <p><label><input type="checkbox" name="spoiler" {% if review and review.spoiler %}checked{% endif %}> {% translate "Contient des spoilers" %}</label></p>
     <button type="submit">{% translate "Publier" %}</button>
 </form>
-{% if reading and not force_new %}
-    <p><a href="?nouvelle=1">{% translate "Ou enregistrer une relecture" %}</a></p>
-{% endif %}
 {% endblock %}
