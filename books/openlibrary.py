@@ -50,6 +50,22 @@ def _normalize_docs(docs):
     return out
 
 
+def best_match(title: str, author: str = "") -> dict | None:
+    """Recherche OL best-effort : premier résultat qui correspond au titre.
+
+    Renvoie un dict normalisé (olid/cover_id/…) ou None. Erreurs avalées.
+    """
+    if not title:
+        return None
+    try:
+        results = search(f"{title} {author}".strip(), limit=5)
+    except Exception:
+        return None
+    if not results:
+        return None
+    return results[0]
+
+
 def fetch_work(olid: str) -> dict:
     """Détail d'une œuvre : description + covers. Vide si indisponible."""
     olid = (olid or "").strip()

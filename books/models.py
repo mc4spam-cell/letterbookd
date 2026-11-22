@@ -89,7 +89,7 @@ class PrizeWinner(models.Model):
     """Lauréats de prix littéraires récupérés via Wikidata."""
     prize_qid = models.CharField(max_length=16)
     prize_name = models.CharField(max_length=120)
-    book_qid = models.CharField(max_length=16)
+    book_qid = models.CharField(max_length=128)
     title = models.CharField(_("titre"), max_length=500)
     author = models.CharField(_("auteur"), max_length=300, blank=True)
     year = models.PositiveSmallIntegerField(null=True, blank=True)

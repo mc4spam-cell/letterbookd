@@ -25,7 +25,8 @@
 <div class="rel-grid">
     {% for it in items %}
     <div class="rel-card">
-        {% if it.cover_url %}<img src="{{ it.cover_url }}" alt="{{ it.title }}">{% endif %}
+        {% if it.book and it.book.cover_url %}<img src="{{ it.book.cover_url }}" alt="{{ it.title }}">
+        {% elif it.cover_url %}<img src="{{ it.cover_url }}" alt="{{ it.title }}">{% endif %}
         <div class="rel-title">{{ it.title }}</div>
         {% if it.author %}<div class="rel-author">{{ it.author }}</div>{% endif %}
         {% if it.summary %}<div class="rel-summary">{{ it.summary }}</div>{% endif %}

@@ -15,18 +15,22 @@
     .prz-actions .heart-btn svg { stroke:var(--accent); fill:transparent; transition:fill .15s; }
     .prz-actions .heart-btn.on svg { fill:var(--accent); }
     .prz-actions .move-btn { color:#46a2e4; }
+    .prz-table td.cover { width:48px; }
+    .prz-table td.cover img { width:40px; height:60px; object-fit:cover; border-radius:3px; background:var(--surface-2); }
+    .prz-table td .title-with-summary { cursor:help; }
 </style>
 <h1>{% translate "Prix littéraires" %}</h1>
 <p style="color:var(--muted)">{% translate "Lauréats des 5 dernières années, via Wikidata." %}</p>
 {% for prize, rows in grouped.items %}
 <h2 style="margin-top:20px">{{ prize }}</h2>
 <table class="prz-table">
-    <thead><tr><th class="prz-year">{% translate "Année" %}</th><th>{% translate "Titre" %}</th><th>{% translate "Auteur" %}</th><th class="prz-actions"></th></tr></thead>
+    <thead><tr><th class="prz-year">{% translate "Année" %}</th><th></th><th>{% translate "Titre" %}</th><th>{% translate "Auteur" %}</th><th class="prz-actions"></th></tr></thead>
     <tbody>
     {% for r in rows %}
         <tr>
             <td class="prz-year">{{ r.year|default:"—" }}</td>
-            <td>{{ r.title }}</td>
+            <td class="cover">{% if r.book and r.book.cover_url %}<img src="{{ r.book.cover_url }}" alt="">{% endif %}</td>
+            <td><span class="title-with-summary" {% if r.book and r.book.description %}title="{{ r.book.description|truncatechars:400 }}"{% endif %}>{{ r.title }}</span></td>
             <td class="prz-author">{{ r.author|default:"—" }}</td>
             <td class="prz-actions">
                 {% if r.book_id %}
