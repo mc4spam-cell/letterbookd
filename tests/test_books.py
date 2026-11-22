@@ -92,7 +92,7 @@ def test_add_with_next_list_redirects_to_list_picker(make_user):
         {"olid": "OLY", "title": "T", "authors": "A", "next": "list"},
     )
     book = Book.objects.get(olid="OLY")
-    assert r["Location"] == reverse("book_add_to_list", args=[book.pk])
+    assert r["Location"] == f"{reverse('books_detail', args=[book.pk])}?open_list=1"
 
 
 @pytest.mark.django_db

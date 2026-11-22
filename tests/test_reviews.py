@@ -54,7 +54,7 @@ def test_review_visible_to_any_authenticated_user(make_user, book):
     reader = make_user()
     _login(author).post(reverse("read_book", args=[book.pk]), {"review_text": "ok"})
     review = Review.objects.get()
-    assert _login(reader).get(reverse("review_detail", args=[review.pk])).status_code == 200
+    assert _login(reader).get(reverse("review_detail", args=[review.pk])).status_code == 302
     assert review in visible_reviews(reader)
 
 
