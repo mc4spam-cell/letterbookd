@@ -11,10 +11,10 @@ UA = "letterbookd/0.1 (private book club)"
 # Prix suivis. Le label est écrasé par celui renvoyé par Wikidata si dispo.
 PRIZES = {
     "Q191113": "Prix Goncourt",
-    "Q1056607": "Prix Q1056607",
-    "Q1265837": "Prix Q1265837",
-    "Q1077979": "Prix Q1077979",
-    "Q3400048": "Prix Q3400048",
+    "Q1056607": "Prix Renaudot",
+    "Q1265837": "Prix Femina",
+    "Q1077979": "Prix Médicis",
+    "Q3400048": "Prix Interallié",
 }
 
 QUERY = """
