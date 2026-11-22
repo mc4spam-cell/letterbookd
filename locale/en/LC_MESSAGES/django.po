@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 18:43+0100\n"
+"POT-Creation-Date: 2026-11-23 00:35+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -11,655 +11,961 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: books/models.py:6
 msgid "identifiant Open Library"
 msgstr "Open Library ID"
 
+#: books/models.py:7 books/models.py:71 books/models.py:93
+#: clubs/list_models.py:15
 msgid "titre"
 msgstr "title"
 
+#: books/models.py:8
 msgid "auteurs"
 msgstr "authors"
 
+#: books/models.py:9
 msgid "ISBN"
 msgstr "ISBN"
 
+#: books/models.py:10
 msgid "pages"
 msgstr "pages"
 
+#: books/models.py:12
 msgid "année"
 msgstr "year"
 
+#: books/models.py:13 books/models.py:74
 msgid "résumé"
 msgstr "summary"
 
+#: books/models.py:72 books/models.py:94 templates/clubs/readings.html:19
+msgid "auteur"
+msgstr "author"
+
+#: clubs/list_models.py:8
 msgid "normale"
-msgstr ""
+msgstr "normal"
 
+#: clubs/list_models.py:9
 msgid "favoris"
-msgstr ""
+msgstr "favorites"
 
+#: clubs/list_models.py:10 clubs/review_models.py:10
 msgid "à lire"
 msgstr "to read"
 
+#: clubs/list_models.py:16
 msgid "description"
 msgstr "description"
 
+#: clubs/list_models.py:32
 msgid "note libre"
 msgstr "free note"
 
+#: clubs/review_models.py:11
 msgid "en cours"
 msgstr "reading"
 
+#: clubs/review_models.py:12
 msgid "lu"
 msgstr "read"
 
+#: clubs/review_models.py:13
 msgid "abandonné"
 msgstr "abandoned"
 
+#: clubs/review_models.py:20
 msgid "statut"
 msgstr "status"
 
+#: clubs/review_models.py:23
 msgid "note (demi-points, 0 à 10)"
 msgstr "rating (half-points, 0 to 10)"
 
+#: clubs/review_models.py:25
 msgid "commencé le"
 msgstr "started on"
 
+#: clubs/review_models.py:26
 msgid "terminé le"
 msgstr "finished on"
 
+#: clubs/review_models.py:45 templates/clubs/readings.html:36
 msgid "avis"
 msgstr "review"
 
+#: clubs/review_models.py:46
 msgid "contient des spoilers"
 msgstr "contains spoilers"
 
+#: clubs/review_models.py:83 templates/clubs/_review_reactions.html:5
 msgid "Approuver"
 msgstr "Approve"
 
+#: clubs/review_models.py:84 templates/clubs/_review_reactions.html:11
 msgid "Interroger"
 msgstr "Question"
 
+#: clubs/review_models.py:85 templates/clubs/_review_reactions.html:14
 msgid "Réprouver"
 msgstr "Disapprove"
 
+#: clubs/review_models.py:105
 msgid "Nouveau commentaire sur ton avis"
 msgstr "New comment on your review"
 
+#: clubs/review_models.py:106
 msgid "Nouvelle réponse à ton commentaire"
 msgstr "New reply to your comment"
 
+#: templates/account/login.html:4 templates/account/login.html:6
+#: templates/account/login.html:16
 msgid "Sign In"
 msgstr "Sign In"
 
+#: templates/account/login.html:24
 msgid "Sign in with a passkey"
 msgstr "Sign in with a passkey"
 
+#: templates/account/login.html:27
 msgid "Send me a sign-in code"
 msgstr "Send me a sign-in code"
 
+#: templates/base.html:523
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
+#: templates/base.html:527 templates/clubs/home.html:3
+msgid "Accueil"
+msgstr "Home"
+
+#: templates/base.html:528 templates/clubs/moderation.html:57
 msgid "Livres"
 msgstr "Books"
 
+#: templates/base.html:529 templates/books/releases.html:3
+#: templates/books/releases.html:22
+msgid "Sorties"
+msgstr "New releases"
+
+#: templates/base.html:530 templates/books/prizes.html:3
+#: templates/books/prizes.html:32
+msgid "Prix littéraires"
+msgstr "Literary prizes"
+
+#: templates/base.html:530
+msgid "Prix"
+msgstr "Prizes"
+
+#: templates/base.html:531 templates/clubs/members.html:3
+#: templates/clubs/members.html:5 templates/clubs/moderation.html:45
 msgid "Membres"
 msgstr "Members"
 
+#: templates/base.html:532 templates/clubs/lists_index.html:3
+#: templates/clubs/lists_index.html:21
 msgid "Listes"
 msgstr "Lists"
 
-msgid "Flux"
-msgstr "Feed"
-
+#: templates/base.html:533
 msgid "Notifs"
 msgstr "Notifs"
 
+#: templates/base.html:534
 msgid "Inviter"
 msgstr "Invite"
 
+#: templates/base.html:536 templates/clubs/moderation.html:3
+#: templates/clubs/moderation.html:42
 msgid "Modération"
 msgstr "Moderation"
 
+#: templates/base.html:538
 msgid "Déconnexion"
 msgstr "Sign out"
 
+#: templates/base.html:541
 msgid "Connexion"
 msgstr "Sign in"
 
+#: templates/base.html:544
 msgid "À propos"
 msgstr "About"
 
+#: templates/base.html:545
 msgid "Langue"
 msgstr "Language"
 
+#: templates/base.html:552
 msgid "À propos de letterbookd"
 msgstr "About letterbookd"
 
-msgid ""
-"Un outil pour animer un club de lecture privé : choisir le livre du mois, "
-"noter, écrire des avis, en discuter."
-msgstr ""
-"A tool to run a private book club: pick the book of the month, rate it, "
-"write reviews, discuss them."
+#: templates/base.html:553
+msgid "Un outil pour animer un club de lecture privé : choisir le livre du mois, noter, écrire des avis, en discuter."
+msgstr "A tool to run a private book club: pick the book of the month, rate it, write reviews, discuss them."
 
+#: templates/base.html:554
 msgid "Guide d'utilisation"
 msgstr "User guide"
 
+#: templates/base.html:556 templates/clubs/moderation.html:57
 msgid "Auteur"
 msgstr "Author"
 
+#: templates/base.html:557
 msgid "Dernière mise à jour"
 msgstr "Last updated"
 
+#: templates/base.html:559
 msgid "Fermer"
 msgstr "Close"
 
-msgid ""
-"L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
-"pour créer ton compte."
-msgstr ""
-"letterbookd is invitation-only. If someone sent you a link, follow it to "
-"create your account."
+#: templates/base.html:586
+msgid "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le pour créer ton compte."
+msgstr "letterbookd is invitation-only. If someone sent you a link, follow it to create your account."
 
+#: templates/books/detail.html:65 templates/clubs/read_book.html:8
 msgid "Auteurs"
 msgstr "Authors"
 
+#: templates/books/detail.html:66 templates/clubs/read_book.html:9
 msgid "Année"
 msgstr "Year"
 
+#: templates/books/detail.html:67 templates/clubs/read_book.html:10
 msgid "Pages"
 msgstr "Pages"
 
+#: templates/books/detail.html:72
 msgid "Résumé"
 msgstr "Summary"
 
+#: templates/books/detail.html:77 templates/books/detail.html:86
+#: templates/books/prizes.html:55 templates/books/releases.html:35
+#: templates/books/search.html:95 templates/clubs/lists_index.html:56
+#: templates/clubs/lists_index.html:92
 msgid "Favori"
 msgstr "Favorite"
 
+#: templates/books/detail.html:80
 msgid "Noter / écrire un avis"
 msgstr "Rate / write a review"
 
+#: templates/books/detail.html:81 templates/books/prizes.html:58
+#: templates/books/releases.html:38 templates/books/search.html:98
+#: templates/clubs/_add_to_list_modal.html:18
+#: templates/clubs/book_add_to_list.html:3 templates/clubs/lists_index.html:59
+#: templates/clubs/lists_index.html:95
 msgid "Ajouter à une liste"
 msgstr "Add to a list"
 
+#: templates/books/detail.html:89
 msgid "Ajouter aux favoris"
 msgstr "Add to favorites"
 
+#: templates/books/detail.html:92 templates/clubs/read_book.html:16
 msgid "Statut"
 msgstr "Status"
 
+#: templates/books/detail.html:99 templates/clubs/read_book.html:23
 msgid "Commencé le"
 msgstr "Started on"
 
+#: templates/books/detail.html:102 templates/clubs/read_book.html:26
 msgid "Terminé le"
 msgstr "Finished on"
 
+#: templates/books/detail.html:106 templates/clubs/_star_picker.html:2
+#: templates/clubs/read_book.html:30
 msgid "Note"
 msgstr "Rating"
 
+#: templates/books/detail.html:109 templates/clubs/read_book.html:33
 msgid "Avis (optionnel)"
 msgstr "Review (optional)"
 
+#: templates/books/detail.html:112 templates/clubs/read_book.html:36
 msgid "Contient des spoilers"
 msgstr "Contains spoilers"
 
+#: templates/books/detail.html:114 templates/books/detail.html:151
+#: templates/books/detail.html:195 templates/clubs/_add_to_list_modal.html:42
+#: templates/clubs/book_add_to_list.html:44 templates/clubs/list_form.html:9
+#: templates/clubs/read_book.html:37
 msgid "Publier"
 msgstr "Publish"
 
+#: templates/books/detail.html:115 templates/books/detail.html:152
+#: templates/books/detail.html:196 templates/clubs/_add_to_list_modal.html:43
+#: templates/clubs/moderation.html:225
 msgid "Annuler"
 msgstr "Cancel"
 
+#: templates/books/detail.html:122
 msgid "Mon avis"
 msgstr "My review"
 
+#: templates/books/detail.html:131 templates/books/detail.html:174
 msgid "Spoilers"
 msgstr "Spoilers"
 
+#: templates/books/detail.html:144
 msgid "Modifier"
 msgstr "Edit"
 
+#: templates/books/detail.html:145 templates/books/detail.html:189
 msgid "Réagir"
 msgstr "React"
 
-#, fuzzy
-#| msgid "Nouveau commentaire"
+#: templates/books/detail.html:149 templates/books/detail.html:193
 msgid "Ton commentaire…"
-msgstr "New comment"
+msgstr "Your comment…"
 
+#: templates/books/detail.html:158
 msgid "Tu n'as pas encore noté ce livre."
 msgstr "You haven't rated this book yet."
 
+#: templates/books/detail.html:161
 msgid "Avis des autres membres"
 msgstr "Other members' reviews"
 
+#: templates/books/detail.html:205
 msgid "Personne d'autre n'a encore écrit sur ce livre."
 msgstr "No one else has written about this book yet."
 
+#: templates/books/detail.html:210
 msgid "Note moyenne"
 msgstr "Average rating"
 
+#: templates/books/detail.html:217
 msgid "note(s)"
 msgstr "rating(s)"
 
+#: templates/books/detail.html:219
 msgid "Répartition"
 msgstr "Distribution"
 
+#: templates/books/detail.html:229
 msgid "Pas encore de note."
 msgstr "No rating yet."
 
+#: templates/books/prizes.html:33
+msgid "Lauréats des 5 dernières années, via Wikidata."
+msgstr "Winners from the past 5 years, via Wikidata."
+
+#: templates/books/prizes.html:68
+msgid "Aucun lauréat enregistré pour l'instant."
+msgstr "No winners recorded yet."
+
+#: templates/books/releases.html:23
+msgid "Nouveautés livres, récupérées chaque semaine dans « Le Monde des livres »."
+msgstr "New releases, fetched weekly from “Le Monde des livres”."
+
+#: templates/books/releases.html:42
+msgid "Lire l'article →"
+msgstr "Read article →"
+
+#: templates/books/releases.html:48
+msgid "Aucune nouveauté pour l'instant."
+msgstr "No new releases yet."
+
+#: templates/books/search.html:3 templates/books/search.html:44
 msgid "Chercher un livre"
 msgstr "Search for a book"
 
+#: templates/books/search.html:46
 msgid "titre, auteur, ISBN"
 msgstr "title, author, ISBN"
 
+#: templates/books/search.html:47
 msgid "Chercher"
 msgstr "Search"
 
+#: templates/books/search.html:52
 msgid "Rien trouvé pour cette recherche."
 msgstr "Nothing found for this search."
 
+#: templates/books/search.html:57
 msgid "Le livre manque ?"
 msgstr "Book missing?"
 
+#: templates/books/search.html:59
 msgid "chercher sur Open Library"
 msgstr "search on Open Library"
 
+#: templates/books/search.html:63
 msgid "y créer une fiche"
 msgstr "create a record there"
 
-msgid ""
-"(les livres ajoutés sur Open Library apparaîtront ici après quelques "
-"minutes)."
+#: templates/books/search.html:65
+msgid "(les livres ajoutés sur Open Library apparaîtront ici après quelques minutes)."
 msgstr "(books added on Open Library will show up here after a few minutes)."
 
+#: templates/books/search.html:82
 msgid "Consulter"
 msgstr "View"
 
+#: templates/books/search.html:102
 msgid "Note enregistrée"
 msgstr "Rating saved"
 
+#: templates/books/search.html:103
 msgid "ajouter un avis"
 msgstr "add a review"
 
+#: templates/clubs/_add_to_list_modal.html:28
+#: templates/clubs/book_add_to_list.html:30 templates/clubs/lists_index.html:30
+#: templates/clubs/lists_index.html:75 templates/clubs/profile.html:42
 msgid "livre(s)"
 msgstr "book(s)"
 
+#: templates/clubs/_add_to_list_modal.html:35
+#: templates/clubs/book_add_to_list.html:38
 msgid "Ou créer une nouvelle liste"
 msgstr "Or create a new list"
 
+#: templates/clubs/_add_to_list_modal.html:38
+#: templates/clubs/book_add_to_list.html:41 templates/clubs/list_form.html:7
+#: templates/clubs/moderation.html:57
 msgid "Titre"
 msgstr "Title"
 
+#: templates/clubs/_mod_th.html:6
+msgid "Trier ↑"
+msgstr "Sort ↑"
+
+#: templates/clubs/_mod_th.html:7
+msgid "Trier ↓"
+msgstr "Sort ↓"
+
+#: templates/clubs/_mod_th.html:11 templates/clubs/moderation.html:74
+#: templates/clubs/moderation.html:148 templates/clubs/moderation.html:177
+#: templates/clubs/moderation.html:213
+msgid "Filtrer"
+msgstr "Filter"
+
+#: templates/clubs/book_add_to_list.html:19
 #, python-format
 msgid "Ajouter « %(t)s » à une liste"
 msgstr "Add “%(t)s” to a list"
 
+#: templates/clubs/book_add_to_list.html:47
 msgid "Retour à la fiche"
 msgstr "Back to the book"
 
-msgid "Flux des avis"
-msgstr "Review feed"
-
-msgid "a écrit sur"
-msgstr "wrote about"
-
-msgid "voir l'avis"
-msgstr "see the review"
-
-msgid "Rien à montrer pour le moment."
-msgstr "Nothing to show yet."
-
-msgid "Accueil"
-msgstr "Home"
-
+#: templates/clubs/home.html:23
 msgid "Nouveaux livres"
 msgstr "New books"
 
+#: templates/clubs/home.html:25
 msgid "Membres que je suis"
 msgstr "Members I follow"
 
+#: templates/clubs/home.html:45
 msgid "Personne à suivre pour le moment."
 msgstr "No one to follow yet."
 
+#: templates/clubs/home.html:46
 msgid "Trouve des membres à suivre"
 msgstr "Find members to follow"
 
+#: templates/clubs/home.html:50
 msgid "Autres membres"
 msgstr "Other members"
 
+#: templates/clubs/invite_invalid.html:3
 msgid "Invitation invalide"
 msgstr "Invalid invitation"
 
+#: templates/clubs/invite_invalid.html:5
 msgid "Invitation invalide ou déjà utilisée"
 msgstr "Invalid or already-used invitation"
 
+#: templates/clubs/invite_invalid.html:6
 msgid "Demande un nouveau lien à la personne qui t'a invité·e."
 msgstr "Ask the person who invited you for a new link."
 
+#: templates/clubs/invites.html:3
 msgid "Mes invitations"
 msgstr "My invitations"
 
+#: templates/clubs/invites.html:6
 msgid "Invitations"
 msgstr "Invitations"
 
+#: templates/clubs/invites.html:8
 msgid "Générer un lien"
 msgstr "Generate a link"
 
-msgid ""
-"Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
-"tu veux."
-msgstr ""
-"Clicking “+” generates an invitation link. Copy it and share it however you "
-"like."
+#: templates/clubs/invites.html:11
+msgid "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme tu veux."
+msgstr "Clicking “+” generates an invitation link. Copy it and share it however you like."
 
+#: templates/clubs/invites.html:18
 msgid "utilisée"
 msgstr "used"
 
+#: templates/clubs/invites.html:19
 msgid "par"
 msgstr "by"
 
+#: templates/clubs/invites.html:22
 msgid "Copier"
 msgstr "Copy"
 
+#: templates/clubs/list_form.html:3 templates/clubs/list_form.html:5
 msgid "Nouvelle liste"
 msgstr "New list"
 
+#: templates/clubs/list_form.html:8
 msgid "Description"
 msgstr "Description"
 
+#: templates/clubs/lists_index.html:23
 msgid "Créer une liste"
 msgstr "Create a list"
 
+#: templates/clubs/lists_index.html:29
 msgid "Favoris"
 msgstr "Favorites"
 
+#: templates/clubs/lists_index.html:29
 msgid "À lire"
 msgstr "To read"
 
+#: templates/clubs/lists_index.html:33
 #, python-format
 msgid "Supprimer la liste « %(n)s » ?"
 msgstr "Delete the list “%(n)s”?"
 
+#: templates/clubs/lists_index.html:35
 msgid "Supprimer la liste"
 msgstr "Delete the list"
 
-msgid "Retirer des favoris"
-msgstr "Remove from favorites"
-
+#: templates/clubs/lists_index.html:51
 #, python-format
 msgid "Retirer « %(n)s » de la liste ?"
 msgstr "Remove “%(n)s” from the list?"
 
+#: templates/clubs/lists_index.html:52
 msgid "Retirer de la liste"
 msgstr "Remove from the list"
 
-msgid "Déplacer dans une autre liste"
-msgstr "Move to another list"
+#: templates/clubs/lists_index.html:67 templates/clubs/profile.html:51
+msgid "Liste vide."
+msgstr "Empty list."
 
+#: templates/clubs/lists_index.html:74
 msgid "Tous mes livres"
 msgstr "All my books"
 
+#: templates/clubs/lists_index.html:87
 #, python-format
 msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
 msgstr "Remove “%(n)s” from your books (rating and comments included)?"
 
+#: templates/clubs/lists_index.html:88 templates/clubs/moderation.html:103
+#: templates/clubs/moderation.html:132 templates/clubs/moderation.html:161
+#: templates/clubs/moderation.html:190
 msgid "Supprimer"
 msgstr "Delete"
 
+#: templates/clubs/lists_index.html:103
 msgid "Aucun livre pour l'instant."
 msgstr "No books yet."
 
+#: templates/clubs/me.html:3 templates/clubs/me.html:5
 msgid "Mon compte"
 msgstr "My account"
 
+#: templates/clubs/me.html:7
 msgid "Voir mes stats"
 msgstr "See my stats"
 
+#: templates/clubs/me.html:8
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
+#: templates/clubs/me.html:12
 msgid "Nom affiché"
 msgstr "Display name"
 
+#: templates/clubs/me.html:13
 msgid "Bio"
 msgstr "Bio"
 
+#: templates/clubs/me.html:14
 msgid "Enregistrer"
 msgstr "Save"
 
+#: templates/clubs/me.html:17
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
 
+#: templates/clubs/me.html:18
 msgid "Cela efface ton profil et tes lectures, sans retour en arrière."
 msgstr "This erases your profile and your readings, with no going back."
 
+#: templates/clubs/me.html:19
 msgid "Confirmer la suppression définitive de ton compte ?"
 msgstr "Confirm permanent deletion of your account?"
 
+#: templates/clubs/me.html:21
 msgid "Supprimer définitivement"
 msgstr "Delete permanently"
 
+#: templates/clubs/members.html:14 templates/clubs/profile.html:10
 msgid "Ne plus suivre"
 msgstr "Unfollow"
 
+#: templates/clubs/members.html:25 templates/clubs/profile.html:10
 msgid "Suivre"
 msgstr "Follow"
 
+#: templates/clubs/members.html:67
 msgid "Aucun autre membre pour l'instant."
 msgstr "No other members yet."
 
+#: templates/clubs/moderation.html:46
+msgid "Lectures"
+msgstr "Readings"
+
+#: templates/clubs/moderation.html:47 templates/clubs/moderation.html:148
+msgid "Avis"
+msgstr "Review"
+
+#: templates/clubs/moderation.html:48
+msgid "Commentaires"
+msgstr "Comments"
+
+#: templates/clubs/moderation.html:57
 msgid "Nom"
 msgstr "Name"
 
+#: templates/clubs/moderation.html:57
 msgid "E-mail"
 msgstr "Email"
 
+#: templates/clubs/moderation.html:57
 msgid "Inscrit le"
 msgstr "Joined"
 
+#: templates/clubs/moderation.html:57
+msgid "IP"
+msgstr "IP"
+
+#: templates/clubs/moderation.html:57 templates/clubs/moderation.html:243
 msgid "État"
 msgstr "State"
 
+#: templates/clubs/moderation.html:57
+msgid "Membre"
+msgstr "Member"
+
+#: templates/clubs/moderation.html:57
+msgid "Livre"
+msgstr "Book"
+
+#: templates/clubs/moderation.html:57
+msgid "Date"
+msgstr "Date"
+
+#: templates/clubs/moderation.html:76 templates/clubs/moderation.html:121
+#: templates/clubs/moderation.html:149 templates/clubs/moderation.html:178
 msgid "Actions"
 msgstr "Actions"
 
+#: templates/clubs/moderation.html:87 templates/clubs/moderation.html:220
+#: users/models.py:35
+msgid "supprimé"
+msgstr "deleted"
+
+#: templates/clubs/moderation.html:88 templates/clubs/moderation.html:219
 msgid "suspendu"
 msgstr "suspended"
 
+#: templates/clubs/moderation.html:89 templates/clubs/moderation.html:218
 msgid "admin"
 msgstr "admin"
 
+#: templates/clubs/moderation.html:90 templates/clubs/moderation.html:217
 msgid "actif"
 msgstr "active"
 
+#: templates/clubs/moderation.html:96
 msgid "Suspendre"
 msgstr "Suspend"
 
+#: templates/clubs/moderation.html:96
 msgid "Réactiver"
 msgstr "Reactivate"
 
+#: templates/clubs/moderation.html:99
 msgid "Retirer droits admin"
 msgstr "Remove admin rights"
 
+#: templates/clubs/moderation.html:99
 msgid "Donner droits admin"
 msgstr "Grant admin rights"
 
+#: templates/clubs/moderation.html:102
 #, python-format
-msgid "Supprimer définitivement %(n)s et toutes ses données ?"
-msgstr "Permanently delete %(n)s and all their data?"
+msgid "Supprimer %(n)s ? (conservé en base, rayé)"
+msgstr "Delete %(n)s? (kept in database, struck through)"
 
-msgid "Lectures récentes"
-msgstr "Recent readings"
+#: templates/clubs/moderation.html:110 templates/clubs/moderation.html:137
+#: templates/clubs/moderation.html:166 templates/clubs/moderation.html:195
+msgid "Rien à afficher."
+msgstr "Nothing to show."
 
+#: templates/clubs/moderation.html:131
 msgid "Supprimer cette lecture ?"
 msgstr "Delete this reading?"
 
-msgid "Avis récents"
-msgstr "Recent reviews"
-
+#: templates/clubs/moderation.html:160
 msgid "Supprimer cet avis ?"
 msgstr "Delete this review?"
 
-msgid "Commentaires récents"
-msgstr "Recent comments"
+#: templates/clubs/moderation.html:177
+msgid "Commentaire"
+msgstr "Comment"
 
+#: templates/clubs/moderation.html:189
 msgid "Supprimer ce commentaire ?"
 msgstr "Delete this comment?"
 
+#: templates/clubs/moderation.html:204
+msgid "Page précédente"
+msgstr "Previous page"
+
+#: templates/clubs/moderation.html:205
+msgid "Aller à"
+msgstr "Go to"
+
+#: templates/clubs/moderation.html:206
+msgid "Page suivante"
+msgstr "Next page"
+
+#: templates/clubs/moderation.html:207
+msgid "item(s)"
+msgstr "item(s)"
+
+#: templates/clubs/moderation.html:216
+msgid "tous"
+msgstr "all"
+
+#: templates/clubs/moderation.html:223
+msgid "Appliquer"
+msgstr "Apply"
+
+#: templates/clubs/moderation.html:224
+msgid "Effacer"
+msgstr "Clear"
+
+#: templates/clubs/notifications.html:3 templates/clubs/notifications.html:5
 msgid "Notifications"
 msgstr "Notifications"
 
+#: templates/clubs/notifications.html:12
 msgid "voir"
 msgstr "view"
 
+#: templates/clubs/notifications.html:19
 msgid "Aucune notification."
 msgstr "No notifications."
 
+#: templates/clubs/notifications.html:22
+msgid "Flux des avis"
+msgstr "Review feed"
+
+#: templates/clubs/notifications.html:30
+msgid "a écrit sur"
+msgstr "wrote about"
+
+#: templates/clubs/notifications.html:33 templates/clubs/profile.html:29
+msgid "voir l'avis"
+msgstr "see the review"
+
+#: templates/clubs/notifications.html:40
+msgid "Rien à montrer pour le moment."
+msgstr "Nothing to show yet."
+
+#: templates/clubs/profile.html:19
 msgid "Ses livres, par préférence"
 msgstr "Their books, by preference"
 
+#: templates/clubs/profile.html:35
 msgid "Aucune lecture pour l'instant."
 msgstr "No reading yet."
 
-msgid "Liste vide."
-msgstr "Empty list."
-
+#: templates/clubs/read_book.html:3
 msgid "Noter"
 msgstr "Rate"
 
+#: templates/clubs/read_book.html:13
 msgid "Nouvelle lecture (relecture)"
 msgstr "New reading (re-read)"
 
+#: templates/clubs/readings.html:3 templates/clubs/readings.html:5
 msgid "Lectures de"
 msgstr "Readings of"
 
+#: templates/clubs/readings.html:8
 msgid "Filtrer par statut"
 msgstr "Filter by status"
 
+#: templates/clubs/readings.html:10
 msgid "Tous"
 msgstr "All"
 
+#: templates/clubs/readings.html:16
 msgid "Trier par"
 msgstr "Sort by"
 
+#: templates/clubs/readings.html:18
 msgid "date"
 msgstr "date"
 
-msgid "auteur"
-msgstr "author"
-
+#: templates/clubs/readings.html:20
 msgid "note"
 msgstr "rating"
 
+#: templates/clubs/readings.html:21
 msgid "terminé"
 msgstr "finished"
 
+#: templates/clubs/readings.html:42
 msgid "Aucune lecture pour ce filtre."
 msgstr "No readings for this filter."
 
+#: templates/clubs/stats.html:3 templates/clubs/stats.html:5
 msgid "Mes stats"
 msgstr "My stats"
 
+#: templates/clubs/stats.html:7
 msgid "Lectures enregistrées"
 msgstr "Readings recorded"
 
+#: templates/clubs/stats.html:8
 msgid "Terminées en"
 msgstr "Finished in"
 
+#: templates/clubs/stats.html:9
 msgid "Note moyenne (/10)"
 msgstr "Average rating (/10)"
 
+#: templates/clubs/stats.html:12
 msgid "Par statut"
 msgstr "By status"
 
+#: users/forms.py:32
 msgid "Nom de membre"
 msgstr "Member name"
 
-msgid ""
-"C'est ce nom que les autres membres verront. Les adresses e-mail restent "
-"privées."
+#: users/forms.py:36
+msgid "C'est ce nom que les autres membres verront. Les adresses e-mail restent privées."
 msgstr "This is the name other members will see. Email addresses stay private."
 
+#: users/forms.py:51
 msgid "Le nom de membre est obligatoire."
 msgstr "The member name is required."
 
+#: users/forms.py:53
 msgid "Ce nom est déjà pris, choisis-en un autre."
 msgstr "That name is already taken, pick another one."
 
+#: users/forms.py:76
 #, python-format
-msgid ""
-"Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
-"l'ancien."
-msgstr ""
-"The new password reuses more than %(n)d consecutive characters from the old "
-"one."
+msgid "Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de l'ancien."
+msgstr "The new password reuses more than %(n)d consecutive characters from the old one."
 
+#: users/models.py:31
 msgid "adresse e-mail"
 msgstr "email address"
 
+#: users/models.py:32
 msgid "nom affiché"
 msgstr "display name"
 
+#: users/models.py:33
 msgid "bio"
 msgstr "bio"
 
+#: users/models.py:34
+msgid "dernière IP"
+msgstr "last IP"
+
+#: users/validators.py:15
 msgid "des minuscules"
 msgstr "lowercase letters"
 
+#: users/validators.py:17
 msgid "des majuscules"
 msgstr "uppercase letters"
 
+#: users/validators.py:19
 msgid "des chiffres"
 msgstr "digits"
 
+#: users/validators.py:21
 msgid "des caractères spéciaux"
 msgstr "special characters"
 
+#: users/validators.py:25
 #, python-format
 msgid "Le mot de passe doit contenir %(items)s."
 msgstr "The password must contain %(items)s."
 
-msgid ""
-"Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
-"des chiffres et des caractères spéciaux."
-msgstr ""
-"Your password must contain both lowercase and uppercase letters, digits, and "
-"special characters."
+#: users/validators.py:31
+msgid "Votre mot de passe doit contenir à la fois des minuscules, des majuscules, des chiffres et des caractères spéciaux."
+msgstr "Your password must contain both lowercase and uppercase letters, digits, and special characters."
 
-#, fuzzy
-#| msgid "adresse e-mail"
+#: users/validators.py:47
 msgid "votre adresse e-mail"
-msgstr "email address"
+msgstr "your e-mail address"
 
-#, fuzzy
-#| msgid "Nom de membre"
+#: users/validators.py:48
 msgid "votre nom de membre"
-msgstr "Member name"
+msgstr "your member name"
+
+#: users/validators.py:62
+#, python-format
+msgid "Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
+msgstr "The password reuses more than %(n)d consecutive characters from %(attr)s."
+
+#: users/validators.py:70
+#, python-format
+msgid "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de votre adresse e-mail et/ou de votre nom de membre."
+msgstr "Your password cannot reuse more than %(n)d consecutive characters from your email address and/or your member name."
+
+#: users/validators.py:86
+#, python-format
+msgid "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de votre mot de passe précédent."
+msgstr "Your password cannot reuse more than %(n)d consecutive characters from your previous password."
+
+#~ msgid "Flux"
+#~ msgstr "Feed"
+
+#~ msgid "Retirer des favoris"
+#~ msgstr "Remove from favorites"
+
+#~ msgid "Déplacer dans une autre liste"
+#~ msgstr "Move to another list"
 
 #, python-format
-msgid ""
-"Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
-msgstr ""
-"The password reuses more than %(n)d consecutive characters from %(attr)s."
+#~ msgid "Supprimer définitivement %(n)s et toutes ses données ?"
+#~ msgstr "Permanently delete %(n)s and all their data?"
 
-#, python-format
-msgid ""
-"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
-"votre adresse e-mail et/ou de votre nom de membre."
-msgstr ""
-"Your password cannot reuse more than %(n)d consecutive characters from your "
-"email address and/or your member name."
+#~ msgid "Lectures récentes"
+#~ msgstr "Recent readings"
 
-#, python-format
-msgid ""
-"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
-"votre mot de passe précédent."
-msgstr ""
-"Your password cannot reuse more than %(n)d consecutive characters from your "
-"previous password."
+#~ msgid "Avis récents"
+#~ msgstr "Recent reviews"
+
+#~ msgid "Commentaires récents"
+#~ msgstr "Recent comments"
 
 #~ msgid "Écris ton avis…"
 #~ msgstr "Write your review…"
@@ -670,14 +976,8 @@ msgstr ""
 #~ msgid "Ou enregistrer une relecture"
 #~ msgstr "Or record a re-read"
 
-#~ msgid "Avis de"
-#~ msgstr "Review by"
-
 #~ msgid "spoilers"
 #~ msgstr "spoilers"
-
-#~ msgid "Commentaires"
-#~ msgstr "Comments"
 
 #~ msgid "Répondre"
 #~ msgstr "Reply"
