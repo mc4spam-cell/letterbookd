@@ -1,0 +1,598 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: letterbookd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"PO-Revision-Date: 2026-11-20 21:10+0000\n"
+"Language-Team: English\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "identifiant Open Library"
+msgstr "Идентификатор Open Library"
+
+msgid "titre"
+msgstr "название"
+
+msgid "auteurs"
+msgstr "авторы"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+msgid "pages"
+msgstr "страницы"
+
+msgid "année"
+msgstr "год"
+
+msgid "résumé"
+msgstr "аннотация"
+
+msgid "description"
+msgstr "описание"
+
+msgid "note libre"
+msgstr "свободная заметка"
+
+msgid "à lire"
+msgstr "хочу прочитать"
+
+msgid "en cours"
+msgstr "читаю"
+
+msgid "lu"
+msgstr "прочитано"
+
+msgid "abandonné"
+msgstr "брошено"
+
+msgid "statut"
+msgstr "статус"
+
+msgid "note (demi-points, 0 à 10)"
+msgstr "оценка (полубаллы, от 0 до 10)"
+
+msgid "commencé le"
+msgstr "начато"
+
+msgid "terminé le"
+msgstr "закончено"
+
+msgid "avis"
+msgstr "отзыв"
+
+msgid "contient des spoilers"
+msgstr "содержит спойлеры"
+
+msgid "Approuver"
+msgstr "Одобрить"
+
+msgid "Interroger"
+msgstr "Спросить"
+
+msgid "Réprouver"
+msgstr "Не одобрить"
+
+msgid "Nouveau commentaire sur ton avis"
+msgstr "Новый комментарий к твоему отзыву"
+
+msgid "Nouvelle réponse à ton commentaire"
+msgstr "Новый ответ на твой комментарий"
+
+msgid "Sign In"
+msgstr "Войти"
+
+msgid "Sign in with a passkey"
+msgstr "Войти с помощью ключа доступа"
+
+msgid "Send me a sign-in code"
+msgstr "Отправь мне код для входа"
+
+msgid "Aller au contenu"
+msgstr "Перейти к содержимому"
+
+msgid "Livres"
+msgstr "Книги"
+
+msgid "Membres"
+msgstr "Участники"
+
+msgid "Listes"
+msgstr "Списки"
+
+msgid "Flux"
+msgstr "Лента"
+
+msgid "Notifs"
+msgstr "Уведомления"
+
+msgid "Inviter"
+msgstr "Пригласить"
+
+msgid "Modération"
+msgstr "Модерация"
+
+msgid "Déconnexion"
+msgstr "Выйти"
+
+msgid "Connexion"
+msgstr "Войти"
+
+msgid "À propos"
+msgstr "О сайте"
+
+msgid "Langue"
+msgstr "Язык"
+
+msgid "À propos de letterbookd"
+msgstr "О letterbookd"
+
+msgid ""
+"Un outil pour animer un club de lecture privé : choisir le livre du mois, "
+"noter, écrire des avis, en discuter."
+msgstr ""
+"Инструмент для закрытого книжного клуба: выбираем книгу месяца, ставим оценку, "
+"пишем отзывы и обсуждаем их."
+
+msgid "Auteur"
+msgstr "Автор"
+
+msgid "Dernière mise à jour"
+msgstr "Последнее обновление"
+
+msgid "Fermer"
+msgstr "Закрыть"
+
+msgid "Guide d'utilisation"
+msgstr "Руководство пользователя"
+
+msgid ""
+"L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
+"pour créer ton compte."
+msgstr ""
+"Вход в letterbookd только по приглашению. Если тебе прислали ссылку, перейди "
+"по ней и создай аккаунт."
+
+msgid "couverture"
+msgstr "обложка"
+
+msgid "Auteurs"
+msgstr "Авторы"
+
+msgid "Année"
+msgstr "Год"
+
+msgid "Pages"
+msgstr "Страницы"
+
+msgid "Résumé"
+msgstr "Аннотация"
+
+msgid "Noter / écrire un avis"
+msgstr "Оценить / написать отзыв"
+
+msgid "Ajouter à une liste"
+msgstr "Добавить в список"
+
+msgid "Mon avis"
+msgstr "Мой отзыв"
+
+msgid "Spoilers"
+msgstr "Спойлеры"
+
+msgid "Modifier"
+msgstr "Изменить"
+
+msgid "Réagir"
+msgstr "Реакция"
+
+msgid "Écris ton avis…"
+msgstr "Напиши свой отзыв…"
+
+msgid "Publier"
+msgstr "Опубликовать"
+
+msgid "Avis complet (note, dates, spoiler)"
+msgstr "Полный отзыв (оценка, даты, спойлер)"
+
+msgid "Avis des autres membres"
+msgstr "Отзывы других участников"
+
+msgid "Personne d'autre n'a encore écrit sur ce livre."
+msgstr "Пока никто не написал об этой книге."
+
+msgid "Note moyenne"
+msgstr "Средняя оценка"
+
+msgid "note(s)"
+msgstr "оценок"
+
+msgid "Répartition"
+msgstr "Распределение"
+
+msgid "Pas encore de note."
+msgstr "Оценок пока нет."
+
+msgid "Chercher un livre"
+msgstr "Найти книгу"
+
+msgid "titre, auteur, ISBN"
+msgstr "название, автор, ISBN"
+
+msgid "Chercher"
+msgstr "Искать"
+
+msgid "Rien trouvé pour cette recherche."
+msgstr "По этому запросу ничего не найдено."
+
+msgid "Le livre manque ?"
+msgstr "Нет нужной книги?"
+
+msgid "chercher sur Open Library"
+msgstr "поискать в Open Library"
+
+msgid "y créer une fiche"
+msgstr "создать карточку там"
+
+msgid ""
+"(les livres ajoutés sur Open Library apparaîtront ici après quelques "
+"minutes)."
+msgstr ""
+"(книги, добавленные в Open Library, появятся здесь через несколько минут)."
+
+msgid "Consulter"
+msgstr "Открыть"
+
+msgid "Note enregistrée"
+msgstr "Оценка сохранена"
+
+msgid "ajouter un avis"
+msgstr "добавить отзыв"
+
+msgid "Note"
+msgstr "Оценка"
+
+#, python-format
+msgid "Ajouter « %(t)s » à une liste"
+msgstr "Добавить «%(t)s» в список"
+
+msgid "livre(s)"
+msgstr "книг(и)"
+
+msgid "Ou créer une nouvelle liste"
+msgstr "Или создать новый список"
+
+msgid "Titre"
+msgstr "Название"
+
+msgid "Retour à la fiche"
+msgstr "Назад к книге"
+
+msgid "Flux des avis"
+msgstr "Лента отзывов"
+
+msgid "a écrit sur"
+msgstr "написал(а) о"
+
+msgid "voir l'avis"
+msgstr "посмотреть отзыв"
+
+msgid "Rien à montrer pour le moment."
+msgstr "Пока нечего показать."
+
+msgid "Accueil"
+msgstr "Главная"
+
+msgid "Nouveaux livres"
+msgstr "Новые книги"
+
+msgid "Membres que je suis"
+msgstr "Участники, на которых я подписан"
+
+msgid "Personne à suivre pour le moment."
+msgstr "Пока не на кого подписаться."
+
+msgid "Trouve des membres à suivre"
+msgstr "Найди, на кого подписаться"
+
+msgid "Autres membres"
+msgstr "Другие участники"
+
+msgid "Invitation invalide"
+msgstr "Недействительное приглашение"
+
+msgid "Invitation invalide ou déjà utilisée"
+msgstr "Приглашение недействительно или уже использовано"
+
+msgid "Demande un nouveau lien à la personne qui t'a invité·e."
+msgstr "Попроси того, кто тебя пригласил, прислать новую ссылку."
+
+msgid "Mes invitations"
+msgstr "Мои приглашения"
+
+msgid "Invitations"
+msgstr "Приглашения"
+
+msgid "Générer un lien"
+msgstr "Создать ссылку"
+
+msgid ""
+"Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
+"tu veux."
+msgstr ""
+"Нажми «+», чтобы создать ссылку-приглашение. Скопируй её и отправь как удобно."
+
+msgid "utilisée"
+msgstr "использовано"
+
+msgid "par"
+msgstr "кем"
+
+msgid "Copier"
+msgstr "Копировать"
+
+msgid "Nouvelle liste"
+msgstr "Новый список"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Créer une liste"
+msgstr "Создать список"
+
+#, python-format
+msgid "Supprimer la liste « %(n)s » ?"
+msgstr "Удалить список «%(n)s»?"
+
+msgid "Supprimer la liste"
+msgstr "Удалить список"
+
+#, python-format
+msgid "Retirer « %(n)s » de la liste ?"
+msgstr "Убрать «%(n)s» из списка?"
+
+msgid "Retirer de la liste"
+msgstr "Убрать из списка"
+
+msgid "Déplacer dans une autre liste"
+msgstr "Переместить в другой список"
+
+msgid "Liste vide."
+msgstr "Список пуст."
+
+msgid "Tous mes livres"
+msgstr "Все мои книги"
+
+#, python-format
+msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
+msgstr "Убрать «%(n)s» из твоих книг (вместе с оценкой и комментариями)?"
+
+msgid "Supprimer"
+msgstr "Удалить"
+
+msgid "Aucun livre pour l'instant."
+msgstr "Книг пока нет."
+
+msgid "Mon compte"
+msgstr "Мой аккаунт"
+
+msgid "Voir mes stats"
+msgstr "Моя статистика"
+
+msgid "Changer mon mot de passe"
+msgstr "Сменить пароль"
+
+msgid "Nom affiché"
+msgstr "Отображаемое имя"
+
+msgid "Bio"
+msgstr "О себе"
+
+msgid "Enregistrer"
+msgstr "Сохранить"
+
+msgid "Supprimer mon compte"
+msgstr "Удалить аккаунт"
+
+msgid "Cela efface ton profil et tes lectures, sans retour en arrière."
+msgstr "Профиль и все твои чтения будут стерты без возможности восстановления."
+
+msgid "Confirmer la suppression définitive de ton compte ?"
+msgstr "Подтвердить окончательное удаление аккаунта?"
+
+msgid "Supprimer définitivement"
+msgstr "Удалить навсегда"
+
+msgid "Ne plus suivre"
+msgstr "Отписаться"
+
+msgid "Suivre"
+msgstr "Подписаться"
+
+msgid "Aucun autre membre pour l'instant."
+msgstr "Других участников пока нет."
+
+msgid "Nom"
+msgstr "Имя"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Inscrit le"
+msgstr "Дата регистрации"
+
+msgid "État"
+msgstr "Состояние"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "suspendu"
+msgstr "заблокирован"
+
+msgid "admin"
+msgstr "админ"
+
+msgid "actif"
+msgstr "активен"
+
+msgid "Suspendre"
+msgstr "Заблокировать"
+
+msgid "Réactiver"
+msgstr "Разблокировать"
+
+msgid "Retirer droits admin"
+msgstr "Забрать права админа"
+
+msgid "Donner droits admin"
+msgstr "Дать права админа"
+
+#, python-format
+msgid "Supprimer définitivement %(n)s et toutes ses données ?"
+msgstr "Удалить %(n)s и все его данные навсегда?"
+
+msgid "Lectures récentes"
+msgstr "Недавние чтения"
+
+msgid "Supprimer cette lecture ?"
+msgstr "Удалить это чтение?"
+
+msgid "Avis récents"
+msgstr "Недавние отзывы"
+
+msgid "Supprimer cet avis ?"
+msgstr "Удалить этот отзыв?"
+
+msgid "Commentaires récents"
+msgstr "Недавние комментарии"
+
+msgid "Supprimer ce commentaire ?"
+msgstr "Удалить этот комментарий?"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "voir"
+msgstr "открыть"
+
+msgid "Aucune notification."
+msgstr "Уведомлений нет."
+
+msgid "Ses livres, par préférence"
+msgstr "Книги по предпочтению"
+
+msgid "Aucune lecture pour l'instant."
+msgstr "Чтений пока нет."
+
+msgid "Noter"
+msgstr "Оценить"
+
+msgid "Nouvelle lecture (relecture)"
+msgstr "Новое чтение (перечитывание)"
+
+msgid "Statut"
+msgstr "Статус"
+
+msgid "Commencé le"
+msgstr "Начато"
+
+msgid "Terminé le"
+msgstr "Закончено"
+
+msgid "Avis (optionnel)"
+msgstr "Отзыв (необязательно)"
+
+msgid "Contient des spoilers"
+msgstr "Содержит спойлеры"
+
+msgid "Ou enregistrer une relecture"
+msgstr "Или записать перечитывание"
+
+msgid "Lectures de"
+msgstr "Чтения:"
+
+msgid "Filtrer par statut"
+msgstr "Фильтровать по статусу"
+
+msgid "Tous"
+msgstr "Все"
+
+msgid "Trier par"
+msgstr "Сортировать по"
+
+msgid "date"
+msgstr "дате"
+
+msgid "auteur"
+msgstr "автору"
+
+msgid "note"
+msgstr "оценке"
+
+msgid "terminé"
+msgstr "окончанию"
+
+msgid "Aucune lecture pour ce filtre."
+msgstr "Нет чтений по этому фильтру."
+
+msgid "Avis de"
+msgstr "Отзыв от"
+
+msgid "spoilers"
+msgstr "спойлеры"
+
+msgid "Commentaires"
+msgstr "Комментарии"
+
+msgid "Répondre"
+msgstr "Ответить"
+
+msgid "Pas encore de commentaire."
+msgstr "Комментариев пока нет."
+
+msgid "Nouveau commentaire"
+msgstr "Новый комментарий"
+
+msgid "Mes stats"
+msgstr "Моя статистика"
+
+msgid "Lectures enregistrées"
+msgstr "Записано чтений"
+
+msgid "Terminées en"
+msgstr "Завершено в"
+
+msgid "Note moyenne (/10)"
+msgstr "Средняя оценка (из 10)"
+
+msgid "Par statut"
+msgstr "По статусу"
+
+msgid "Nom de membre"
+msgstr "Имя участника"
+
+msgid ""
+"C'est ce nom que les autres membres verront. Les adresses e-mail restent "
+"privées."
+msgstr ""
+"Это имя увидят другие участники. E-mail-адреса остаются приватными."
+
+msgid "Le nom de membre est obligatoire."
+msgstr "Имя участника обязательно."
+
+msgid "Ce nom est déjà pris, choisis-en un autre."
+msgstr "Это имя уже занято, выбери другое."
+
+msgid "adresse e-mail"
+msgstr "e-mail"
+
+msgid "nom affiché"
+msgstr "отображаемое имя"
+
+msgid "bio"
+msgstr "о себе"

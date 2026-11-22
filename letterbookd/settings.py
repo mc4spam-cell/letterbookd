@@ -127,7 +127,14 @@ LANGUAGE_CODE = "fr"
 TIME_ZONE = "Europe/Paris"
 USE_I18N = True
 USE_TZ = True
-LANGUAGES = [("fr", "Français"), ("en", "English")]
+LANGUAGES = [
+    ("fr", "Français"),
+    ("en", "English"),
+    ("es", "Español"),
+    ("de", "Deutsch"),
+    ("ru", "Русский"),
+    ("zh-hans", "中文"),
+]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
 STATIC_URL = "static/"

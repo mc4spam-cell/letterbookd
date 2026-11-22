@@ -1,0 +1,591 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: letterbookd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"PO-Revision-Date: 2026-11-20 21:10+0000\n"
+"Language-Team: English\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "identifiant Open Library"
+msgstr "Identificador de Open Library"
+
+msgid "titre"
+msgstr "título"
+
+msgid "auteurs"
+msgstr "autores"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+msgid "pages"
+msgstr "páginas"
+
+msgid "année"
+msgstr "año"
+
+msgid "résumé"
+msgstr "resumen"
+
+msgid "description"
+msgstr "descripción"
+
+msgid "note libre"
+msgstr "nota libre"
+
+msgid "à lire"
+msgstr "por leer"
+
+msgid "en cours"
+msgstr "leyendo"
+
+msgid "lu"
+msgstr "leído"
+
+msgid "abandonné"
+msgstr "abandonado"
+
+msgid "statut"
+msgstr "estado"
+
+msgid "note (demi-points, 0 à 10)"
+msgstr "puntuación (medios puntos, 0 a 10)"
+
+msgid "commencé le"
+msgstr "empezado el"
+
+msgid "terminé le"
+msgstr "terminado el"
+
+msgid "avis"
+msgstr "reseña"
+
+msgid "contient des spoilers"
+msgstr "contiene spoilers"
+
+msgid "Approuver"
+msgstr "Aprobar"
+
+msgid "Interroger"
+msgstr "Preguntar"
+
+msgid "Réprouver"
+msgstr "Desaprobar"
+
+msgid "Nouveau commentaire sur ton avis"
+msgstr "Nuevo comentario en tu reseña"
+
+msgid "Nouvelle réponse à ton commentaire"
+msgstr "Nueva respuesta a tu comentario"
+
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+msgid "Sign in with a passkey"
+msgstr "Iniciar sesión con una clave de acceso"
+
+msgid "Send me a sign-in code"
+msgstr "Envíame un código para iniciar sesión"
+
+msgid "Aller au contenu"
+msgstr "Ir al contenido"
+
+msgid "Livres"
+msgstr "Libros"
+
+msgid "Membres"
+msgstr "Miembros"
+
+msgid "Listes"
+msgstr "Listas"
+
+msgid "Flux"
+msgstr "Actividad"
+
+msgid "Notifs"
+msgstr "Notifs"
+
+msgid "Inviter"
+msgstr "Invitar"
+
+msgid "Modération"
+msgstr "Moderación"
+
+msgid "Déconnexion"
+msgstr "Cerrar sesión"
+
+msgid "Connexion"
+msgstr "Iniciar sesión"
+
+msgid "À propos"
+msgstr "Acerca de"
+
+msgid "Langue"
+msgstr "Idioma"
+
+msgid "À propos de letterbookd"
+msgstr "Acerca de letterbookd"
+
+msgid ""
+"Un outil pour animer un club de lecture privé : choisir le livre du mois, "
+"noter, écrire des avis, en discuter."
+msgstr "Una herramienta para animar un club de lectura privado: elige el libro del mes, puntúa, escribe reseñas y debátelas."
+
+msgid "Auteur"
+msgstr "Autor"
+
+msgid "Dernière mise à jour"
+msgstr "Última actualización"
+
+msgid "Fermer"
+msgstr "Cerrar"
+
+msgid "Guide d'utilisation"
+msgstr "Guía de uso"
+
+msgid ""
+"L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
+"pour créer ton compte."
+msgstr "letterbookd es solo por invitación. Si alguien te ha enviado un enlace, síguelo para crear tu cuenta."
+
+msgid "couverture"
+msgstr "portada"
+
+msgid "Auteurs"
+msgstr "Autores"
+
+msgid "Année"
+msgstr "Año"
+
+msgid "Pages"
+msgstr "Páginas"
+
+msgid "Résumé"
+msgstr "Resumen"
+
+msgid "Noter / écrire un avis"
+msgstr "Puntuar / escribir una reseña"
+
+msgid "Ajouter à une liste"
+msgstr "Añadir a una lista"
+
+msgid "Mon avis"
+msgstr "Mi reseña"
+
+msgid "Spoilers"
+msgstr "Spoilers"
+
+msgid "Modifier"
+msgstr "Editar"
+
+msgid "Réagir"
+msgstr "Reaccionar"
+
+msgid "Écris ton avis…"
+msgstr "Escribe tu reseña…"
+
+msgid "Publier"
+msgstr "Publicar"
+
+msgid "Avis complet (note, dates, spoiler)"
+msgstr "Reseña completa (puntuación, fechas, spoiler)"
+
+msgid "Avis des autres membres"
+msgstr "Reseñas de otros miembros"
+
+msgid "Personne d'autre n'a encore écrit sur ce livre."
+msgstr "Nadie más ha escrito sobre este libro todavía."
+
+msgid "Note moyenne"
+msgstr "Puntuación media"
+
+msgid "note(s)"
+msgstr "puntuación(es)"
+
+msgid "Répartition"
+msgstr "Distribución"
+
+msgid "Pas encore de note."
+msgstr "Aún no hay puntuación."
+
+msgid "Chercher un livre"
+msgstr "Buscar un libro"
+
+msgid "titre, auteur, ISBN"
+msgstr "título, autor, ISBN"
+
+msgid "Chercher"
+msgstr "Buscar"
+
+msgid "Rien trouvé pour cette recherche."
+msgstr "No se encontró nada para esta búsqueda."
+
+msgid "Le livre manque ?"
+msgstr "¿Falta el libro?"
+
+msgid "chercher sur Open Library"
+msgstr "buscar en Open Library"
+
+msgid "y créer une fiche"
+msgstr "y crear una ficha"
+
+msgid ""
+"(les livres ajoutés sur Open Library apparaîtront ici après quelques "
+"minutes)."
+msgstr "(los libros añadidos a Open Library aparecerán aquí en unos minutos)."
+
+msgid "Consulter"
+msgstr "Ver"
+
+msgid "Note enregistrée"
+msgstr "Puntuación guardada"
+
+msgid "ajouter un avis"
+msgstr "añadir una reseña"
+
+msgid "Note"
+msgstr "Puntuación"
+
+#, python-format
+msgid "Ajouter « %(t)s » à une liste"
+msgstr "Añadir « %(t)s » a una lista"
+
+msgid "livre(s)"
+msgstr "libro(s)"
+
+msgid "Ou créer une nouvelle liste"
+msgstr "O crear una lista nueva"
+
+msgid "Titre"
+msgstr "Título"
+
+msgid "Retour à la fiche"
+msgstr "Volver a la ficha"
+
+msgid "Flux des avis"
+msgstr "Actividad de reseñas"
+
+msgid "a écrit sur"
+msgstr "escribió sobre"
+
+msgid "voir l'avis"
+msgstr "ver la reseña"
+
+msgid "Rien à montrer pour le moment."
+msgstr "Nada que mostrar por ahora."
+
+msgid "Accueil"
+msgstr "Inicio"
+
+msgid "Nouveaux livres"
+msgstr "Libros nuevos"
+
+msgid "Membres que je suis"
+msgstr "Miembros que sigo"
+
+msgid "Personne à suivre pour le moment."
+msgstr "Nadie a quien seguir por ahora."
+
+msgid "Trouve des membres à suivre"
+msgstr "Encuentra miembros a quien seguir"
+
+msgid "Autres membres"
+msgstr "Otros miembros"
+
+msgid "Invitation invalide"
+msgstr "Invitación no válida"
+
+msgid "Invitation invalide ou déjà utilisée"
+msgstr "Invitación no válida o ya utilizada"
+
+msgid "Demande un nouveau lien à la personne qui t'a invité·e."
+msgstr "Pide un nuevo enlace a quien te invitó."
+
+msgid "Mes invitations"
+msgstr "Mis invitaciones"
+
+msgid "Invitations"
+msgstr "Invitaciones"
+
+msgid "Générer un lien"
+msgstr "Generar un enlace"
+
+msgid ""
+"Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
+"tu veux."
+msgstr "Haz clic en « + » para generar un enlace de invitación. Cópialo y compártelo como quieras."
+
+msgid "utilisée"
+msgstr "utilizada"
+
+msgid "par"
+msgstr "por"
+
+msgid "Copier"
+msgstr "Copiar"
+
+msgid "Nouvelle liste"
+msgstr "Nueva lista"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Créer une liste"
+msgstr "Crear una lista"
+
+#, python-format
+msgid "Supprimer la liste « %(n)s » ?"
+msgstr "¿Eliminar la lista « %(n)s »?"
+
+msgid "Supprimer la liste"
+msgstr "Eliminar la lista"
+
+#, python-format
+msgid "Retirer « %(n)s » de la liste ?"
+msgstr "¿Quitar « %(n)s » de la lista?"
+
+msgid "Retirer de la liste"
+msgstr "Quitar de la lista"
+
+msgid "Déplacer dans une autre liste"
+msgstr "Mover a otra lista"
+
+msgid "Liste vide."
+msgstr "Lista vacía."
+
+msgid "Tous mes livres"
+msgstr "Todos mis libros"
+
+#, python-format
+msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
+msgstr "¿Eliminar « %(n)s » de tus libros (con su puntuación y sus comentarios)?"
+
+msgid "Supprimer"
+msgstr "Eliminar"
+
+msgid "Aucun livre pour l'instant."
+msgstr "Aún no hay libros."
+
+msgid "Mon compte"
+msgstr "Mi cuenta"
+
+msgid "Voir mes stats"
+msgstr "Ver mis estadísticas"
+
+msgid "Changer mon mot de passe"
+msgstr "Cambiar mi contraseña"
+
+msgid "Nom affiché"
+msgstr "Nombre visible"
+
+msgid "Bio"
+msgstr "Biografía"
+
+msgid "Enregistrer"
+msgstr "Guardar"
+
+msgid "Supprimer mon compte"
+msgstr "Eliminar mi cuenta"
+
+msgid "Cela efface ton profil et tes lectures, sans retour en arrière."
+msgstr "Esto borra tu perfil y tus lecturas, sin vuelta atrás."
+
+msgid "Confirmer la suppression définitive de ton compte ?"
+msgstr "¿Confirmar la eliminación definitiva de tu cuenta?"
+
+msgid "Supprimer définitivement"
+msgstr "Eliminar definitivamente"
+
+msgid "Ne plus suivre"
+msgstr "Dejar de seguir"
+
+msgid "Suivre"
+msgstr "Seguir"
+
+msgid "Aucun autre membre pour l'instant."
+msgstr "Aún no hay otros miembros."
+
+msgid "Nom"
+msgstr "Nombre"
+
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+msgid "Inscrit le"
+msgstr "Registrado el"
+
+msgid "État"
+msgstr "Estado"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "suspendu"
+msgstr "suspendido"
+
+msgid "admin"
+msgstr "admin"
+
+msgid "actif"
+msgstr "activo"
+
+msgid "Suspendre"
+msgstr "Suspender"
+
+msgid "Réactiver"
+msgstr "Reactivar"
+
+msgid "Retirer droits admin"
+msgstr "Quitar derechos de admin"
+
+msgid "Donner droits admin"
+msgstr "Dar derechos de admin"
+
+#, python-format
+msgid "Supprimer définitivement %(n)s et toutes ses données ?"
+msgstr "¿Eliminar definitivamente a %(n)s y todos sus datos?"
+
+msgid "Lectures récentes"
+msgstr "Lecturas recientes"
+
+msgid "Supprimer cette lecture ?"
+msgstr "¿Eliminar esta lectura?"
+
+msgid "Avis récents"
+msgstr "Reseñas recientes"
+
+msgid "Supprimer cet avis ?"
+msgstr "¿Eliminar esta reseña?"
+
+msgid "Commentaires récents"
+msgstr "Comentarios recientes"
+
+msgid "Supprimer ce commentaire ?"
+msgstr "¿Eliminar este comentario?"
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "voir"
+msgstr "ver"
+
+msgid "Aucune notification."
+msgstr "No hay notificaciones."
+
+msgid "Ses livres, par préférence"
+msgstr "Sus libros, por preferencia"
+
+msgid "Aucune lecture pour l'instant."
+msgstr "Aún no hay lecturas."
+
+msgid "Noter"
+msgstr "Puntuar"
+
+msgid "Nouvelle lecture (relecture)"
+msgstr "Nueva lectura (relectura)"
+
+msgid "Statut"
+msgstr "Estado"
+
+msgid "Commencé le"
+msgstr "Empezado el"
+
+msgid "Terminé le"
+msgstr "Terminado el"
+
+msgid "Avis (optionnel)"
+msgstr "Reseña (opcional)"
+
+msgid "Contient des spoilers"
+msgstr "Contiene spoilers"
+
+msgid "Ou enregistrer une relecture"
+msgstr "O registrar una relectura"
+
+msgid "Lectures de"
+msgstr "Lecturas de"
+
+msgid "Filtrer par statut"
+msgstr "Filtrar por estado"
+
+msgid "Tous"
+msgstr "Todos"
+
+msgid "Trier par"
+msgstr "Ordenar por"
+
+msgid "date"
+msgstr "fecha"
+
+msgid "auteur"
+msgstr "autor"
+
+msgid "note"
+msgstr "puntuación"
+
+msgid "terminé"
+msgstr "terminado"
+
+msgid "Aucune lecture pour ce filtre."
+msgstr "No hay lecturas para este filtro."
+
+msgid "Avis de"
+msgstr "Reseña de"
+
+msgid "spoilers"
+msgstr "spoilers"
+
+msgid "Commentaires"
+msgstr "Comentarios"
+
+msgid "Répondre"
+msgstr "Responder"
+
+msgid "Pas encore de commentaire."
+msgstr "Aún no hay comentarios."
+
+msgid "Nouveau commentaire"
+msgstr "Nuevo comentario"
+
+msgid "Mes stats"
+msgstr "Mis estadísticas"
+
+msgid "Lectures enregistrées"
+msgstr "Lecturas registradas"
+
+msgid "Terminées en"
+msgstr "Terminadas en"
+
+msgid "Note moyenne (/10)"
+msgstr "Puntuación media (/10)"
+
+msgid "Par statut"
+msgstr "Por estado"
+
+msgid "Nom de membre"
+msgstr "Nombre de miembro"
+
+msgid ""
+"C'est ce nom que les autres membres verront. Les adresses e-mail restent "
+"privées."
+msgstr "Es el nombre que verán los demás miembros. Las direcciones de correo se mantienen privadas."
+
+msgid "Le nom de membre est obligatoire."
+msgstr "El nombre de miembro es obligatorio."
+
+msgid "Ce nom est déjà pris, choisis-en un autre."
+msgstr "Ese nombre ya está en uso, elige otro."
+
+msgid "adresse e-mail"
+msgstr "dirección de correo electrónico"
+
+msgid "nom affiché"
+msgstr "nombre visible"
+
+msgid "bio"
+msgstr "biografía"
