@@ -6,7 +6,7 @@
         <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort={{ key }}&dir=asc" class="{% if sort == key and dir == 'asc' %}on{% endif %}" title="{% translate 'Trier ↑' %}">▲</a>
         <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort={{ key }}&dir=desc" class="{% if sort == key and dir == 'desc' %}on{% endif %}" title="{% translate 'Trier ↓' %}">▼</a>
     </span>
-    {% if filter_val != None %}
-    <br><input class="filter" type="text" name="q_{{ key }}" value="{{ filter_val }}" placeholder="…">
+    {% if filterable %}
+    <br><input class="filter" type="text" name="q_{{ key }}" value="{{ filter_val|default_if_none:'' }}" placeholder="…">
     {% endif %}
 </th>

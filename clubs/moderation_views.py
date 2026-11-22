@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Case, Count, IntegerField, Q, Value, When
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .review_models import Comment, Reading, Review
@@ -18,7 +18,7 @@ SORTS = {
         "joined": "date_joined",
         "books": "nb_readings",
         "ip": "last_ip",
-        "state": "is_active",
+        "state": "state_rank",
     },
     "readings": {
         "member": "user__display_name",
@@ -82,25 +82,31 @@ def moderation(request):
             ["member", "email", "ip", "state", "title", "text"]}}
 
     if tab == "members":
-        qs = User.objects.annotate(nb_readings=Count("reading", distinct=True))
+        qs = User.objects.annotate(
+            nb_readings=Count("reading", distinct=True),
+            state_rank=Case(
+                When(is_deleted=True, then=Value(4)),
+                When(is_active=False, then=Value(3)),
+                When(is_staff=True, then=Value(2)),
+                default=Value(1),
+                output_field=IntegerField(),
+            ),
+        )
         if v := _q(request, "member"):
             qs = qs.filter(display_name__icontains=v)
         if v := _q(request, "email"):
             qs = qs.filter(email__icontains=v)
         if v := _q(request, "ip"):
             qs = qs.filter(last_ip__icontains=v)
-        if v := _q(request, "state"):
-            vl = v.lower()
-            cond = Q()
-            if "supp" in vl:
-                cond |= Q(is_deleted=True)
-            if "susp" in vl:
-                cond |= Q(is_active=False, is_deleted=False)
-            if "admin" in vl:
-                cond |= Q(is_staff=True, is_active=True, is_deleted=False)
-            if "actif" in vl:
-                cond |= Q(is_active=True, is_staff=False, is_deleted=False)
-            qs = qs.filter(cond) if cond else qs.none()
+        state = _q(request, "state")
+        if state == "actif":
+            qs = qs.filter(is_active=True, is_staff=False, is_deleted=False)
+        elif state == "admin":
+            qs = qs.filter(is_staff=True, is_active=True, is_deleted=False)
+        elif state == "suspendu":
+            qs = qs.filter(is_active=False, is_deleted=False)
+        elif state == "supprime":
+            qs = qs.filter(is_deleted=True)
         qs, sort, direction = _sort_qs(qs, tab, request)
         page = _paginate(request, qs)
         for u in page.object_list:

@@ -42,12 +42,25 @@
 {% if tab == "members" %}
 <table class="mod-table">
     <thead><tr>
-        {% include "clubs/_mod_th.html" with key="member" label=l_nom filter_val=f.member %}
-        {% include "clubs/_mod_th.html" with key="email" label=l_email filter_val=f.email %}
+        {% include "clubs/_mod_th.html" with key="member" label=l_nom filter_val=f.member filterable=True %}
+        {% include "clubs/_mod_th.html" with key="email" label=l_email filter_val=f.email filterable=True %}
         {% include "clubs/_mod_th.html" with key="joined" label=l_joined %}
         {% include "clubs/_mod_th.html" with key="books" label=l_books %}
-        {% include "clubs/_mod_th.html" with key="ip" label=l_ip filter_val=f.ip %}
-        {% include "clubs/_mod_th.html" with key="state" label=l_state filter_val=f.state %}
+        {% include "clubs/_mod_th.html" with key="ip" label=l_ip filter_val=f.ip filterable=True %}
+        <th>
+            <span>{{ l_state }}</span>
+            <span class="sort">
+                <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort=state&dir=asc" class="{% if sort == 'state' and dir == 'asc' %}on{% endif %}">▲</a>
+                <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort=state&dir=desc" class="{% if sort == 'state' and dir == 'desc' %}on{% endif %}">▼</a>
+            </span>
+            <br><select class="filter" name="q_state" onchange="this.form.submit()">
+                <option value="">— {% translate "tous" %} —</option>
+                <option value="actif" {% if f.state == 'actif' %}selected{% endif %}>{% translate "actif" %}</option>
+                <option value="admin" {% if f.state == 'admin' %}selected{% endif %}>{% translate "admin" %}</option>
+                <option value="suspendu" {% if f.state == 'suspendu' %}selected{% endif %}>{% translate "suspendu" %}</option>
+                <option value="supprime" {% if f.state == 'supprime' %}selected{% endif %}>{% translate "supprimé" %}</option>
+            </select>
+        </th>
         <th>{% translate "Actions" %}</th>
     </tr></thead>
     <tbody>
@@ -64,7 +77,8 @@
                 {% elif u.is_staff %}<em style="color:var(--accent)">{% translate "admin" %}</em>
                 {% else %}<em>{% translate "actif" %}</em>{% endif %}
             </td>
-            <td style="display:flex;gap:6px;flex-wrap:wrap">
+            <td>
+                <div style="display:flex;gap:6px;flex-wrap:wrap">
                 {% if u.id != user.id and not u.is_superuser and not u.is_deleted %}
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='suspend' %}" style="margin:0">{% csrf_token %}
                     <button class="icon-btn" type="submit" title="{% if u.is_active %}{% translate 'Suspendre' %}{% else %}{% translate 'Réactiver' %}{% endif %}">{% if u.is_active %}⏸{% else %}▶{% endif %}</button>
@@ -77,6 +91,7 @@
                     <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
                 </form>
                 {% endif %}
+                </div>
             </td>
         </tr>
     {% empty %}
@@ -88,8 +103,8 @@
 {% elif tab == "readings" %}
 <table class="mod-table">
     <thead><tr>
-        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member %}
-        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member filterable=True %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title filterable=True %}
         {% include "clubs/_mod_th.html" with key="date" label=l_date %}
         <th>{% translate "Actions" %}</th>
     </tr></thead>
@@ -115,8 +130,8 @@
 {% elif tab == "reviews" %}
 <table class="mod-table">
     <thead><tr>
-        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member %}
-        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member filterable=True %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title filterable=True %}
         {% include "clubs/_mod_th.html" with key="date" label=l_date %}
         <th>{% translate "Avis" %}{% with v=f.text %}<br><input class="filter" type="text" name="q_text" value="{{ v }}" placeholder="…"></input>{% endwith %}</th>
         <th>{% translate "Actions" %}</th>
@@ -144,8 +159,8 @@
 {% else %}
 <table class="mod-table">
     <thead><tr>
-        {% include "clubs/_mod_th.html" with key="member" label=l_author filter_val=f.member %}
-        {% include "clubs/_mod_th.html" with key="title" label=l_livre filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="member" label=l_author filter_val=f.member filterable=True %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_livre filter_val=f.title filterable=True %}
         {% include "clubs/_mod_th.html" with key="date" label=l_date %}
         <th>{% translate "Commentaire" %}{% with v=f.text %}<br><input class="filter" type="text" name="q_text" value="{{ v }}" placeholder="…"></input>{% endwith %}</th>
         <th>{% translate "Actions" %}</th>
