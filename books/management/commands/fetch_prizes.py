@@ -8,7 +8,10 @@ def _get_book(book_qid: str, title: str, author: str) -> Book | None:
     """Crée/récupère un Book pour permettre l'ajout aux favoris/listes."""
     if not title:
         return None
-    olid = f"wd:{book_qid}" if book_qid and not book_qid.startswith("nowork:") else f"wdn:{abs(hash((title, author))) % 10**10}"
+    if book_qid and not book_qid.startswith("nowork:"):
+        olid = f"wd:{book_qid}"
+    else:
+        olid = f"wdn:{abs(hash((title, author))) % 10**10}"
     book, _ = Book.objects.get_or_create(
         olid=olid, defaults={"title": title[:500], "authors": author[:500]},
     )

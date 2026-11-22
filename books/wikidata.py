@@ -28,12 +28,12 @@ PRIZES = {
 
 _VALUES = " ".join(f"wd:{q}" for q in PRIZES)
 
-QUERY = """
+QUERY = ("""
 SELECT DISTINCT ?prix ?prixLabel ?annee ?laureat ?laureatLabel ?ouvrage ?ouvrageLabel WHERE {
-  VALUES ?prix { %(V)s }
+  VALUES ?prix { __V__ }
   {
     SELECT ?prix ?annee ?laureat ?ouvrage ?score WHERE {
-      VALUES ?prix { %(V)s }
+      VALUES ?prix { __V__ }
       {
         ?ouvrage p:P166 ?stmt .
         ?stmt ps:P166 ?prix ; pq:P585 ?date .
@@ -55,7 +55,7 @@ SELECT DISTINCT ?prix ?prixLabel ?annee ?laureat ?laureatLabel ?ouvrage ?ouvrage
   }
   {
     SELECT ?prix ?annee (MAX(?score) AS ?scoreMax) WHERE {
-      VALUES ?prix { %(V)s }
+      VALUES ?prix { __V__ }
       {
         ?ouvrage p:P166 ?stmt .
         ?stmt ps:P166 ?prix ; pq:P585 ?date .
@@ -80,7 +80,7 @@ SELECT DISTINCT ?prix ?prixLabel ?annee ?laureat ?laureatLabel ?ouvrage ?ouvrage
   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
 }
 ORDER BY ?prixLabel DESC(?annee)
-""" % {"V": _VALUES}
+""".replace("__V__", _VALUES))
 
 
 def _qid(uri: str) -> str:

@@ -38,6 +38,31 @@ class Book(models.Model):
     def large_cover(self) -> str:
         return self._cover("L")
 
+    def hydrate_from_openlibrary(self) -> None:
+        """Enrichit description et cover_id manquants via /works/{olid}.json.
+
+        Best-effort : les erreurs sont avalées pour ne jamais casser la vue,
+        et les olid synthétiques (lm:, wd:, wdn:) sont ignorés.
+        """
+        if not self.olid or ":" in self.olid:
+            return
+        from . import openlibrary
+        try:
+            data = openlibrary.fetch_work(self.olid)
+        except Exception:
+            return
+        changed = False
+        desc = data.get("description") or ""
+        if desc and not self.description:
+            self.description = desc[:4000]
+            changed = True
+        cov = data.get("cover_id")
+        if cov and not self.cover_id:
+            self.cover_id = cov
+            changed = True
+        if changed:
+            self.save(update_fields=["description", "cover_id"])
+
 
 class NewRelease(models.Model):
     """Nouveautés aspirées sur une source externe (Fnac pour l'instant)."""
@@ -79,23 +104,3 @@ class PrizeWinner(models.Model):
 
     def __str__(self):
         return f"{self.prize_name} {self.year}: {self.title}"
-
-    def hydrate_from_openlibrary(self) -> None:
-        """Enrichit description et cover_id manquants via /works/{olid}.json.
-
-        Best-effort : les erreurs sont avalées pour ne jamais casser la vue.
-        """
-        from . import openlibrary
-
-        data = openlibrary.fetch_work(self.olid)
-        changed = False
-        desc = data.get("description") or ""
-        if desc and not self.description:
-            self.description = desc[:4000]
-            changed = True
-        cov = data.get("cover_id")
-        if cov and not self.cover_id:
-            self.cover_id = cov
-            changed = True
-        if changed:
-            self.save(update_fields=["description", "cover_id"])
