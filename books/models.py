@@ -47,6 +47,7 @@ class NewRelease(models.Model):
     author = models.CharField(_("auteur"), max_length=300, blank=True)
     cover_url = models.URLField(max_length=500, blank=True)
     summary = models.TextField(_("résumé"), blank=True)
+    book = models.ForeignKey("Book", on_delete=models.SET_NULL, null=True, blank=True)
     fetched_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -67,6 +68,7 @@ class PrizeWinner(models.Model):
     title = models.CharField(_("titre"), max_length=500)
     author = models.CharField(_("auteur"), max_length=300, blank=True)
     year = models.PositiveSmallIntegerField(null=True, blank=True)
+    book = models.ForeignKey("Book", on_delete=models.SET_NULL, null=True, blank=True)
     fetched_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

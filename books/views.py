@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -193,16 +194,34 @@ def detail(request, book_id):
     )
 
 
+def _fav_and_lists(request):
+    ensure_default_lists(request.user)
+    fav_ids = set(ListItem.objects.filter(
+        list__owner=request.user, list__kind=ReadingList.Kind.FAVORITES,
+    ).values_list("book_id", flat=True))
+    lists = (ReadingList.objects.filter(owner=request.user)
+        .exclude(kind=ReadingList.Kind.FAVORITES)
+        .annotate(items_count=Count("items")).order_by("name"))
+    return fav_ids, lists
+
+
 @login_required
 def releases(request):
-    items = NewRelease.objects.all()
-    return render(request, "books/releases.html", {"items": items})
+    items = list(NewRelease.objects.select_related("book"))
+    fav_ids, lists = _fav_and_lists(request)
+    for it in items:
+        it.is_favorite = it.book_id in fav_ids if it.book_id else False
+    return render(request, "books/releases.html",
+                  {"items": items, "add_to_list_lists": lists})
 
 
 @login_required
 def prizes(request):
-    items = PrizeWinner.objects.all()
+    items = list(PrizeWinner.objects.select_related("book"))
+    fav_ids, lists = _fav_and_lists(request)
     grouped = {}
     for p in items:
+        p.is_favorite = p.book_id in fav_ids if p.book_id else False
         grouped.setdefault(p.prize_name, []).append(p)
-    return render(request, "books/prizes.html", {"grouped": grouped})
+    return render(request, "books/prizes.html",
+                  {"grouped": grouped, "add_to_list_lists": lists})
