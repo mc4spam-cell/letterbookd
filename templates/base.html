@@ -400,6 +400,12 @@
             .cover-lg { width: 140px; margin: 0 16px 10px 0; }
             .cover-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
             textarea { max-width: 100%; }
+            header .nav-user .nav-label,
+            header a[href="/"] .nav-label,
+            header a[href$="notifications/"] .nav-label,
+            header a[href$="inviter/"] .nav-label,
+            header a[href$="moderation/"] .nav-label,
+            header form[action$="logout/"] .nav-label { display: none; }
         }
 
         /* ───── Mobile (≤640px) ───── */
