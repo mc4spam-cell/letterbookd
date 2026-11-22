@@ -69,12 +69,15 @@ def test_home_empty_state_when_following_nobody(make_user, book):
 
 
 @pytest.mark.django_db
-def test_members_page_lists_others(make_user):
+def test_members_page_lists_only_followed(make_user):
+    """La page /membres/ ne liste que les membres que je suis."""
     me = make_user()
+    followed = make_user(email="a@x.y", display_name="followed")
     other = make_user(email="other@x.y", display_name="other")
+    from clubs.models import Follow
+    Follow.objects.create(follower=me, followed=followed)
     r = _login(me).get(reverse("members"))
-    content = r.content.decode()
-    # Isole la liste des membres (après <main>)
-    body = content.split('id="main"', 1)[1]
-    assert other.display_name in body
+    body = r.content.decode().split('id="main"', 1)[1]
+    assert followed.display_name in body
+    assert other.display_name not in body
     assert me.display_name not in body
