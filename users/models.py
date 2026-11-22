@@ -31,6 +31,8 @@ class User(AbstractUser):
     email = models.EmailField(_("adresse e-mail"), unique=True)
     display_name = models.CharField(_("nom affiché"), max_length=80, unique=True)
     bio = models.TextField(_("bio"), blank=True)
+    last_ip = models.GenericIPAddressField(_("dernière IP"), null=True, blank=True)
+    is_deleted = models.BooleanField(_("supprimé"), default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

@@ -2,93 +2,184 @@
 {% load i18n %}
 {% block title %}{% translate "Modération" %}{% endblock %}
 {% block content %}
+<style>
+    .mod-tabs { display:flex; gap:2px; border-bottom:1px solid var(--border); margin-bottom:12px; }
+    .mod-tabs a { padding:8px 14px; text-decoration:none; color:var(--muted); border-bottom:2px solid transparent; }
+    .mod-tabs a.on { color:var(--text); border-bottom-color:var(--accent); }
+    .mod-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .mod-table th { padding:6px 8px; text-align:left; color:var(--muted); border-bottom:1px solid var(--border); vertical-align:top; }
+    .mod-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:top; }
+    .mod-table .sort { display:inline-flex; gap:2px; margin-left:4px; }
+    .mod-table .sort a { text-decoration:none; color:var(--muted); font-size:10px; }
+    .mod-table .sort a.on { color:var(--accent); }
+    .mod-table input.filter { width:100%; max-width:160px; background:var(--surface-2); color:var(--text);
+        border:1px solid var(--border); border-radius:4px; padding:3px 6px; font-size:12px; margin-top:4px; }
+    .mod-pager { display:flex; gap:12px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted); }
+    .mod-pager a { color:var(--accent); text-decoration:none; }
+    .mod-pager input { width:60px; background:var(--surface-2); color:var(--text);
+        border:1px solid var(--border); border-radius:4px; padding:3px 6px; }
+    tr.deleted td { text-decoration:line-through; color:var(--muted); }
+</style>
+
 <h1>{% translate "Modération" %}</h1>
 
-<h2>{% translate "Membres" %}</h2>
-<table style="width:100%;border-collapse:collapse;font-size:13px">
-    <thead>
-        <tr style="text-align:left;color:var(--muted);border-bottom:1px solid var(--border)">
-            <th style="padding:6px 8px">{% translate "Nom" %}</th>
-            <th style="padding:6px 8px">{% translate "E-mail" %}</th>
-            <th style="padding:6px 8px">{% translate "Inscrit le" %}</th>
-            <th style="padding:6px 8px;text-align:right">{% translate "Livres" %}</th>
-            <th style="padding:6px 8px">{% translate "État" %}</th>
-            <th style="padding:6px 8px">{% translate "Actions" %}</th>
-        </tr>
-    </thead>
+<nav class="mod-tabs">
+    <a href="?tab=members" class="{% if tab == 'members' %}on{% endif %}">{% translate "Membres" %}</a>
+    <a href="?tab=readings" class="{% if tab == 'readings' %}on{% endif %}">{% translate "Lectures" %}</a>
+    <a href="?tab=reviews" class="{% if tab == 'reviews' %}on{% endif %}">{% translate "Avis" %}</a>
+    <a href="?tab=comments" class="{% if tab == 'comments' %}on{% endif %}">{% translate "Commentaires" %}</a>
+</nav>
+
+{# One GET form wraps the whole table so Entrée dans n'importe quel filtre resoumet #}
+<form method="get">
+    <input type="hidden" name="tab" value="{{ tab }}">
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <input type="hidden" name="dir" value="{{ dir }}">
+
+{% with f=filters %}
+{% translate "Nom" as l_nom %}{% translate "E-mail" as l_email %}{% translate "Inscrit le" as l_joined %}{% translate "Livres" as l_books %}{% translate "IP" as l_ip %}{% translate "État" as l_state %}{% translate "Membre" as l_member %}{% translate "Auteur" as l_author %}{% translate "Titre" as l_title %}{% translate "Livre" as l_livre %}{% translate "Date" as l_date %}
+
+{% if tab == "members" %}
+<table class="mod-table">
+    <thead><tr>
+        {% include "clubs/_mod_th.html" with key="member" label=l_nom filter_val=f.member %}
+        {% include "clubs/_mod_th.html" with key="email" label=l_email filter_val=f.email %}
+        {% include "clubs/_mod_th.html" with key="joined" label=l_joined %}
+        {% include "clubs/_mod_th.html" with key="books" label=l_books %}
+        {% include "clubs/_mod_th.html" with key="ip" label=l_ip filter_val=f.ip %}
+        {% include "clubs/_mod_th.html" with key="state" label=l_state filter_val=f.state %}
+        <th>{% translate "Actions" %}</th>
+    </tr></thead>
     <tbody>
-    {% for u in users %}
-        <tr style="border-bottom:1px solid var(--border)">
-            <td style="padding:6px 8px">
-                <a href="{% url 'profile_detail' user_id=u.id %}">{{ u.display_name|default:"—" }}</a>
-            </td>
-            <td style="padding:6px 8px;color:var(--muted)">{{ u.email }}</td>
-            <td style="padding:6px 8px;color:var(--muted)">{{ u.date_joined|date:"j M Y" }}</td>
-            <td style="padding:6px 8px;text-align:right">{{ u.nb_readings }}</td>
-            <td style="padding:6px 8px">
-                {% if not u.is_active %}<em style="color:#ff5566">{% translate "suspendu" %}</em>
+    {% for u in page %}
+        <tr class="{% if u.is_deleted %}deleted{% endif %}">
+            <td><a href="{% url 'profile_detail' user_id=u.id %}">{{ u.display_name|default:"—" }}</a></td>
+            <td style="color:var(--muted)">{{ u.email }}</td>
+            <td style="color:var(--muted)">{{ u.date_joined|date:"j M Y" }}</td>
+            <td style="text-align:right">{{ u.nb_readings }}</td>
+            <td style="color:var(--muted)">{{ u.last_ip|default:"—" }}</td>
+            <td>
+                {% if u.is_deleted %}<em style="color:var(--muted)">{% translate "supprimé" %}</em>
+                {% elif not u.is_active %}<em style="color:#ff5566">{% translate "suspendu" %}</em>
                 {% elif u.is_staff %}<em style="color:var(--accent)">{% translate "admin" %}</em>
                 {% else %}<em>{% translate "actif" %}</em>{% endif %}
             </td>
-            <td style="padding:6px 8px;display:flex;gap:6px;flex-wrap:wrap">
-                {% if u.id != user.id and not u.is_superuser %}
+            <td style="display:flex;gap:6px;flex-wrap:wrap">
+                {% if u.id != user.id and not u.is_superuser and not u.is_deleted %}
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='suspend' %}" style="margin:0">{% csrf_token %}
-                    <button class="icon-btn" type="submit" title="{% if u.is_active %}{% translate 'Suspendre' %}{% else %}{% translate 'Réactiver' %}{% endif %}">
-                        {% if u.is_active %}⏸{% else %}▶{% endif %}
-                    </button>
+                    <button class="icon-btn" type="submit" title="{% if u.is_active %}{% translate 'Suspendre' %}{% else %}{% translate 'Réactiver' %}{% endif %}">{% if u.is_active %}⏸{% else %}▶{% endif %}</button>
                 </form>
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='staff' %}" style="margin:0">{% csrf_token %}
-                    <button class="icon-btn" type="submit" title="{% if u.is_staff %}{% translate 'Retirer droits admin' %}{% else %}{% translate 'Donner droits admin' %}{% endif %}">
-                        {% if u.is_staff %}☆{% else %}★{% endif %}
-                    </button>
+                    <button class="icon-btn" type="submit" title="{% if u.is_staff %}{% translate 'Retirer droits admin' %}{% else %}{% translate 'Donner droits admin' %}{% endif %}">{% if u.is_staff %}☆{% else %}★{% endif %}</button>
                 </form>
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='delete' %}" style="margin:0"
-                      onsubmit="return confirm('{% blocktranslate with n=u.display_name|default:u.email %}Supprimer définitivement {{ n }} et toutes ses données ?{% endblocktranslate %}');">{% csrf_token %}
+                      onsubmit="return confirm('{% blocktranslate with n=u.display_name|default:u.email %}Supprimer {{ n }} ? (conservé en base, rayé){% endblocktranslate %}');">{% csrf_token %}
                     <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
                 </form>
                 {% endif %}
             </td>
         </tr>
+    {% empty %}
+        <tr><td colspan="7" style="color:var(--muted)"><em>{% translate "Rien à afficher." %}</em></td></tr>
     {% endfor %}
     </tbody>
 </table>
 
-<h2>{% translate "Lectures récentes" %}</h2>
-<ul>
-{% for r in recent_readings %}
-    <li style="padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
-        <span style="flex:1"><strong>{{ r.user }}</strong> · {{ r.book }} <em>({{ r.created_at|date:"j M" }})</em></span>
-        <form method="post" action="{% url 'moderation_delete' kind='reading' obj_id=r.id %}" style="margin:0"
-              onsubmit="return confirm('{% translate 'Supprimer cette lecture ?' %}');">{% csrf_token %}
-            <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
-        </form>
-    </li>
-{% endfor %}
-</ul>
+{% elif tab == "readings" %}
+<table class="mod-table">
+    <thead><tr>
+        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="date" label=l_date %}
+        <th>{% translate "Actions" %}</th>
+    </tr></thead>
+    <tbody>
+    {% for r in page %}
+        <tr>
+            <td>{{ r.user }}</td>
+            <td>{{ r.book }}</td>
+            <td style="color:var(--muted)">{{ r.created_at|date:"j M Y H:i" }}</td>
+            <td>
+                <form method="post" action="{% url 'moderation_delete' kind='reading' obj_id=r.id %}" style="margin:0"
+                      onsubmit="return confirm('{% translate 'Supprimer cette lecture ?' %}');">{% csrf_token %}
+                    <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4" style="color:var(--muted)"><em>{% translate "Rien à afficher." %}</em></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-<h2>{% translate "Avis récents" %}</h2>
-<ul>
-{% for rv in recent_reviews %}
-    <li style="padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
-        <span style="flex:1"><strong>{{ rv.reading.user }}</strong> · {{ rv.reading.book }} <em>({{ rv.created_at|date:"j M" }})</em></span>
-        <form method="post" action="{% url 'moderation_delete' kind='review' obj_id=rv.id %}" style="margin:0"
-              onsubmit="return confirm('{% translate 'Supprimer cet avis ?' %}');">{% csrf_token %}
-            <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
-        </form>
-    </li>
-{% endfor %}
-</ul>
+{% elif tab == "reviews" %}
+<table class="mod-table">
+    <thead><tr>
+        {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="date" label=l_date %}
+        <th>{% translate "Avis" %}{% with v=f.text %}<br><input class="filter" type="text" name="q_text" value="{{ v }}" placeholder="…"></input>{% endwith %}</th>
+        <th>{% translate "Actions" %}</th>
+    </tr></thead>
+    <tbody>
+    {% for rv in page %}
+        <tr>
+            <td>{{ rv.reading.user }}</td>
+            <td>{{ rv.reading.book }}</td>
+            <td style="color:var(--muted)">{{ rv.created_at|date:"j M Y H:i" }}</td>
+            <td style="white-space:pre-wrap">{{ rv.text }}</td>
+            <td>
+                <form method="post" action="{% url 'moderation_delete' kind='review' obj_id=rv.id %}" style="margin:0"
+                      onsubmit="return confirm('{% translate 'Supprimer cet avis ?' %}');">{% csrf_token %}
+                    <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5" style="color:var(--muted)"><em>{% translate "Rien à afficher." %}</em></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-<h2>{% translate "Commentaires récents" %}</h2>
-<ul>
-{% for c in recent_comments %}
-    <li style="padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
-        <span style="flex:1"><strong>{{ c.author }}</strong> : {{ c.text|truncatechars:80 }} <em>({{ c.created_at|date:"j M" }})</em></span>
-        <form method="post" action="{% url 'moderation_delete' kind='comment' obj_id=c.id %}" style="margin:0"
-              onsubmit="return confirm('{% translate 'Supprimer ce commentaire ?' %}');">{% csrf_token %}
-            <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
-        </form>
-    </li>
-{% endfor %}
-</ul>
+{% else %}
+<table class="mod-table">
+    <thead><tr>
+        {% include "clubs/_mod_th.html" with key="member" label=l_author filter_val=f.member %}
+        {% include "clubs/_mod_th.html" with key="title" label=l_livre filter_val=f.title %}
+        {% include "clubs/_mod_th.html" with key="date" label=l_date %}
+        <th>{% translate "Commentaire" %}{% with v=f.text %}<br><input class="filter" type="text" name="q_text" value="{{ v }}" placeholder="…"></input>{% endwith %}</th>
+        <th>{% translate "Actions" %}</th>
+    </tr></thead>
+    <tbody>
+    {% for c in page %}
+        <tr>
+            <td>{{ c.author }}</td>
+            <td>{{ c.review.reading.book }}</td>
+            <td style="color:var(--muted)">{{ c.created_at|date:"j M Y H:i" }}</td>
+            <td style="white-space:pre-wrap">{{ c.text }}</td>
+            <td>
+                <form method="post" action="{% url 'moderation_delete' kind='comment' obj_id=c.id %}" style="margin:0"
+                      onsubmit="return confirm('{% translate 'Supprimer ce commentaire ?' %}');">{% csrf_token %}
+                    <button class="icon-btn danger" type="submit" title="{% translate 'Supprimer' %}">×</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5" style="color:var(--muted)"><em>{% translate "Rien à afficher." %}</em></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endwith %}
+
+<div class="mod-pager">
+    <button type="submit" class="icon-btn" title="{% translate 'Appliquer les filtres' %}">⟲ {% translate "Filtrer" %}</button>
+    {% if page.has_previous %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.previous_page_number }}">← {% translate "Précédent" %}</a>{% endif %}
+    <span>{% blocktranslate with n=page.number t=page.paginator.num_pages %}Page {{ n }} / {{ t }}{% endblocktranslate %} · {{ page.paginator.count }} {% translate "item(s)" %}</span>
+    {% if page.has_next %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.next_page_number }}">{% translate "Suivant" %} →</a>{% endif %}
+    <label>{% translate "Aller à" %} <input type="number" name="page" min="1" max="{{ page.paginator.num_pages }}" value="{{ page.number }}"></label>
+</div>
+
+</form>
 {% endblock %}

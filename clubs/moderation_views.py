@@ -1,40 +1,144 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import user_passes_test
-from django.db.models import Count
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .review_models import Comment, Reading, Review
 
 staff_required = user_passes_test(lambda u: u.is_authenticated and u.is_staff)
 
+PAGE_SIZE = 50
+
+# {tab: {col: orm_field}}
+SORTS = {
+    "members": {
+        "member": "display_name",
+        "email": "email",
+        "joined": "date_joined",
+        "books": "nb_readings",
+        "ip": "last_ip",
+        "state": "is_active",
+    },
+    "readings": {
+        "member": "user__display_name",
+        "title": "book__title",
+        "date": "created_at",
+    },
+    "reviews": {
+        "member": "reading__user__display_name",
+        "title": "reading__book__title",
+        "date": "created_at",
+    },
+    "comments": {
+        "member": "author__display_name",
+        "title": "review__reading__book__title",
+        "date": "created_at",
+    },
+}
+
+
+def _state_label(u):
+    if u.is_deleted:
+        return "supprimé"
+    if not u.is_active:
+        return "suspendu"
+    if u.is_staff:
+        return "admin"
+    return "actif"
+
+
+def _sort_qs(qs, tab, request):
+    sort = request.GET.get("sort") or {
+        "members": "joined", "readings": "date", "reviews": "date", "comments": "date"
+    }[tab]
+    direction = request.GET.get("dir", "desc")
+    field = SORTS[tab].get(sort)
+    if not field:
+        return qs, sort, direction
+    prefix = "" if direction == "asc" else "-"
+    return qs.order_by(f"{prefix}{field}"), sort, direction
+
+
+def _paginate(request, qs):
+    try:
+        page = int(request.GET.get("page", 1))
+    except ValueError:
+        page = 1
+    return Paginator(qs, PAGE_SIZE).get_page(page)
+
+
+def _q(request, key):
+    return (request.GET.get(f"q_{key}") or "").strip()
+
 
 @staff_required
 def moderation(request):
+    tab = request.GET.get("tab") or "members"
+    if tab not in SORTS:
+        tab = "members"
     User = get_user_model()
-    users = (
-        User.objects.annotate(nb_readings=Count("reading", distinct=True))
-        .order_by("-date_joined")
-    )
-    recent_readings = (
-        Reading.objects.select_related("user", "book").order_by("-created_at")[:20]
-    )
-    recent_reviews = (
-        Review.objects.select_related("reading__user", "reading__book")
-        .order_by("-created_at")[:20]
-    )
-    recent_comments = (
-        Comment.objects.select_related("author", "review").order_by("-created_at")[:20]
-    )
-    return render(
-        request,
-        "clubs/moderation.html",
-        {
-            "users": users,
-            "recent_readings": recent_readings,
-            "recent_reviews": recent_reviews,
-            "recent_comments": recent_comments,
-        },
-    )
+    ctx = {"tab": tab, "filters": {k: request.GET.get(f"q_{k}", "") for k in
+            ["member", "email", "ip", "state", "title", "text"]}}
+
+    if tab == "members":
+        qs = User.objects.annotate(nb_readings=Count("reading", distinct=True))
+        if v := _q(request, "member"):
+            qs = qs.filter(display_name__icontains=v)
+        if v := _q(request, "email"):
+            qs = qs.filter(email__icontains=v)
+        if v := _q(request, "ip"):
+            qs = qs.filter(last_ip__icontains=v)
+        if v := _q(request, "state"):
+            vl = v.lower()
+            cond = Q()
+            if "supp" in vl:
+                cond |= Q(is_deleted=True)
+            if "susp" in vl:
+                cond |= Q(is_active=False, is_deleted=False)
+            if "admin" in vl:
+                cond |= Q(is_staff=True, is_active=True, is_deleted=False)
+            if "actif" in vl:
+                cond |= Q(is_active=True, is_staff=False, is_deleted=False)
+            qs = qs.filter(cond) if cond else qs.none()
+        qs, sort, direction = _sort_qs(qs, tab, request)
+        page = _paginate(request, qs)
+        for u in page.object_list:
+            u.state_label = _state_label(u)
+        ctx.update(page=page, sort=sort, dir=direction)
+
+    elif tab == "readings":
+        qs = Reading.objects.select_related("user", "book")
+        if v := _q(request, "member"):
+            qs = qs.filter(user__display_name__icontains=v)
+        if v := _q(request, "title"):
+            qs = qs.filter(book__title__icontains=v)
+        qs, sort, direction = _sort_qs(qs, tab, request)
+        ctx.update(page=_paginate(request, qs), sort=sort, dir=direction)
+
+    elif tab == "reviews":
+        qs = Review.objects.select_related("reading__user", "reading__book")
+        if v := _q(request, "member"):
+            qs = qs.filter(reading__user__display_name__icontains=v)
+        if v := _q(request, "title"):
+            qs = qs.filter(reading__book__title__icontains=v)
+        if v := _q(request, "text"):
+            qs = qs.filter(text__icontains=v)
+        qs, sort, direction = _sort_qs(qs, tab, request)
+        ctx.update(page=_paginate(request, qs), sort=sort, dir=direction)
+
+    else:  # comments
+        qs = Comment.objects.select_related("author", "review__reading__book")
+        if v := _q(request, "member"):
+            qs = qs.filter(author__display_name__icontains=v)
+        if v := _q(request, "title"):
+            qs = qs.filter(review__reading__book__title__icontains=v)
+        if v := _q(request, "text"):
+            qs = qs.filter(text__icontains=v)
+        qs, sort, direction = _sort_qs(qs, tab, request)
+        ctx.update(page=_paginate(request, qs), sort=sort, dir=direction)
+
+    return render(request, "clubs/moderation.html", ctx)
 
 
 def _action(request, user_id, action):
@@ -49,7 +153,9 @@ def _action(request, user_id, action):
         target.is_staff = not target.is_staff
         target.save(update_fields=["is_staff"])
     elif action == "delete":
-        target.delete()
+        target.is_deleted = True
+        target.is_active = False
+        target.save(update_fields=["is_deleted", "is_active"])
     return redirect("moderation")
 
 
