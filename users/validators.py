@@ -1,7 +1,18 @@
 import re
 
+from django.contrib.auth.password_validation import UserAttributeSimilarityValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
+
+class ExplicitSimilarityValidator(UserAttributeSimilarityValidator):
+    """Mêmes vérifs que le validateur Django, mais un help_text qui dit lesquelles."""
+
+    def get_help_text(self):
+        return _(
+            "Doit être nettement différent de votre adresse e-mail et "
+            "de votre nom de membre (au moins 50 %% de différence)."
+        )
 
 
 class CharacterClassesValidator:

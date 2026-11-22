@@ -106,7 +106,7 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@letterbookd.l
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "users.validators.ExplicitSimilarityValidator",
         "OPTIONS": {
             "user_attributes": ("email", "display_name"),
             "max_similarity": 0.5,
