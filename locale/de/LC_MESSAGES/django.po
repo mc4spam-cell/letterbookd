@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 00:35+0100\n"
+"POT-Creation-Date: 2026-11-23 00:42+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: de\n"
@@ -749,8 +749,11 @@ msgid "Page suivante"
 msgstr "Nächste Seite"
 
 #: templates/clubs/moderation.html:207
-msgid "item(s)"
-msgstr "Eintrag/Einträge"
+#, python-format
+msgid "%(n)s élément"
+msgid_plural "%(n)s éléments"
+msgstr[0] "%(n)s Eintrag"
+msgstr[1] "%(n)s Einträge"
 
 #: templates/clubs/moderation.html:216
 msgid "tous"
@@ -944,6 +947,9 @@ msgstr "Dein Passwort darf nicht mehr als %(n)d aufeinanderfolgende Zeichen dein
 #, python-format
 msgid "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de votre mot de passe précédent."
 msgstr "Dein Passwort darf nicht mehr als %(n)d aufeinanderfolgende Zeichen deines vorherigen Passworts wiederverwenden."
+
+#~ msgid "item(s)"
+#~ msgstr "Eintrag/Einträge"
 
 #~ msgid "Flux"
 #~ msgstr "Feed"
