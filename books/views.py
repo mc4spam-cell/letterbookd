@@ -133,6 +133,13 @@ def detail(request, book_id):
         else:
             other_entries.append(e)
 
+    highlighted = request.GET.get("avis")
+    highlighted_id = int(highlighted) if highlighted and highlighted.isdigit() else None
+    if highlighted_id is not None:
+        other_entries.sort(
+            key=lambda e: 0 if getattr(e, "review", None) and e.review.pk == highlighted_id else 1
+        )
+
     return render(
         request,
         "books/detail.html",
@@ -144,5 +151,6 @@ def detail(request, book_id):
             "max_count": max_count,
             "my_entry": my_entry,
             "other_entries": other_entries,
+            "highlighted_review_id": highlighted_id,
         },
     )

@@ -2,7 +2,7 @@ from datetime import date as _date
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg, Count, Prefetch
+from django.db.models import Avg, Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -86,8 +86,10 @@ def read_book(request, book_id):
 
 @login_required
 def review_detail(request, review_id):
+    """L'avis est affiche sur la fiche livre. On n'a plus de page dediee :
+    on y redirige, en epinglant l'avis concerne."""
     review = get_object_or_404(
-        Review.objects.select_related("reading__user", "reading__book"), pk=review_id
+        Review.objects.select_related("reading__book"), pk=review_id
     )
     if request.method == "POST":
         text = (request.POST.get("text") or "").strip()
@@ -100,14 +102,8 @@ def review_detail(request, review_id):
                 review=review, parent=parent, author=request.user, text=text
             )
             _notify_for_comment(comment)
-        return redirect("review_detail", review_id=review.pk)
-    replies_qs = Comment.objects.select_related("author").order_by("created_at")
-    roots = (
-        review.comments.filter(parent__isnull=True)
-        .prefetch_related(Prefetch("replies", queryset=replies_qs))
-        .select_related("author")
-    )
-    return render(request, "clubs/review_detail.html", {"review": review, "roots": roots})
+    url = reverse("books_detail", args=[review.reading.book_id])
+    return redirect(f"{url}?avis={review.pk}#avis-{review.pk}")
 
 
 @login_required
