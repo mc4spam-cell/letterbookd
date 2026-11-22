@@ -108,6 +108,7 @@ def detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     if not book.description or not book.cover_id:
         book.hydrate_from_openlibrary()
+    ensure_default_lists(request.user)
 
     rated = Reading.objects.filter(book=book, rating__isnull=False)
     agg = rated.aggregate(avg=Avg("rating"), total=Count("id"))

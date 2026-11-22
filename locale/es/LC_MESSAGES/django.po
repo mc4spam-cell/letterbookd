@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 14:20+0100\n"
+"POT-Creation-Date: 2026-11-22 18:43+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: es\n"
@@ -32,14 +32,20 @@ msgstr "año"
 msgid "résumé"
 msgstr "resumen"
 
+msgid "normale"
+msgstr ""
+
+msgid "favoris"
+msgstr ""
+
+msgid "à lire"
+msgstr "por leer"
+
 msgid "description"
 msgstr "descripción"
 
 msgid "note libre"
 msgstr "nota libre"
-
-msgid "à lire"
-msgstr "por leer"
 
 msgid "en cours"
 msgstr "leyendo"
@@ -169,11 +175,41 @@ msgstr "Páginas"
 msgid "Résumé"
 msgstr "Resumen"
 
+msgid "Favori"
+msgstr "Favorito"
+
 msgid "Noter / écrire un avis"
 msgstr "Puntuar / escribir una reseña"
 
 msgid "Ajouter à une liste"
 msgstr "Añadir a una lista"
+
+msgid "Ajouter aux favoris"
+msgstr "Añadir a favoritos"
+
+msgid "Statut"
+msgstr "Estado"
+
+msgid "Commencé le"
+msgstr "Empezado el"
+
+msgid "Terminé le"
+msgstr "Terminado el"
+
+msgid "Note"
+msgstr "Puntuación"
+
+msgid "Avis (optionnel)"
+msgstr "Reseña (opcional)"
+
+msgid "Contient des spoilers"
+msgstr "Contiene spoilers"
+
+msgid "Publier"
+msgstr "Publicar"
+
+msgid "Annuler"
+msgstr "Cancelar"
 
 msgid "Mon avis"
 msgstr "Mi reseña"
@@ -187,14 +223,13 @@ msgstr "Editar"
 msgid "Réagir"
 msgstr "Reaccionar"
 
-msgid "Écris ton avis…"
-msgstr "Escribe tu reseña…"
+#, fuzzy
+#| msgid "Nouveau commentaire"
+msgid "Ton commentaire…"
+msgstr "Nuevo comentario"
 
-msgid "Publier"
-msgstr "Publicar"
-
-msgid "Avis complet (note, dates, spoiler)"
-msgstr "Reseña completa (puntuación, fechas, spoiler)"
+msgid "Tu n'as pas encore noté ce livre."
+msgstr "Aún no has calificado este libro."
 
 msgid "Avis des autres membres"
 msgstr "Reseñas de otros miembros"
@@ -249,13 +284,6 @@ msgstr "Puntuación guardada"
 msgid "ajouter un avis"
 msgstr "añadir una reseña"
 
-msgid "Note"
-msgstr "Puntuación"
-
-#, python-format
-msgid "Ajouter « %(t)s » à une liste"
-msgstr "Añadir « %(t)s » a una lista"
-
 msgid "livre(s)"
 msgstr "libro(s)"
 
@@ -264,6 +292,10 @@ msgstr "O crear una lista nueva"
 
 msgid "Titre"
 msgstr "Título"
+
+#, python-format
+msgid "Ajouter « %(t)s » à une liste"
+msgstr "Añadir « %(t)s » a una lista"
 
 msgid "Retour à la fiche"
 msgstr "Volver a la ficha"
@@ -341,12 +373,21 @@ msgstr "Descripción"
 msgid "Créer une liste"
 msgstr "Crear una lista"
 
+msgid "Favoris"
+msgstr "Favoritos"
+
+msgid "À lire"
+msgstr "Por leer"
+
 #, python-format
 msgid "Supprimer la liste « %(n)s » ?"
 msgstr "¿Eliminar la lista « %(n)s »?"
 
 msgid "Supprimer la liste"
 msgstr "Eliminar la lista"
+
+msgid "Retirer des favoris"
+msgstr "Quitar de favoritos"
 
 #, python-format
 msgid "Retirer « %(n)s » de la liste ?"
@@ -357,9 +398,6 @@ msgstr "Quitar de la lista"
 
 msgid "Déplacer dans une autre liste"
 msgstr "Mover a otra lista"
-
-msgid "Liste vide."
-msgstr "Lista vacía."
 
 msgid "Tous mes livres"
 msgstr "Todos mis libros"
@@ -487,29 +525,14 @@ msgstr "Sus libros, por preferencia"
 msgid "Aucune lecture pour l'instant."
 msgstr "Aún no hay lecturas."
 
+msgid "Liste vide."
+msgstr "Lista vacía."
+
 msgid "Noter"
 msgstr "Puntuar"
 
 msgid "Nouvelle lecture (relecture)"
 msgstr "Nueva lectura (relectura)"
-
-msgid "Statut"
-msgstr "Estado"
-
-msgid "Commencé le"
-msgstr "Empezado el"
-
-msgid "Terminé le"
-msgstr "Terminado el"
-
-msgid "Avis (optionnel)"
-msgstr "Reseña (opcional)"
-
-msgid "Contient des spoilers"
-msgstr "Contiene spoilers"
-
-msgid "Ou enregistrer une relecture"
-msgstr "O registrar una relectura"
 
 msgid "Lectures de"
 msgstr "Lecturas de"
@@ -537,24 +560,6 @@ msgstr "terminado"
 
 msgid "Aucune lecture pour ce filtre."
 msgstr "No hay lecturas para este filtro."
-
-msgid "Avis de"
-msgstr "Reseña de"
-
-msgid "spoilers"
-msgstr "spoilers"
-
-msgid "Commentaires"
-msgstr "Comentarios"
-
-msgid "Répondre"
-msgstr "Responder"
-
-msgid "Pas encore de commentaire."
-msgstr "Aún no hay comentarios."
-
-msgid "Nouveau commentaire"
-msgstr "Nuevo comentario"
 
 msgid "Mes stats"
 msgstr "Mis estadísticas"
@@ -591,7 +596,9 @@ msgstr "Ese nombre ya está en uso, elige otro."
 msgid ""
 "Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
 "l'ancien."
-msgstr "La nueva contraseña repite más de %(n)d caracteres consecutivos de la anterior."
+msgstr ""
+"La nueva contraseña repite más de %(n)d caracteres consecutivos de la "
+"anterior."
 
 msgid "adresse e-mail"
 msgstr "dirección de correo electrónico"
@@ -621,7 +628,9 @@ msgstr "La contraseña debe contener %(items)s."
 msgid ""
 "Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
 "des chiffres et des caractères spéciaux."
-msgstr "Tu contraseña debe contener a la vez minúsculas, mayúsculas, dígitos y caracteres especiales."
+msgstr ""
+"Tu contraseña debe contener a la vez minúsculas, mayúsculas, dígitos y "
+"caracteres especiales."
 
 #, fuzzy
 #| msgid "adresse e-mail"
@@ -642,13 +651,41 @@ msgstr "La contraseña repite más de %(n)d caracteres consecutivos de %(attr)s.
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre adresse e-mail et/ou de votre nom de membre."
-msgstr "Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu dirección de correo electrónico y/o de tu nombre de miembro."
+msgstr ""
+"Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu "
+"dirección de correo electrónico y/o de tu nombre de miembro."
 
 #, python-format
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre mot de passe précédent."
-msgstr "Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu contraseña anterior."
+msgstr ""
+"Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu "
+"contraseña anterior."
+
+#~ msgid "Écris ton avis…"
+#~ msgstr "Escribe tu reseña…"
+
+#~ msgid "Avis complet (note, dates, spoiler)"
+#~ msgstr "Reseña completa (puntuación, fechas, spoiler)"
+
+#~ msgid "Ou enregistrer une relecture"
+#~ msgstr "O registrar una relectura"
+
+#~ msgid "Avis de"
+#~ msgstr "Reseña de"
+
+#~ msgid "spoilers"
+#~ msgstr "spoilers"
+
+#~ msgid "Commentaires"
+#~ msgstr "Comentarios"
+
+#~ msgid "Répondre"
+#~ msgstr "Responder"
+
+#~ msgid "Pas encore de commentaire."
+#~ msgstr "Aún no hay comentarios."
 
 #~ msgid "couverture"
 #~ msgstr "portada"

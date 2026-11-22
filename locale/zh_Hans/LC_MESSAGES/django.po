@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 14:20+0100\n"
+"POT-Creation-Date: 2026-11-22 18:43+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: zh_Hans\n"
@@ -32,14 +32,20 @@ msgstr "年份"
 msgid "résumé"
 msgstr "简介"
 
+msgid "normale"
+msgstr ""
+
+msgid "favoris"
+msgstr ""
+
+msgid "à lire"
+msgstr "待读"
+
 msgid "description"
 msgstr "描述"
 
 msgid "note libre"
 msgstr "自由备注"
-
-msgid "à lire"
-msgstr "想读"
 
 msgid "en cours"
 msgstr "在读"
@@ -165,11 +171,41 @@ msgstr "页数"
 msgid "Résumé"
 msgstr "简介"
 
+msgid "Favori"
+msgstr "最爱"
+
 msgid "Noter / écrire un avis"
 msgstr "打分 / 写书评"
 
 msgid "Ajouter à une liste"
 msgstr "添加到书单"
+
+msgid "Ajouter aux favoris"
+msgstr "添加到最爱"
+
+msgid "Statut"
+msgstr "状态"
+
+msgid "Commencé le"
+msgstr "开始于"
+
+msgid "Terminé le"
+msgstr "读完于"
+
+msgid "Note"
+msgstr "评分"
+
+msgid "Avis (optionnel)"
+msgstr "书评（可选）"
+
+msgid "Contient des spoilers"
+msgstr "包含剧透"
+
+msgid "Publier"
+msgstr "发布"
+
+msgid "Annuler"
+msgstr "取消"
 
 msgid "Mon avis"
 msgstr "我的书评"
@@ -183,14 +219,13 @@ msgstr "编辑"
 msgid "Réagir"
 msgstr "回应"
 
-msgid "Écris ton avis…"
-msgstr "写下你的书评…"
+#, fuzzy
+#| msgid "Nouveau commentaire"
+msgid "Ton commentaire…"
+msgstr "新评论"
 
-msgid "Publier"
-msgstr "发布"
-
-msgid "Avis complet (note, dates, spoiler)"
-msgstr "完整书评（评分、日期、剧透）"
+msgid "Tu n'as pas encore noté ce livre."
+msgstr "你还没评价这本书。"
 
 msgid "Avis des autres membres"
 msgstr "其他成员的书评"
@@ -245,21 +280,18 @@ msgstr "评分已保存"
 msgid "ajouter un avis"
 msgstr "添加书评"
 
-msgid "Note"
-msgstr "评分"
-
-#, python-format
-msgid "Ajouter « %(t)s » à une liste"
-msgstr "将《%(t)s》添加到书单"
-
 msgid "livre(s)"
 msgstr "本书"
 
 msgid "Ou créer une nouvelle liste"
-msgstr "或新建书单"
+msgstr "或新建列表"
 
 msgid "Titre"
 msgstr "标题"
+
+#, python-format
+msgid "Ajouter « %(t)s » à une liste"
+msgstr "将《%(t)s》添加到书单"
 
 msgid "Retour à la fiche"
 msgstr "返回书籍页"
@@ -335,12 +367,21 @@ msgstr "描述"
 msgid "Créer une liste"
 msgstr "创建书单"
 
+msgid "Favoris"
+msgstr "最爱"
+
+msgid "À lire"
+msgstr "待读"
+
 #, python-format
 msgid "Supprimer la liste « %(n)s » ?"
 msgstr "删除书单「%(n)s」？"
 
 msgid "Supprimer la liste"
 msgstr "删除书单"
+
+msgid "Retirer des favoris"
+msgstr "从最爱中移除"
 
 #, python-format
 msgid "Retirer « %(n)s » de la liste ?"
@@ -351,9 +392,6 @@ msgstr "从书单中移除"
 
 msgid "Déplacer dans une autre liste"
 msgstr "移到其他书单"
-
-msgid "Liste vide."
-msgstr "书单为空。"
 
 msgid "Tous mes livres"
 msgstr "我的全部书籍"
@@ -480,29 +518,14 @@ msgstr "按偏好排序的书籍"
 msgid "Aucune lecture pour l'instant."
 msgstr "暂时还没有阅读记录。"
 
+msgid "Liste vide."
+msgstr "书单为空。"
+
 msgid "Noter"
 msgstr "打分"
 
 msgid "Nouvelle lecture (relecture)"
 msgstr "新的阅读（重读）"
-
-msgid "Statut"
-msgstr "状态"
-
-msgid "Commencé le"
-msgstr "开始于"
-
-msgid "Terminé le"
-msgstr "读完于"
-
-msgid "Avis (optionnel)"
-msgstr "书评（可选）"
-
-msgid "Contient des spoilers"
-msgstr "包含剧透"
-
-msgid "Ou enregistrer une relecture"
-msgstr "或记录一次重读"
 
 msgid "Lectures de"
 msgstr "的阅读记录"
@@ -530,24 +553,6 @@ msgstr "已读完"
 
 msgid "Aucune lecture pour ce filtre."
 msgstr "此筛选下没有阅读记录。"
-
-msgid "Avis de"
-msgstr "的书评"
-
-msgid "spoilers"
-msgstr "剧透"
-
-msgid "Commentaires"
-msgstr "评论"
-
-msgid "Répondre"
-msgstr "回复"
-
-msgid "Pas encore de commentaire."
-msgstr "还没有评论。"
-
-msgid "Nouveau commentaire"
-msgstr "新评论"
 
 msgid "Mes stats"
 msgstr "我的统计"
@@ -633,13 +638,39 @@ msgstr "密码重复使用了超过 %(n)d 个来自 %(attr)s 的连续字符。"
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre adresse e-mail et/ou de votre nom de membre."
-msgstr "你的密码不能重复使用超过 %(n)d 个来自你的电子邮箱和/或你的成员名称的连续字符。"
+msgstr ""
+"你的密码不能重复使用超过 %(n)d 个来自你的电子邮箱和/或你的成员名称的连续字"
+"符。"
 
 #, python-format
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre mot de passe précédent."
 msgstr "你的密码不能重复使用超过 %(n)d 个来自你之前密码的连续字符。"
+
+#~ msgid "Écris ton avis…"
+#~ msgstr "写下你的书评…"
+
+#~ msgid "Avis complet (note, dates, spoiler)"
+#~ msgstr "完整书评（评分、日期、剧透）"
+
+#~ msgid "Ou enregistrer une relecture"
+#~ msgstr "或记录一次重读"
+
+#~ msgid "Avis de"
+#~ msgstr "的书评"
+
+#~ msgid "spoilers"
+#~ msgstr "剧透"
+
+#~ msgid "Commentaires"
+#~ msgstr "评论"
+
+#~ msgid "Répondre"
+#~ msgstr "回复"
+
+#~ msgid "Pas encore de commentaire."
+#~ msgstr "还没有评论。"
 
 #~ msgid "couverture"
 #~ msgstr "封面"

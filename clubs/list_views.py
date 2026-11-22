@@ -35,9 +35,15 @@ def lists_index(request):
         Reading.objects.filter(user=request.user, rating__isnull=False)
         .values_list("book_id", "rating")
     )
+    fav_book_ids = set(
+        ListItem.objects.filter(
+            list__owner=request.user, list__kind=ReadingList.Kind.FAVORITES
+        ).values_list("book_id", flat=True)
+    )
     for rl in my_lists:
         for it in rl.items.all():
             it.my_rating = my_ratings.get(it.book_id)
+            it.is_favorite = it.book_id in fav_book_ids
     all_readings = (
         Reading.objects.filter(user=request.user)
         .select_related("book")
@@ -45,6 +51,7 @@ def lists_index(request):
     )
     for rd in all_readings:
         rd.my_rating = rd.rating
+        rd.is_favorite = rd.book_id in fav_book_ids
     return render(
         request,
         "clubs/lists_index.html",

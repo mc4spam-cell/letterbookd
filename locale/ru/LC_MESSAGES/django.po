@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 14:20+0100\n"
+"POT-Creation-Date: 2026-11-22 18:43+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: ru\n"
@@ -32,14 +32,20 @@ msgstr "год"
 msgid "résumé"
 msgstr "аннотация"
 
+msgid "normale"
+msgstr ""
+
+msgid "favoris"
+msgstr ""
+
+msgid "à lire"
+msgstr "к прочтению"
+
 msgid "description"
 msgstr "описание"
 
 msgid "note libre"
 msgstr "свободная заметка"
-
-msgid "à lire"
-msgstr "хочу прочитать"
 
 msgid "en cours"
 msgstr "читаю"
@@ -169,11 +175,41 @@ msgstr "Страницы"
 msgid "Résumé"
 msgstr "Аннотация"
 
+msgid "Favori"
+msgstr "Избранное"
+
 msgid "Noter / écrire un avis"
 msgstr "Оценить / написать отзыв"
 
 msgid "Ajouter à une liste"
 msgstr "Добавить в список"
+
+msgid "Ajouter aux favoris"
+msgstr "Добавить в избранное"
+
+msgid "Statut"
+msgstr "Статус"
+
+msgid "Commencé le"
+msgstr "Начато"
+
+msgid "Terminé le"
+msgstr "Закончено"
+
+msgid "Note"
+msgstr "Оценка"
+
+msgid "Avis (optionnel)"
+msgstr "Отзыв (необязательно)"
+
+msgid "Contient des spoilers"
+msgstr "Содержит спойлеры"
+
+msgid "Publier"
+msgstr "Опубликовать"
+
+msgid "Annuler"
+msgstr "Отмена"
 
 msgid "Mon avis"
 msgstr "Мой отзыв"
@@ -187,14 +223,13 @@ msgstr "Изменить"
 msgid "Réagir"
 msgstr "Реакция"
 
-msgid "Écris ton avis…"
-msgstr "Напиши свой отзыв…"
+#, fuzzy
+#| msgid "Nouveau commentaire"
+msgid "Ton commentaire…"
+msgstr "Новый комментарий"
 
-msgid "Publier"
-msgstr "Опубликовать"
-
-msgid "Avis complet (note, dates, spoiler)"
-msgstr "Полный отзыв (оценка, даты, спойлер)"
+msgid "Tu n'as pas encore noté ce livre."
+msgstr "Вы ещё не оценили эту книгу."
 
 msgid "Avis des autres membres"
 msgstr "Отзывы других участников"
@@ -250,13 +285,6 @@ msgstr "Оценка сохранена"
 msgid "ajouter un avis"
 msgstr "добавить отзыв"
 
-msgid "Note"
-msgstr "Оценка"
-
-#, python-format
-msgid "Ajouter « %(t)s » à une liste"
-msgstr "Добавить «%(t)s» в список"
-
 msgid "livre(s)"
 msgstr "книг(и)"
 
@@ -265,6 +293,10 @@ msgstr "Или создать новый список"
 
 msgid "Titre"
 msgstr "Название"
+
+#, python-format
+msgid "Ajouter « %(t)s » à une liste"
+msgstr "Добавить «%(t)s» в список"
 
 msgid "Retour à la fiche"
 msgstr "Назад к книге"
@@ -342,12 +374,21 @@ msgstr "Описание"
 msgid "Créer une liste"
 msgstr "Создать список"
 
+msgid "Favoris"
+msgstr "Избранное"
+
+msgid "À lire"
+msgstr "К прочтению"
+
 #, python-format
 msgid "Supprimer la liste « %(n)s » ?"
 msgstr "Удалить список «%(n)s»?"
 
 msgid "Supprimer la liste"
 msgstr "Удалить список"
+
+msgid "Retirer des favoris"
+msgstr "Удалить из избранного"
 
 #, python-format
 msgid "Retirer « %(n)s » de la liste ?"
@@ -358,9 +399,6 @@ msgstr "Убрать из списка"
 
 msgid "Déplacer dans une autre liste"
 msgstr "Переместить в другой список"
-
-msgid "Liste vide."
-msgstr "Список пуст."
 
 msgid "Tous mes livres"
 msgstr "Все мои книги"
@@ -487,29 +525,14 @@ msgstr "Книги по предпочтению"
 msgid "Aucune lecture pour l'instant."
 msgstr "Чтений пока нет."
 
+msgid "Liste vide."
+msgstr "Список пуст."
+
 msgid "Noter"
 msgstr "Оценить"
 
 msgid "Nouvelle lecture (relecture)"
 msgstr "Новое чтение (перечитывание)"
-
-msgid "Statut"
-msgstr "Статус"
-
-msgid "Commencé le"
-msgstr "Начато"
-
-msgid "Terminé le"
-msgstr "Закончено"
-
-msgid "Avis (optionnel)"
-msgstr "Отзыв (необязательно)"
-
-msgid "Contient des spoilers"
-msgstr "Содержит спойлеры"
-
-msgid "Ou enregistrer une relecture"
-msgstr "Или записать перечитывание"
 
 msgid "Lectures de"
 msgstr "Чтения:"
@@ -537,24 +560,6 @@ msgstr "окончанию"
 
 msgid "Aucune lecture pour ce filtre."
 msgstr "Нет чтений по этому фильтру."
-
-msgid "Avis de"
-msgstr "Отзыв от"
-
-msgid "spoilers"
-msgstr "спойлеры"
-
-msgid "Commentaires"
-msgstr "Комментарии"
-
-msgid "Répondre"
-msgstr "Ответить"
-
-msgid "Pas encore de commentaire."
-msgstr "Комментариев пока нет."
-
-msgid "Nouveau commentaire"
-msgstr "Новый комментарий"
 
 msgid "Mes stats"
 msgstr "Моя статистика"
@@ -619,7 +624,9 @@ msgstr "Пароль должен содержать %(items)s."
 msgid ""
 "Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
 "des chiffres et des caractères spéciaux."
-msgstr "Твой пароль должен содержать одновременно строчные буквы, заглавные буквы, цифры и специальные символы."
+msgstr ""
+"Твой пароль должен содержать одновременно строчные буквы, заглавные буквы, "
+"цифры и специальные символы."
 
 #, fuzzy
 #| msgid "adresse e-mail"
@@ -640,13 +647,41 @@ msgstr "Пароль повторяет более %(n)d подряд идущи
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre adresse e-mail et/ou de votre nom de membre."
-msgstr "Твой пароль не может повторять более %(n)d подряд идущих символов твоего адреса электронной почты и/или твоего имени участника."
+msgstr ""
+"Твой пароль не может повторять более %(n)d подряд идущих символов твоего "
+"адреса электронной почты и/или твоего имени участника."
 
 #, python-format
 msgid ""
 "Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
 "votre mot de passe précédent."
-msgstr "Твой пароль не может повторять более %(n)d подряд идущих символов твоего предыдущего пароля."
+msgstr ""
+"Твой пароль не может повторять более %(n)d подряд идущих символов твоего "
+"предыдущего пароля."
+
+#~ msgid "Écris ton avis…"
+#~ msgstr "Напиши свой отзыв…"
+
+#~ msgid "Avis complet (note, dates, spoiler)"
+#~ msgstr "Полный отзыв (оценка, даты, спойлер)"
+
+#~ msgid "Ou enregistrer une relecture"
+#~ msgstr "Или записать перечитывание"
+
+#~ msgid "Avis de"
+#~ msgstr "Отзыв от"
+
+#~ msgid "spoilers"
+#~ msgstr "спойлеры"
+
+#~ msgid "Commentaires"
+#~ msgstr "Комментарии"
+
+#~ msgid "Répondre"
+#~ msgstr "Ответить"
+
+#~ msgid "Pas encore de commentaire."
+#~ msgstr "Комментариев пока нет."
 
 #~ msgid "couverture"
 #~ msgstr "обложка"
