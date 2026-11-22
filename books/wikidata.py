@@ -96,21 +96,32 @@ def fetch() -> list[dict]:
     for b in data.get("results", {}).get("bindings", []):
         prize_qid = _qid(b.get("prix", {}).get("value", ""))
         work_qid = _qid(b.get("ouvrage", {}).get("value", ""))
+        laureate_qid = _qid(b.get("laureat", {}).get("value", ""))
         year = b.get("annee", {}).get("value")
         title = (b.get("ouvrageLabel", {}).get("value") or "").strip()
         author = (b.get("laureatLabel", {}).get("value") or "").strip()
-        if not prize_qid or (not title and not author):
-            continue
-        # QID bruts filtrés quand labels manquants
+        # Labels QID bruts = pas de libellé fr/en → vide
         if title.startswith("Q") and title[1:].isdigit():
             title = ""
         if author.startswith("Q") and author[1:].isdigit():
             author = ""
+        # Quand le P166 est posé sur la personne (pas sur l'œuvre), l'UNION
+        # remonte l'auteur dans ?ouvrage. Heuristique : si le lauréat est vide
+        # mais l'ouvrage est renseigné, on permute (ouvrage → auteur).
+        if not author and title:
+            author, title = title, ""
+            if work_qid and not laureate_qid:
+                laureate_qid, work_qid = work_qid, ""
+        if not prize_qid or (not title and not author):
+            continue
+        # book_qid stable pour dédupliquer ; si l'ouvrage est inconnu, on le
+        # construit à partir du lauréat + prix + année.
+        key = work_qid or f"nowork:{laureate_qid or author[:40]}:{prize_qid}:{year}"
         out.append({
             "prize_qid": prize_qid,
             "prize_name": b.get("prixLabel", {}).get("value") or PRIZES.get(prize_qid, prize_qid),
-            "book_qid": work_qid or f"nowork:{prize_qid}:{year}:{author[:40]}",
-            "title": title or f"— ({PRIZES.get(prize_qid, prize_qid)} {year})",
+            "book_qid": key,
+            "title": title,
             "author": author,
             "year": int(year) if year and year.isdigit() else None,
         })
