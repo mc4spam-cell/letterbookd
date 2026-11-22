@@ -4,11 +4,17 @@ from django.utils.translation import gettext_lazy as _
 
 
 class ReadingList(models.Model):
+    class Kind(models.TextChoices):
+        NORMAL = "normal", _("normale")
+        FAVORITES = "favorites", _("favoris")
+        TOREAD = "toread", _("à lire")
+
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lists"
     )
     name = models.CharField(_("titre"), max_length=120)
     description = models.TextField(_("description"), blank=True)
+    kind = models.CharField(max_length=16, choices=Kind.choices, default=Kind.NORMAL)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

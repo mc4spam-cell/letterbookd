@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
-from clubs.models import Comment, Reading, ReadingList, ReadingStatus, ReviewReaction
+from clubs.list_views import ensure_default_lists
+from clubs.models import Comment, ListItem, Reading, ReadingList, ReadingStatus, ReviewReaction
 
 from . import openlibrary
 from .models import Book
@@ -19,8 +21,16 @@ def search(request):
                 user=request.user, book__olid__in=olids, rating__isnull=False
             ).values_list("book__olid", "rating")
         )
+        fav_olids = set(
+            ListItem.objects.filter(
+                list__owner=request.user,
+                list__kind=ReadingList.Kind.FAVORITES,
+                book__olid__in=olids,
+            ).values_list("book__olid", flat=True)
+        )
         for r in results:
             r["rating"] = ratings.get(r.get("olid"))
+            r["is_favorite"] = r.get("olid") in fav_olids
     return render(request, "books/search.html", {"q": q, "results": results})
 
 
@@ -50,6 +60,20 @@ def add(request):
     if created:
         book.hydrate_from_openlibrary()
     nxt = request.POST.get("next") or "detail"
+    if nxt == "inline_favorite":
+        ensure_default_lists(request.user)
+        fav = ReadingList.objects.get(
+            owner=request.user, kind=ReadingList.Kind.FAVORITES
+        )
+        existing = ListItem.objects.filter(list=fav, book=book).first()
+        if existing:
+            existing.delete()
+            is_fav = False
+        else:
+            ListItem.objects.create(list=fav, book=book)
+            is_fav = True
+        fav.save(update_fields=["updated_at"])
+        return JsonResponse({"book_id": book.pk, "is_favorite": is_fav})
     if nxt == "inline_rate":
         rating_raw = (request.POST.get("rating") or "").strip()
         rating = (
@@ -73,7 +97,7 @@ def add(request):
     if nxt == "rate":
         return redirect("read_book", book_id=book.pk)
     if nxt == "list":
-        return redirect("book_add_to_list", book_id=book.pk)
+        return redirect(f"{reverse('books_detail', args=[book.pk])}?open_list=1")
     return redirect("books_detail", book_id=book.pk)
 
 
@@ -133,6 +157,12 @@ def detail(request, book_id):
         else:
             other_entries.append(e)
 
+    is_favorite = ListItem.objects.filter(
+        list__owner=request.user,
+        list__kind=ReadingList.Kind.FAVORITES,
+        book=book,
+    ).exists()
+
     highlighted = request.GET.get("avis")
     highlighted_id = int(highlighted) if highlighted and highlighted.isdigit() else None
     if highlighted_id is not None:
@@ -153,7 +183,10 @@ def detail(request, book_id):
             "other_entries": other_entries,
             "highlighted_review_id": highlighted_id,
             "statuses": ReadingStatus.choices,
+            "is_favorite": is_favorite,
+            "open_list": request.GET.get("open_list") == "1",
             "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
+                .exclude(kind=ReadingList.Kind.FAVORITES)
                 .annotate(items_count=Count("items")).order_by("name"),
         },
     )

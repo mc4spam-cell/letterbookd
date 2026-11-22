@@ -32,6 +32,9 @@
         margin-left: 10px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .heart-btn { background: none; border: 0; padding: 0; cursor: pointer; line-height: 0; }
+    .heart-btn svg { width: 22px; height: 22px; stroke: var(--accent); stroke-width: 2; fill: var(--muted); }
+    .heart-btn.on svg { fill: var(--accent); }
     #search-form input[type="search"],
     #search-form input[type="search"]:hover,
     #search-form input[type="search"]:focus { outline: none; border-color: var(--border); }
@@ -91,6 +94,9 @@
 
                 <div class="actions">
                     {% star_picker r.rating prefix=r.olid %}
+                    <button type="button" class="heart-btn fav-btn {% if r.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" aria-label="{% translate 'Favori' %}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+                    </button>
                     <button type="submit" name="next" value="list" class="icon-btn" title="{% translate 'Ajouter à une liste' %}">＋</button>
                 </div>
 
@@ -123,6 +129,18 @@
         const ok = row.querySelector('.rate-ok');
         const okStars = ok.querySelector('.stars');
         const writeLink = ok.querySelector('.write-comment');
+        const favBtn = row.querySelector('.fav-btn');
+
+        if (favBtn) favBtn.addEventListener('click', async function () {
+            const fd = new FormData(form);
+            fd.set('next', 'inline_favorite');
+            try {
+                const resp = await fetch(form.action, { method: 'POST', body: fd });
+                if (!resp.ok) return;
+                const data = await resp.json();
+                favBtn.classList.toggle('on', !!data.is_favorite);
+            } catch (_) { /* silencieux */ }
+        });
 
         picker.addEventListener('change', async function (e) {
             if (!e.target.classList.contains('star-input')) return;

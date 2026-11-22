@@ -37,6 +37,11 @@ urlpatterns = [
         list_views.book_add_to_list,
         name="book_add_to_list",
     ),
+    path(
+        "livres/<int:book_id>/favori/",
+        list_views.toggle_favorite,
+        name="toggle_favorite",
+    ),
     path("moi/", views.me_settings, name="me_settings"),
     path("inviter/", views.invites, name="invites"),
     path("invitation/<str:token>/", views.accept_invitation, name="accept_invitation"),
