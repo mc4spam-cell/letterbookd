@@ -1,23 +1,30 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block title %}{% translate "Prix littéraires" %}{% endblock %}
 {% block content %}
 <style>
-    .cover-cell { position: relative; }
-    .cover-cell .year-chip { position: absolute; top: 4px; left: 4px; padding: 2px 6px; font-size: 11px;
+    .prz-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 8px 0 24px; }
+    .prz-cell { position: relative; display: flex; flex-direction: column; }
+    .prz-cover { width: 100%; aspect-ratio: 2/3; border-radius: 4px; background: var(--surface-2);
+        display: block; overflow: hidden; }
+    .prz-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prz-cover.default { background: url("{% static 'images/Pochette_prix_defaut.jpg' %}") center/cover no-repeat, #2a2015; }
+    .prz-year-chip { position: absolute; top: 4px; left: 4px; padding: 2px 6px; font-size: 11px;
         background: rgba(0,0,0,.7); color: #fff; border-radius: 3px; }
-    .cover-cell .cap { font-size: 12px; margin-top: 4px; line-height: 1.2; }
-    .cover-cell .cap .title { font-weight: 600; color: var(--text); }
-    .cover-cell .cap .author { color: var(--muted); }
-    .cover-actions { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 4px; }
-    .cover-actions svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .cover-actions .move-btn { color: #46a2e4; text-decoration: none; }
-    .cover-actions .move-btn:hover svg { stroke: #68b6ee; }
-    .cover-actions form { margin: 0; }
-    .heart-btn svg { width: 18px; height: 18px; }
-    .heart-btn { background: none; border: 0; padding: 0; cursor: pointer; line-height: 0; }
-    .heart-btn svg { stroke: var(--accent); fill: transparent; transition: fill .15s; }
-    .heart-btn.on svg { fill: var(--accent); }
+    .prz-title { font-weight: 700; color: #fff; font-size: 13px; line-height: 1.2; margin-top: 6px; }
+    .prz-author { color: var(--muted); font-size: 12px; line-height: 1.2; margin-top: 2px; }
+    .prz-actions { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 6px; }
+    .prz-actions svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .prz-actions .move-btn { color: #46a2e4; text-decoration: none; }
+    .prz-actions .heart-btn { background: none; border: 0; padding: 0; cursor: pointer; line-height: 0; }
+    .prz-actions .heart-btn svg { stroke: var(--accent); fill: transparent; transition: fill .15s; }
+    .prz-actions .heart-btn.on svg { fill: var(--accent); }
+    @media (max-width: 1023px) {
+        .prz-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 640px) {
+        .prz-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    }
 </style>
 
 <h1>{% translate "Prix littéraires" %}</h1>
@@ -26,34 +33,31 @@
 {% for prize, rows in grouped.items %}
 <section>
     <h2 style="margin-top:20px">{{ prize }}</h2>
-    <div class="cover-grid">
+    <div class="prz-grid">
         {% for r in rows %}
-        <div class="cover-cell">
+        <div class="prz-cell">
             {% if r.book_id %}
-            <a href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book }}">
-                {% include "books/_cover.html" with book=r.book %}
-                {% if r.year %}<span class="year-chip">{{ r.year }}</span>{% endif %}
+            <a href="{% url 'books_detail' book_id=r.book_id %}" class="prz-cover {% if not r.book.cover_id %}default{% endif %}">
+                {% if r.book.cover_id %}<img src="{{ r.book.cover_url }}" alt="">{% endif %}
+                {% if r.year %}<span class="prz-year-chip">{{ r.year }}</span>{% endif %}
             </a>
             {% else %}
-            <span>
-                <span class="no-cover no-cover-md"><span>{{ r.author|default:r.title }}</span></span>
-                {% if r.year %}<span class="year-chip">{{ r.year }}</span>{% endif %}
+            <span class="prz-cover default">
+                {% if r.year %}<span class="prz-year-chip">{{ r.year }}</span>{% endif %}
             </span>
             {% endif %}
-            <div class="cap">
-                {% if r.title %}<div class="title">{{ r.title }}</div>{% endif %}
-                {% if r.author %}<div class="author">{{ r.author }}</div>{% endif %}
-            </div>
-            {% if r.book_id %}
-            <div class="cover-actions">
+            {% if r.title %}<div class="prz-title">{{ r.title }}</div>{% endif %}
+            {% if r.author %}<div class="prz-author">{{ r.author }}</div>{% endif %}
+            <div class="prz-actions">
+                {% if r.book_id %}
                 <button type="button" class="heart-btn {% if r.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ r.book_id }}, this)">
                     <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
                 </button>
                 <a href="#" class="move-btn" title="{% translate 'Ajouter à une liste' %}" onclick="openAddToList({{ r.book_id }}, null); return false">
                     <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
                 </a>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
         {% endfor %}
     </div>
