@@ -14,7 +14,7 @@
     .rel-card a.src { font-size:11px; color:var(--accent); text-decoration:none; margin-top:auto; }
 </style>
 <h1>{% translate "Sorties" %}</h1>
-<p style="color:var(--muted)">{% translate "Nouveautés livres, récupérées chaque semaine sur fnac.com." %}</p>
+<p style="color:var(--muted)">{% translate "Nouveautés livres, récupérées chaque semaine dans « Le Monde des livres »." %}</p>
 {% if items %}
 <div class="rel-grid">
     {% for it in items %}
@@ -23,7 +23,7 @@
         <div class="rel-title">{{ it.title }}</div>
         {% if it.author %}<div class="rel-author">{{ it.author }}</div>{% endif %}
         {% if it.summary %}<div class="rel-summary">{{ it.summary }}</div>{% endif %}
-        {% if it.source_url %}<a class="src" href="{{ it.source_url }}" target="_blank" rel="noopener">{% translate "Voir sur fnac.com →" %}</a>{% endif %}
+        {% if it.source_url %}<a class="src" href="{{ it.source_url }}" target="_blank" rel="noopener">{% translate "Lire l'article →" %}</a>{% endif %}
     </div>
     {% endfor %}
 </div>

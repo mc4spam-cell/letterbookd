@@ -20,10 +20,13 @@ PRIZES = {
 QUERY = """
 SELECT ?prize ?prizeLabel ?livre ?livreLabel ?auteurLabel ?annee WHERE {
   VALUES ?prize { %s }
-  ?livre wdt:P166 ?prize .
+  ?livre p:P166 ?stmt .
+  ?stmt ps:P166 ?prize .
+  OPTIONAL { ?stmt pq:P585 ?qdate . }
+  OPTIONAL { ?livre wdt:P577 ?pdate . }
+  BIND(YEAR(COALESCE(?qdate, ?pdate)) AS ?annee)
   OPTIONAL { ?livre wdt:P50 ?auteur . }
-  OPTIONAL { ?livre wdt:P577 ?date . BIND(YEAR(?date) AS ?annee) }
-  FILTER(?annee >= 2020)
+  FILTER(!BOUND(?annee) || ?annee >= 2020)
   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" }
 }
 """
