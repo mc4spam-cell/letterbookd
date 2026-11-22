@@ -10,23 +10,27 @@
     .mod-table { width:100%; border-collapse:collapse; font-size:13px; }
     .mod-table thead th { position:sticky; top:42px; z-index:4; background:var(--surface);
         padding:6px 8px; text-align:left; color:var(--muted); border-bottom:1px solid var(--border); vertical-align:middle; }
+    .mod-table thead th.c { text-align:center; }
     .mod-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:middle; white-space:nowrap; }
+    .mod-table td.c { text-align:center; }
     .mod-table tbody tr:nth-child(even) td { background:var(--surface-2); }
     .mod-table td.email { max-width:220px; overflow:hidden; text-overflow:ellipsis; color:var(--muted); }
     .mod-table td .actions-row { display:flex; gap:6px; flex-wrap:nowrap; }
     .mod-table .sort { display:inline-flex; gap:2px; margin-left:4px; }
     .mod-table .sort a { text-decoration:none; color:var(--muted); font-size:10px; }
     .mod-table .sort a.on { color:var(--accent); }
-    .mod-table .loupe { text-decoration:none; margin-left:6px; opacity:.5; font-size:12px; }
-    .mod-table .loupe.on { opacity:1; filter:drop-shadow(0 0 2px var(--accent)); }
-    .mod-table select.filter { background:var(--surface-2); color:var(--text);
-        border:1px solid var(--border); border-radius:4px; padding:2px 4px; font-size:12px; margin-left:6px; }
+    .mod-table .loupe { text-decoration:none; margin-left:6px; display:inline-flex; vertical-align:middle; opacity:.65; }
+    .mod-table .loupe svg { width:14px; height:14px; stroke:#e46; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .mod-table .loupe:hover { opacity:1; }
+    .mod-table .loupe.on { opacity:1; }
+    .mod-table .loupe.on svg { filter:drop-shadow(0 0 2px #e46); }
+    .state-dot svg { width:14px; height:14px; vertical-align:middle; }
     .mod-pager { display:flex; gap:12px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted); }
     .mod-pager a { color:var(--accent); text-decoration:none; }
     .mod-pager input { width:60px; background:var(--surface-2); color:var(--text);
         border:1px solid var(--border); border-radius:4px; padding:3px 6px; }
     tr.deleted td { text-decoration:line-through; color:var(--muted); }
-    dialog.m input[type="text"] { width:100%; box-sizing:border-box; background:var(--surface-2); color:var(--text);
+    dialog.m input[type="text"], dialog.m select { width:100%; box-sizing:border-box; background:var(--surface-2); color:var(--text);
         border:1px solid var(--border); border-radius:4px; padding:6px 8px; font-size:14px; }
 </style>
 
@@ -39,7 +43,6 @@
     <a href="?tab=comments" class="{% if tab == 'comments' %}on{% endif %}">{% translate "Commentaires" %}</a>
 </nav>
 
-{# One GET form wraps the whole table so Entrée dans n'importe quel filtre resoumet #}
 <form method="get">
     <input type="hidden" name="tab" value="{{ tab }}">
     <input type="hidden" name="sort" value="{{ sort }}">
@@ -54,21 +57,16 @@
         {% include "clubs/_mod_th.html" with key="member" label=l_nom filter_val=f.member filterable=True %}
         {% include "clubs/_mod_th.html" with key="email" label=l_email filter_val=f.email filterable=True %}
         {% include "clubs/_mod_th.html" with key="joined" label=l_joined %}
-        {% include "clubs/_mod_th.html" with key="books" label=l_books %}
-        {% include "clubs/_mod_th.html" with key="ip" label=l_ip filter_val=f.ip filterable=True %}
-        <th>
+        {% include "clubs/_mod_th.html" with key="books" label=l_books center=True %}
+        {% include "clubs/_mod_th.html" with key="ip" label=l_ip %}
+        <th class="c">
             <span>{{ l_state }}</span>
             <span class="sort">
                 <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort=state&dir=asc" class="{% if sort == 'state' and dir == 'asc' %}on{% endif %}">▲</a>
                 <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort=state&dir=desc" class="{% if sort == 'state' and dir == 'desc' %}on{% endif %}">▼</a>
             </span>
-            <br><select class="filter" name="q_state" onchange="this.form.submit()">
-                <option value="">— {% translate "tous" %} —</option>
-                <option value="actif" {% if f.state == 'actif' %}selected{% endif %}>{% translate "actif" %}</option>
-                <option value="admin" {% if f.state == 'admin' %}selected{% endif %}>{% translate "admin" %}</option>
-                <option value="suspendu" {% if f.state == 'suspendu' %}selected{% endif %}>{% translate "suspendu" %}</option>
-                <option value="supprime" {% if f.state == 'supprime' %}selected{% endif %}>{% translate "supprimé" %}</option>
-            </select>
+            <input type="hidden" name="q_state" value="{{ f.state|default_if_none:'' }}">
+            <a href="#" onclick="openStateFilter();return false" class="loupe {% if f.state %}on{% endif %}" title="{% translate 'Filtrer' %}"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></a>
         </th>
         <th>{% translate "Actions" %}</th>
     </tr></thead>
@@ -78,13 +76,13 @@
             <td><a href="{% url 'profile_detail' user_id=u.id %}">{{ u.display_name|default:"—" }}</a></td>
             <td class="email" title="{{ u.email }}">{{ u.email }}</td>
             <td style="color:var(--muted)" title="{{ u.date_joined|date:'DATETIME_FORMAT' }}">{{ u.date_joined|date:"SHORT_DATE_FORMAT" }}</td>
-            <td style="text-align:right">{{ u.nb_readings }}</td>
-            <td>{% if u.last_ip %}<a href="#" onclick="showIp('{{ u.last_ip }}','{{ u.display_name|default:u.email|escapejs }}');return false" title="{% translate 'Voir IP' %}">IP</a>{% else %}<span style="color:var(--muted)">—</span>{% endif %}</td>
-            <td style="text-align:center">
-                {% if u.is_deleted %}<span title="{% translate 'supprimé' %}" style="color:#ff3344;font-size:16px">●</span>
-                {% elif not u.is_active %}<span title="{% translate 'suspendu' %}" style="color:#ff9933;font-size:16px">●</span>
-                {% elif u.is_staff %}<span title="{% translate 'admin' %}" style="color:#33cc66;font-size:16px">⚡</span>
-                {% else %}<span title="{% translate 'actif' %}" style="color:#33cc66;font-size:16px">●</span>{% endif %}
+            <td class="c">{{ u.nb_readings }}</td>
+            <td class="c">{% if u.last_ip %}<span title="{{ u.last_ip }}" style="cursor:help;color:var(--accent)">IP</span>{% else %}<span style="color:var(--muted)">—</span>{% endif %}</td>
+            <td class="c state-dot">
+                {% if u.is_deleted %}<svg viewBox="0 0 16 16" title="x" aria-label="{% translate 'supprimé' %}"><title>{% translate 'supprimé' %}</title><circle cx="8" cy="8" r="6" fill="#ff3344"/></svg>
+                {% elif not u.is_active %}<svg viewBox="0 0 16 16"><title>{% translate 'suspendu' %}</title><circle cx="8" cy="8" r="6" fill="#ff9933"/></svg>
+                {% elif u.is_staff %}<svg viewBox="0 0 16 16"><title>{% translate 'admin' %}</title><path d="M9 1 L3 9 L7 9 L6 15 L13 6 L9 6 Z" fill="#33cc66"/></svg>
+                {% else %}<svg viewBox="0 0 16 16"><title>{% translate 'actif' %}</title><circle cx="8" cy="8" r="6" fill="#33cc66"/></svg>{% endif %}
             </td>
             <td>
                 <div class="actions-row">
@@ -142,7 +140,7 @@
         {% include "clubs/_mod_th.html" with key="member" label=l_member filter_val=f.member filterable=True %}
         {% include "clubs/_mod_th.html" with key="title" label=l_title filter_val=f.title filterable=True %}
         {% include "clubs/_mod_th.html" with key="date" label=l_date %}
-        <th>{% translate "Avis" %}<input type="hidden" name="q_text" value="{{ f.text|default_if_none:'' }}"><a href="#" onclick="openFilter('text','{% translate 'Avis' %}');return false" class="loupe {% if f.text %}on{% endif %}" title="{% translate 'Filtrer' %}">🔍</a></th>
+        <th>{% translate "Avis" %}<input type="hidden" name="q_text" value="{{ f.text|default_if_none:'' }}"><a href="#" onclick="openFilter('text','{% translate 'Avis' %}');return false" class="loupe {% if f.text %}on{% endif %}" title="{% translate 'Filtrer' %}"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></a></th>
         <th>{% translate "Actions" %}</th>
     </tr></thead>
     <tbody>
@@ -171,7 +169,7 @@
         {% include "clubs/_mod_th.html" with key="member" label=l_author filter_val=f.member filterable=True %}
         {% include "clubs/_mod_th.html" with key="title" label=l_livre filter_val=f.title filterable=True %}
         {% include "clubs/_mod_th.html" with key="date" label=l_date %}
-        <th>{% translate "Commentaire" %}<input type="hidden" name="q_text" value="{{ f.text|default_if_none:'' }}"><a href="#" onclick="openFilter('text','{% translate 'Commentaire' %}');return false" class="loupe {% if f.text %}on{% endif %}" title="{% translate 'Filtrer' %}">🔍</a></th>
+        <th>{% translate "Commentaire" %}<input type="hidden" name="q_text" value="{{ f.text|default_if_none:'' }}"><a href="#" onclick="openFilter('text','{% translate 'Commentaire' %}');return false" class="loupe {% if f.text %}on{% endif %}" title="{% translate 'Filtrer' %}"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></a></th>
         <th>{% translate "Actions" %}</th>
     </tr></thead>
     <tbody>
@@ -207,16 +205,17 @@
 
 </form>
 
-<dialog class="m" id="d-ip">
-    <h3 style="margin-top:0">{% translate "Dernière IP" %}</h3>
-    <p><strong id="d-ip-user"></strong><br><code id="d-ip-addr" style="font-size:16px"></code></p>
-    <div class="actions"><button type="button" onclick="document.getElementById('d-ip').close()">{% translate "Fermer" %}</button></div>
-</dialog>
-
 <dialog class="m" id="d-filter">
     <h3 style="margin-top:0">{% translate "Filtrer" %} — <span id="d-filter-label"></span></h3>
-    <input type="text" id="d-filter-input" autofocus>
-    <div class="actions">
+    <input type="text" id="d-filter-input">
+    <select id="d-filter-select" style="display:none">
+        <option value="">— {% translate "tous" %} —</option>
+        <option value="actif">{% translate "actif" %}</option>
+        <option value="admin">{% translate "admin" %}</option>
+        <option value="suspendu">{% translate "suspendu" %}</option>
+        <option value="supprime">{% translate "supprimé" %}</option>
+    </select>
+    <div class="actions" style="margin-top:10px">
         <button type="button" onclick="applyFilter()">{% translate "Appliquer" %}</button>
         <button type="button" onclick="clearFilter()">{% translate "Effacer" %}</button>
         <button type="button" onclick="document.getElementById('d-filter').close()">{% translate "Annuler" %}</button>
@@ -224,23 +223,34 @@
 </dialog>
 
 <script>
-function showIp(ip, who) {
-    document.getElementById('d-ip-user').textContent = who;
-    document.getElementById('d-ip-addr').textContent = ip;
-    document.getElementById('d-ip').showModal();
-}
-let _fkey = null;
+let _fkey = null, _fmode = 'text';
 function openFilter(key, label) {
-    _fkey = key;
+    _fkey = key; _fmode = 'text';
     document.getElementById('d-filter-label').textContent = label;
     const h = document.querySelector('input[name="q_' + key + '"]');
+    document.getElementById('d-filter-input').style.display = '';
+    document.getElementById('d-filter-select').style.display = 'none';
     document.getElementById('d-filter-input').value = h ? h.value : '';
     document.getElementById('d-filter').showModal();
     setTimeout(() => document.getElementById('d-filter-input').focus(), 50);
 }
+function openStateFilter() {
+    _fkey = 'state'; _fmode = 'select';
+    document.getElementById('d-filter-label').textContent = '{% translate "État" %}';
+    const h = document.querySelector('input[name="q_state"]');
+    document.getElementById('d-filter-input').style.display = 'none';
+    document.getElementById('d-filter-select').style.display = '';
+    document.getElementById('d-filter-select').value = h ? h.value : '';
+    document.getElementById('d-filter').showModal();
+}
+function _readVal() {
+    return _fmode === 'select'
+        ? document.getElementById('d-filter-select').value
+        : document.getElementById('d-filter-input').value;
+}
 function applyFilter() {
     const h = document.querySelector('input[name="q_' + _fkey + '"]');
-    if (h) h.value = document.getElementById('d-filter-input').value;
+    if (h) h.value = _readVal();
     document.getElementById('d-filter').close();
     h.form.submit();
 }

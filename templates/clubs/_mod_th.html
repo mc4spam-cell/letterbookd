@@ -1,6 +1,6 @@
 {% load i18n %}
-{# params: key, label, filter_val (optional), filterable (optional) #}
-<th>
+{# params: key, label, filter_val (optional), filterable (optional), center (optional) #}
+<th {% if center %}class="c"{% endif %}>
     <span>{{ label }}</span>
     <span class="sort">
         <a href="?{% for k,v in request.GET.items %}{% if k != 'sort' and k != 'dir' and k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}sort={{ key }}&dir=asc" class="{% if sort == key and dir == 'asc' %}on{% endif %}" title="{% translate 'Trier ↑' %}">▲</a>
@@ -8,6 +8,6 @@
     </span>
     {% if filterable %}
     <input type="hidden" name="q_{{ key }}" value="{{ filter_val|default_if_none:'' }}">
-    <a href="#" onclick="openFilter('{{ key }}','{{ label|escapejs }}');return false" class="loupe {% if filter_val %}on{% endif %}" title="{% translate 'Filtrer' %}">🔍</a>
+    <a href="#" onclick="openFilter('{{ key }}','{{ label|escapejs }}');return false" class="loupe {% if filter_val %}on{% endif %}" title="{% translate 'Filtrer' %}"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></a>
     {% endif %}
 </th>
