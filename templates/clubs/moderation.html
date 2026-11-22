@@ -197,10 +197,10 @@
 
 <div class="mod-pager">
     <button type="submit" class="icon-btn" title="{% translate 'Appliquer les filtres' %}">⟲ {% translate "Filtrer" %}</button>
-    {% if page.has_previous %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.previous_page_number }}">← {% translate "Précédent" %}</a>{% endif %}
-    <span>{% blocktranslate with n=page.number t=page.paginator.num_pages %}Page {{ n }} / {{ t }}{% endblocktranslate %} · {{ page.paginator.count }} {% translate "item(s)" %}</span>
-    {% if page.has_next %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.next_page_number }}">{% translate "Suivant" %} →</a>{% endif %}
-    <label>{% translate "Aller à" %} <input type="number" name="page" min="1" max="{{ page.paginator.num_pages }}" value="{{ page.number }}"></label>
+    {% if page.has_previous %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.previous_page_number }}" title="{% translate 'Page précédente' %}">«</a>{% else %}<span style="opacity:.3">«</span>{% endif %}
+    <label>{% translate "Aller à" %} <input type="number" name="page" min="1" max="{{ page.paginator.num_pages }}" value="{{ page.number }}"> / {{ page.paginator.num_pages }}</label>
+    {% if page.has_next %}<a href="?{% for k,v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page.next_page_number }}" title="{% translate 'Page suivante' %}">»</a>{% else %}<span style="opacity:.3">»</span>{% endif %}
+    <span>· {{ page.paginator.count }} {% translate "item(s)" %}</span>
 </div>
 
 </form>
