@@ -8,7 +8,9 @@
     .mod-tabs a.on { color:var(--text); border-bottom-color:var(--accent); }
     .mod-table { width:100%; border-collapse:collapse; font-size:13px; }
     .mod-table th { padding:6px 8px; text-align:left; color:var(--muted); border-bottom:1px solid var(--border); vertical-align:top; }
-    .mod-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:top; }
+    .mod-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:middle; white-space:nowrap; }
+    .mod-table td.email { max-width:220px; overflow:hidden; text-overflow:ellipsis; color:var(--muted); }
+    .mod-table td .actions-row { display:flex; gap:6px; flex-wrap:nowrap; }
     .mod-table .sort { display:inline-flex; gap:2px; margin-left:4px; }
     .mod-table .sort a { text-decoration:none; color:var(--muted); font-size:10px; }
     .mod-table .sort a.on { color:var(--accent); }
@@ -67,10 +69,10 @@
     {% for u in page %}
         <tr class="{% if u.is_deleted %}deleted{% endif %}">
             <td><a href="{% url 'profile_detail' user_id=u.id %}">{{ u.display_name|default:"—" }}</a></td>
-            <td style="color:var(--muted)">{{ u.email }}</td>
+            <td class="email" title="{{ u.email }}">{{ u.email }}</td>
             <td style="color:var(--muted)">{{ u.date_joined|date:"j M Y" }}</td>
             <td style="text-align:right">{{ u.nb_readings }}</td>
-            <td style="color:var(--muted)">{{ u.last_ip|default:"—" }}</td>
+            <td>{% if u.last_ip %}<a href="#" onclick="showIp('{{ u.last_ip }}','{{ u.display_name|default:u.email|escapejs }}');return false" title="{% translate 'Voir IP' %}">IP</a>{% else %}<span style="color:var(--muted)">—</span>{% endif %}</td>
             <td>
                 {% if u.is_deleted %}<em style="color:var(--muted)">{% translate "supprimé" %}</em>
                 {% elif not u.is_active %}<em style="color:#ff5566">{% translate "suspendu" %}</em>
@@ -78,7 +80,7 @@
                 {% else %}<em>{% translate "actif" %}</em>{% endif %}
             </td>
             <td>
-                <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <div class="actions-row">
                 {% if u.id != user.id and not u.is_superuser and not u.is_deleted %}
                 <form method="post" action="{% url 'moderation_user_action' user_id=u.id action='suspend' %}" style="margin:0">{% csrf_token %}
                     <button class="icon-btn" type="submit" title="{% if u.is_active %}{% translate 'Suspendre' %}{% else %}{% translate 'Réactiver' %}{% endif %}">{% if u.is_active %}⏸{% else %}▶{% endif %}</button>
@@ -197,4 +199,17 @@
 </div>
 
 </form>
+
+<dialog class="m" id="d-ip">
+    <h3 style="margin-top:0">{% translate "Dernière IP" %}</h3>
+    <p><strong id="d-ip-user"></strong><br><code id="d-ip-addr" style="font-size:16px"></code></p>
+    <div class="actions"><button type="button" onclick="document.getElementById('d-ip').close()">{% translate "Fermer" %}</button></div>
+</dialog>
+<script>
+function showIp(ip, who) {
+    document.getElementById('d-ip-user').textContent = who;
+    document.getElementById('d-ip-addr').textContent = ip;
+    document.getElementById('d-ip').showModal();
+}
+</script>
 {% endblock %}
