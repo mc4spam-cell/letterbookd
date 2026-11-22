@@ -24,7 +24,7 @@ def _ordered_user_lists(user):
     fav = qs.filter(kind=ReadingList.Kind.FAVORITES).first()
     toread = qs.filter(kind=ReadingList.Kind.TOREAD).first()
     normals = list(qs.filter(kind=ReadingList.Kind.NORMAL).order_by("created_at"))
-    return [l for l in [fav, toread, *normals] if l]
+    return [rl for rl in [fav, toread, *normals] if rl]
 
 
 @login_required
