@@ -48,9 +48,10 @@
     .entry-actions form { margin: 0; display: flex; gap: 2px; }
     .entry-mine blockquote { border-left-color: var(--accent); }
     .entry-highlight { background: rgba(64,188,244,.06); border-left: 3px solid var(--blue); padding-left: 10px; margin-left: -13px; }
-    .entry-reply { margin: 6px 0 0 24px; padding-top: 6px; }
-    .entry-reply textarea { width: 100%; max-width: 100%; }
-    .quick-review textarea { width: 100%; max-width: 100%; }
+    dialog.m { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 18px; max-width: 520px; width: 90%; }
+    dialog.m::backdrop { background: rgba(0,0,0,.55); }
+    dialog.m textarea { width: 100%; max-width: 100%; box-sizing: border-box; }
+    dialog.m .actions { margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     @media (max-width: 720px) {
         .book-aside { flex-basis: 100%; }
         .entry { flex-direction: column; gap: 6px; }
@@ -98,26 +99,35 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                {% if highlighted_review_id == my_entry.review.id %}
-                <form class="entry-reply" method="post" action="{% url 'review_detail' review_id=my_entry.review.id %}">{% csrf_token %}
-                    <textarea name="text" rows="2" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
-                    <div><button type="submit">{% translate "Publier" %}</button></div>
-                </form>
-                {% endif %}
             </div>
             <div class="entry-actions">
                 {% include "clubs/_review_reactions.html" with r=my_entry %}
                 <a href="{% url 'read_book' book_id=book.id %}">{% translate "Modifier" %}</a>
-                <a href="?avis={{ my_entry.review.id }}#avis-{{ my_entry.review.id }}">{% translate "Réagir" %}</a>
+                <a href="#" onclick="document.getElementById('d-reply-{{ my_entry.review.id }}').showModal(); return false">{% translate "Réagir" %}</a>
             </div>
+            <dialog class="m" id="d-reply-{{ my_entry.review.id }}">
+                <form method="post" action="{% url 'review_detail' review_id=my_entry.review.id %}">{% csrf_token %}
+                    <textarea name="text" rows="3" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
+                    <div class="actions">
+                        <button type="submit">{% translate "Publier" %}</button>
+                        <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+                    </div>
+                </form>
+            </dialog>
         </div>
     {% else %}
-        <form method="post" action="{% url 'read_book' book_id=book.id %}" class="quick-review">{% csrf_token %}
-            <textarea name="review_text" rows="3" placeholder="{% translate 'Écris ton avis…' %}" required></textarea>
-            <div style="margin-top:6px"><button type="submit">{% translate "Publier" %}</button>
-                <a href="{% url 'read_book' book_id=book.id %}" style="margin-left:10px;font-size:13px">{% translate "Avis complet (note, dates, spoiler)" %}</a>
-            </div>
-        </form>
+        <p><button type="button" onclick="document.getElementById('d-review').showModal()">{% translate "Écrire un avis" %}</button>
+            <a href="{% url 'read_book' book_id=book.id %}" style="margin-left:10px">{% translate "Avis complet (note, dates, spoiler)" %}</a>
+        </p>
+        <dialog class="m" id="d-review">
+            <form method="post" action="{% url 'read_book' book_id=book.id %}">{% csrf_token %}
+                <textarea name="review_text" rows="4" placeholder="{% translate 'Écris ton avis…' %}" required></textarea>
+                <div class="actions">
+                    <button type="submit">{% translate "Publier" %}</button>
+                    <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+                </div>
+            </form>
+        </dialog>
     {% endif %}
 
     <h2>{% translate "Avis des autres membres" %}</h2>
@@ -143,19 +153,22 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                {% if highlighted_review_id == r.review.id %}
-                <form class="entry-reply" method="post" action="{% url 'review_detail' review_id=r.review.id %}">{% csrf_token %}
-                    <textarea name="text" rows="2" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
-                    <div><button type="submit">{% translate "Publier" %}</button></div>
-                </form>
-                {% endif %}
                 {% endif %}
             </div>
             {% if r.review %}
             <div class="entry-actions">
                 {% include "clubs/_review_reactions.html" with r=r %}
-                <a href="?avis={{ r.review.id }}#avis-{{ r.review.id }}">{% translate "Réagir" %}</a>
+                <a href="#" onclick="document.getElementById('d-reply-{{ r.review.id }}').showModal(); return false">{% translate "Réagir" %}</a>
             </div>
+            <dialog class="m" id="d-reply-{{ r.review.id }}">
+                <form method="post" action="{% url 'review_detail' review_id=r.review.id %}">{% csrf_token %}
+                    <textarea name="text" rows="3" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
+                    <div class="actions">
+                        <button type="submit">{% translate "Publier" %}</button>
+                        <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+                    </div>
+                </form>
+            </dialog>
             {% endif %}
         </div>
         {% endfor %}
