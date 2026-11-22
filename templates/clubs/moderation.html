@@ -80,11 +80,11 @@
             <td style="color:var(--muted)" title="{{ u.date_joined|date:'DATETIME_FORMAT' }}">{{ u.date_joined|date:"SHORT_DATE_FORMAT" }}</td>
             <td style="text-align:right">{{ u.nb_readings }}</td>
             <td>{% if u.last_ip %}<a href="#" onclick="showIp('{{ u.last_ip }}','{{ u.display_name|default:u.email|escapejs }}');return false" title="{% translate 'Voir IP' %}">IP</a>{% else %}<span style="color:var(--muted)">—</span>{% endif %}</td>
-            <td>
-                {% if u.is_deleted %}<em style="color:var(--muted)">{% translate "supprimé" %}</em>
-                {% elif not u.is_active %}<em style="color:#ff5566">{% translate "suspendu" %}</em>
-                {% elif u.is_staff %}<em style="color:var(--accent)">{% translate "admin" %}</em>
-                {% else %}<em>{% translate "actif" %}</em>{% endif %}
+            <td style="text-align:center">
+                {% if u.is_deleted %}<span title="{% translate 'supprimé' %}" style="color:#ff3344;font-size:16px">●</span>
+                {% elif not u.is_active %}<span title="{% translate 'suspendu' %}" style="color:#ff9933;font-size:16px">●</span>
+                {% elif u.is_staff %}<span title="{% translate 'admin' %}" style="color:#33cc66;font-size:16px">⚡</span>
+                {% else %}<span title="{% translate 'actif' %}" style="color:#33cc66;font-size:16px">●</span>{% endif %}
             </td>
             <td>
                 <div class="actions-row">
