@@ -24,7 +24,7 @@ def _move_rules_into_label(form):
     if f is None:
         return
     f.help_text = ""
-    f.label = mark_safe(f"{f.label}{_password_rules_html()}")
+    f.label = mark_safe(f"{_password_rules_html()}{f.label}")
 
 
 class SignupForm(AllauthSignupForm):
