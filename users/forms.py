@@ -13,7 +13,7 @@ from users.validators import MAX_SHARED_RUN, shares_run
 def _password_rules_html():
     lines = "<br>".join(f"&bull; {t}" for t in password_validators_help_texts())
     return mark_safe(
-        '<span style="display:block;font-weight:normal;font-size:13px;'
+        '<span style="display:block;font-weight:normal;font-size:14px;'
         f'margin:6px 0;color:var(--muted);">{lines}</span>'
     )
 
