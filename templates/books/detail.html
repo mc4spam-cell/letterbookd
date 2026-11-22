@@ -20,7 +20,7 @@
     .avg-line { font-size: 15px; }
     .avg-line .stars { font-size: 20px; letter-spacing: 1px; }
     .dist-chart { display: flex; align-items: flex-end; gap: 2px; height: 96px; margin-top: 6px; }
-    .dist-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; background: transparent; border-radius: 2px 2px 0 0; overflow: hidden; }
+    .dist-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; background: transparent; border-bottom: 2px solid var(--accent); border-radius: 2px 2px 0 0; overflow: hidden; }
     .dist-col .dist-fill { width: 100%; background: var(--accent); }
     .dist-scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; margin-top: 2px; letter-spacing: 1px; }
     .entry { padding: 10px 0; border-bottom: 1px solid var(--border); }
@@ -98,17 +98,17 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                <details class="entry-reply" {% if highlighted_review_id == my_entry.review.id %}open{% endif %}>
-                    <summary>{% translate "Commenter" %}</summary>
-                    <form method="post" action="{% url 'review_detail' review_id=my_entry.review.id %}">{% csrf_token %}
-                        <textarea name="text" rows="2" required></textarea>
-                        <div><button type="submit">{% translate "Publier" %}</button></div>
-                    </form>
-                </details>
+                {% if highlighted_review_id == my_entry.review.id %}
+                <form class="entry-reply" method="post" action="{% url 'review_detail' review_id=my_entry.review.id %}">{% csrf_token %}
+                    <textarea name="text" rows="2" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
+                    <div><button type="submit">{% translate "Publier" %}</button></div>
+                </form>
+                {% endif %}
             </div>
             <div class="entry-actions">
                 {% include "clubs/_review_reactions.html" with r=my_entry %}
                 <a href="{% url 'read_book' book_id=book.id %}">{% translate "Modifier" %}</a>
+                <a href="?avis={{ my_entry.review.id }}#avis-{{ my_entry.review.id }}">{% translate "Réagir" %}</a>
             </div>
         </div>
     {% else %}
@@ -143,18 +143,18 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                <details class="entry-reply" {% if highlighted_review_id == r.review.id %}open{% endif %}>
-                    <summary>{% translate "Commenter" %}</summary>
-                    <form method="post" action="{% url 'review_detail' review_id=r.review.id %}">{% csrf_token %}
-                        <textarea name="text" rows="2" required></textarea>
-                        <div><button type="submit">{% translate "Publier" %}</button></div>
-                    </form>
-                </details>
+                {% if highlighted_review_id == r.review.id %}
+                <form class="entry-reply" method="post" action="{% url 'review_detail' review_id=r.review.id %}">{% csrf_token %}
+                    <textarea name="text" rows="2" placeholder="{% translate 'Ton commentaire…' %}" required></textarea>
+                    <div><button type="submit">{% translate "Publier" %}</button></div>
+                </form>
+                {% endif %}
                 {% endif %}
             </div>
             {% if r.review %}
             <div class="entry-actions">
                 {% include "clubs/_review_reactions.html" with r=r %}
+                <a href="?avis={{ r.review.id }}#avis-{{ r.review.id }}">{% translate "Réagir" %}</a>
             </div>
             {% endif %}
         </div>
