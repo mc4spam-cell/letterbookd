@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"POT-Creation-Date: 2026-11-22 14:20+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: es\n"
@@ -134,7 +134,12 @@ msgstr "Acerca de letterbookd"
 msgid ""
 "Un outil pour animer un club de lecture privé : choisir le livre du mois, "
 "noter, écrire des avis, en discuter."
-msgstr "Una herramienta para animar un club de lectura privado: elige el libro del mes, puntúa, escribe reseñas y debátelas."
+msgstr ""
+"Una herramienta para animar un club de lectura privado: elige el libro del "
+"mes, puntúa, escribe reseñas y debátelas."
+
+msgid "Guide d'utilisation"
+msgstr "Guía de uso"
 
 msgid "Auteur"
 msgstr "Autor"
@@ -145,16 +150,12 @@ msgstr "Última actualización"
 msgid "Fermer"
 msgstr "Cerrar"
 
-msgid "Guide d'utilisation"
-msgstr "Guía de uso"
-
 msgid ""
 "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
 "pour créer ton compte."
-msgstr "letterbookd es solo por invitación. Si alguien te ha enviado un enlace, síguelo para crear tu cuenta."
-
-msgid "couverture"
-msgstr "portada"
+msgstr ""
+"letterbookd es solo por invitación. Si alguien te ha enviado un enlace, "
+"síguelo para crear tu cuenta."
 
 msgid "Auteurs"
 msgstr "Autores"
@@ -318,7 +319,9 @@ msgstr "Generar un enlace"
 msgid ""
 "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
 "tu veux."
-msgstr "Haz clic en « + » para generar un enlace de invitación. Cópialo y compártelo como quieras."
+msgstr ""
+"Haz clic en « + » para generar un enlace de invitación. Cópialo y compártelo "
+"como quieras."
 
 msgid "utilisée"
 msgstr "utilizada"
@@ -363,7 +366,8 @@ msgstr "Todos mis libros"
 
 #, python-format
 msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
-msgstr "¿Eliminar « %(n)s » de tus libros (con su puntuación y sus comentarios)?"
+msgstr ""
+"¿Eliminar « %(n)s » de tus libros (con su puntuación y sus comentarios)?"
 
 msgid "Supprimer"
 msgstr "Eliminar"
@@ -573,13 +577,21 @@ msgstr "Nombre de miembro"
 msgid ""
 "C'est ce nom que les autres membres verront. Les adresses e-mail restent "
 "privées."
-msgstr "Es el nombre que verán los demás miembros. Las direcciones de correo se mantienen privadas."
+msgstr ""
+"Es el nombre que verán los demás miembros. Las direcciones de correo se "
+"mantienen privadas."
 
 msgid "Le nom de membre est obligatoire."
 msgstr "El nombre de miembro es obligatorio."
 
 msgid "Ce nom est déjà pris, choisis-en un autre."
 msgstr "Ese nombre ya está en uso, elige otro."
+
+#, python-format
+msgid ""
+"Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
+"l'ancien."
+msgstr "La nueva contraseña repite más de %(n)d caracteres consecutivos de la anterior."
 
 msgid "adresse e-mail"
 msgstr "dirección de correo electrónico"
@@ -589,3 +601,54 @@ msgstr "nombre visible"
 
 msgid "bio"
 msgstr "biografía"
+
+msgid "des minuscules"
+msgstr "minúsculas"
+
+msgid "des majuscules"
+msgstr "mayúsculas"
+
+msgid "des chiffres"
+msgstr "dígitos"
+
+msgid "des caractères spéciaux"
+msgstr "caracteres especiales"
+
+#, python-format
+msgid "Le mot de passe doit contenir %(items)s."
+msgstr "La contraseña debe contener %(items)s."
+
+msgid ""
+"Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
+"des chiffres et des caractères spéciaux."
+msgstr "Tu contraseña debe contener a la vez minúsculas, mayúsculas, dígitos y caracteres especiales."
+
+#, fuzzy
+#| msgid "adresse e-mail"
+msgid "votre adresse e-mail"
+msgstr "dirección de correo electrónico"
+
+#, fuzzy
+#| msgid "Nom de membre"
+msgid "votre nom de membre"
+msgstr "Nombre de miembro"
+
+#, python-format
+msgid ""
+"Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
+msgstr "La contraseña repite más de %(n)d caracteres consecutivos de %(attr)s."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre adresse e-mail et/ou de votre nom de membre."
+msgstr "Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu dirección de correo electrónico y/o de tu nombre de miembro."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre mot de passe précédent."
+msgstr "Tu contraseña no puede repetir más de %(n)d caracteres consecutivos de tu contraseña anterior."
+
+#~ msgid "couverture"
+#~ msgstr "portada"

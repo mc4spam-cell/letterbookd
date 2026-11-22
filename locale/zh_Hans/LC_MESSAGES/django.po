@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"POT-Creation-Date: 2026-11-22 14:20+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: zh_Hans\n"
@@ -134,8 +134,10 @@ msgstr "关于 letterbookd"
 msgid ""
 "Un outil pour animer un club de lecture privé : choisir le livre du mois, "
 "noter, écrire des avis, en discuter."
-msgstr ""
-"一个用于组织私人读书会的工具：选出每月的书，打分，写书评，一起讨论。"
+msgstr "一个用于组织私人读书会的工具：选出每月的书，打分，写书评，一起讨论。"
+
+msgid "Guide d'utilisation"
+msgstr "使用指南"
 
 msgid "Auteur"
 msgstr "作者"
@@ -146,17 +148,10 @@ msgstr "最后更新"
 msgid "Fermer"
 msgstr "关闭"
 
-msgid "Guide d'utilisation"
-msgstr "使用指南"
-
 msgid ""
 "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
 "pour créer ton compte."
-msgstr ""
-"letterbookd 仅限受邀加入。如果有人给你发了链接，点击即可创建账号。"
-
-msgid "couverture"
-msgstr "封面"
+msgstr "letterbookd 仅限受邀加入。如果有人给你发了链接，点击即可创建账号。"
 
 msgid "Auteurs"
 msgstr "作者"
@@ -239,8 +234,7 @@ msgstr "并在那里创建条目"
 msgid ""
 "(les livres ajoutés sur Open Library apparaîtront ici après quelques "
 "minutes)."
-msgstr ""
-"（在 Open Library 新增的书会在几分钟后出现在这里）。"
+msgstr "（在 Open Library 新增的书会在几分钟后出现在这里）。"
 
 msgid "Consulter"
 msgstr "查看"
@@ -321,8 +315,7 @@ msgstr "生成链接"
 msgid ""
 "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
 "tu veux."
-msgstr ""
-"点击「+」即可生成邀请链接。复制后按你喜欢的方式分享。"
+msgstr "点击「+」即可生成邀请链接。复制后按你喜欢的方式分享。"
 
 msgid "utilisée"
 msgstr "已使用"
@@ -577,14 +570,19 @@ msgstr "成员名"
 msgid ""
 "C'est ce nom que les autres membres verront. Les adresses e-mail restent "
 "privées."
-msgstr ""
-"其他成员会看到这个名字。邮箱地址保持私密。"
+msgstr "其他成员会看到这个名字。邮箱地址保持私密。"
 
 msgid "Le nom de membre est obligatoire."
 msgstr "成员名为必填项。"
 
 msgid "Ce nom est déjà pris, choisis-en un autre."
 msgstr "这个名字已被占用，请换一个。"
+
+#, python-format
+msgid ""
+"Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
+"l'ancien."
+msgstr "新密码重复使用了超过 %(n)d 个来自旧密码的连续字符。"
 
 msgid "adresse e-mail"
 msgstr "邮箱地址"
@@ -594,3 +592,54 @@ msgstr "显示名称"
 
 msgid "bio"
 msgstr "简介"
+
+msgid "des minuscules"
+msgstr "小写字母"
+
+msgid "des majuscules"
+msgstr "大写字母"
+
+msgid "des chiffres"
+msgstr "数字"
+
+msgid "des caractères spéciaux"
+msgstr "特殊字符"
+
+#, python-format
+msgid "Le mot de passe doit contenir %(items)s."
+msgstr "密码必须包含%(items)s。"
+
+msgid ""
+"Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
+"des chiffres et des caractères spéciaux."
+msgstr "你的密码必须同时包含小写字母、大写字母、数字和特殊字符。"
+
+#, fuzzy
+#| msgid "adresse e-mail"
+msgid "votre adresse e-mail"
+msgstr "邮箱地址"
+
+#, fuzzy
+#| msgid "Nom de membre"
+msgid "votre nom de membre"
+msgstr "成员名"
+
+#, python-format
+msgid ""
+"Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
+msgstr "密码重复使用了超过 %(n)d 个来自 %(attr)s 的连续字符。"
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre adresse e-mail et/ou de votre nom de membre."
+msgstr "你的密码不能重复使用超过 %(n)d 个来自你的电子邮箱和/或你的成员名称的连续字符。"
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre mot de passe précédent."
+msgstr "你的密码不能重复使用超过 %(n)d 个来自你之前密码的连续字符。"
+
+#~ msgid "couverture"
+#~ msgstr "封面"

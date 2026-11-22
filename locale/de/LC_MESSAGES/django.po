@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"POT-Creation-Date: 2026-11-22 14:20+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: de\n"
@@ -138,6 +138,9 @@ msgstr ""
 "Ein Werkzeug für einen privaten Lesekreis: das Buch des Monats wählen, "
 "bewerten, Rezensionen schreiben und darüber diskutieren."
 
+msgid "Guide d'utilisation"
+msgstr "Benutzerhandbuch"
+
 msgid "Auteur"
 msgstr "Autor"
 
@@ -147,18 +150,12 @@ msgstr "Letzte Aktualisierung"
 msgid "Fermer"
 msgstr "Schließen"
 
-msgid "Guide d'utilisation"
-msgstr "Benutzerhandbuch"
-
 msgid ""
 "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
 "pour créer ton compte."
 msgstr ""
 "letterbookd ist nur auf Einladung zugänglich. Wenn dir jemand einen Link "
 "geschickt hat, öffne ihn, um dein Konto zu erstellen."
-
-msgid "couverture"
-msgstr "Umschlag"
 
 msgid "Auteurs"
 msgstr "Autoren"
@@ -242,8 +239,7 @@ msgid ""
 "(les livres ajoutés sur Open Library apparaîtront ici après quelques "
 "minutes)."
 msgstr ""
-"(Auf Open Library hinzugefügte Bücher erscheinen hier nach ein paar "
-"Minuten)."
+"(Auf Open Library hinzugefügte Bücher erscheinen hier nach ein paar Minuten)."
 
 msgid "Consulter"
 msgstr "Ansehen"
@@ -371,7 +367,8 @@ msgstr "Alle meine Bücher"
 
 #, python-format
 msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
-msgstr "„%(n)s“ aus deinen Büchern löschen (inklusive Bewertung und Kommentaren)?"
+msgstr ""
+"„%(n)s“ aus deinen Büchern löschen (inklusive Bewertung und Kommentaren)?"
 
 msgid "Supprimer"
 msgstr "Löschen"
@@ -591,6 +588,12 @@ msgstr "Der Mitgliedsname ist Pflicht."
 msgid "Ce nom est déjà pris, choisis-en un autre."
 msgstr "Dieser Name ist schon vergeben, wähl einen anderen."
 
+#, python-format
+msgid ""
+"Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
+"l'ancien."
+msgstr "Das neue Passwort verwendet mehr als %(n)d aufeinanderfolgende Zeichen des alten wieder."
+
 msgid "adresse e-mail"
 msgstr "E-Mail-Adresse"
 
@@ -599,3 +602,54 @@ msgstr "Anzeigename"
 
 msgid "bio"
 msgstr "Bio"
+
+msgid "des minuscules"
+msgstr "Kleinbuchstaben"
+
+msgid "des majuscules"
+msgstr "Großbuchstaben"
+
+msgid "des chiffres"
+msgstr "Ziffern"
+
+msgid "des caractères spéciaux"
+msgstr "Sonderzeichen"
+
+#, python-format
+msgid "Le mot de passe doit contenir %(items)s."
+msgstr "Das Passwort muss %(items)s enthalten."
+
+msgid ""
+"Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
+"des chiffres et des caractères spéciaux."
+msgstr "Dein Passwort muss sowohl Kleinbuchstaben, Großbuchstaben, Ziffern als auch Sonderzeichen enthalten."
+
+#, fuzzy
+#| msgid "adresse e-mail"
+msgid "votre adresse e-mail"
+msgstr "E-Mail-Adresse"
+
+#, fuzzy
+#| msgid "Nom de membre"
+msgid "votre nom de membre"
+msgstr "Mitgliedsname"
+
+#, python-format
+msgid ""
+"Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
+msgstr "Das Passwort verwendet mehr als %(n)d aufeinanderfolgende Zeichen von %(attr)s wieder."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre adresse e-mail et/ou de votre nom de membre."
+msgstr "Dein Passwort darf nicht mehr als %(n)d aufeinanderfolgende Zeichen deiner E-Mail-Adresse und/oder deines Mitgliedsnamens wiederverwenden."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre mot de passe précédent."
+msgstr "Dein Passwort darf nicht mehr als %(n)d aufeinanderfolgende Zeichen deines vorherigen Passworts wiederverwenden."
+
+#~ msgid "couverture"
+#~ msgstr "Umschlag"

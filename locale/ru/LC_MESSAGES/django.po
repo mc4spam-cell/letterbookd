@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-20 21:03+0000\n"
+"POT-Creation-Date: 2026-11-22 14:20+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: ru\n"
@@ -135,8 +135,11 @@ msgid ""
 "Un outil pour animer un club de lecture privé : choisir le livre du mois, "
 "noter, écrire des avis, en discuter."
 msgstr ""
-"Инструмент для закрытого книжного клуба: выбираем книгу месяца, ставим оценку, "
-"пишем отзывы и обсуждаем их."
+"Инструмент для закрытого книжного клуба: выбираем книгу месяца, ставим "
+"оценку, пишем отзывы и обсуждаем их."
+
+msgid "Guide d'utilisation"
+msgstr "Руководство пользователя"
 
 msgid "Auteur"
 msgstr "Автор"
@@ -147,18 +150,12 @@ msgstr "Последнее обновление"
 msgid "Fermer"
 msgstr "Закрыть"
 
-msgid "Guide d'utilisation"
-msgstr "Руководство пользователя"
-
 msgid ""
 "L'accès à letterbookd est sur invitation. Si on t'a envoyé un lien, suis-le "
 "pour créer ton compte."
 msgstr ""
 "Вход в letterbookd только по приглашению. Если тебе прислали ссылку, перейди "
 "по ней и создай аккаунт."
-
-msgid "couverture"
-msgstr "обложка"
 
 msgid "Auteurs"
 msgstr "Авторы"
@@ -324,7 +321,8 @@ msgid ""
 "Un clic sur « + » génère un lien d'invitation. Copie-le et partage-le comme "
 "tu veux."
 msgstr ""
-"Нажми «+», чтобы создать ссылку-приглашение. Скопируй её и отправь как удобно."
+"Нажми «+», чтобы создать ссылку-приглашение. Скопируй её и отправь как "
+"удобно."
 
 msgid "utilisée"
 msgstr "использовано"
@@ -579,14 +577,19 @@ msgstr "Имя участника"
 msgid ""
 "C'est ce nom que les autres membres verront. Les adresses e-mail restent "
 "privées."
-msgstr ""
-"Это имя увидят другие участники. E-mail-адреса остаются приватными."
+msgstr "Это имя увидят другие участники. E-mail-адреса остаются приватными."
 
 msgid "Le nom de membre est obligatoire."
 msgstr "Имя участника обязательно."
 
 msgid "Ce nom est déjà pris, choisis-en un autre."
 msgstr "Это имя уже занято, выбери другое."
+
+#, python-format
+msgid ""
+"Le nouveau mot de passe reprend plus de %(n)d caractères consécutifs de "
+"l'ancien."
+msgstr "Новый пароль повторяет более %(n)d подряд идущих символов старого."
 
 msgid "adresse e-mail"
 msgstr "e-mail"
@@ -596,3 +599,54 @@ msgstr "отображаемое имя"
 
 msgid "bio"
 msgstr "о себе"
+
+msgid "des minuscules"
+msgstr "строчные буквы"
+
+msgid "des majuscules"
+msgstr "заглавные буквы"
+
+msgid "des chiffres"
+msgstr "цифры"
+
+msgid "des caractères spéciaux"
+msgstr "специальные символы"
+
+#, python-format
+msgid "Le mot de passe doit contenir %(items)s."
+msgstr "Пароль должен содержать %(items)s."
+
+msgid ""
+"Votre mot de passe doit contenir à la fois des minuscules, des majuscules, "
+"des chiffres et des caractères spéciaux."
+msgstr "Твой пароль должен содержать одновременно строчные буквы, заглавные буквы, цифры и специальные символы."
+
+#, fuzzy
+#| msgid "adresse e-mail"
+msgid "votre adresse e-mail"
+msgstr "e-mail"
+
+#, fuzzy
+#| msgid "Nom de membre"
+msgid "votre nom de membre"
+msgstr "Имя участника"
+
+#, python-format
+msgid ""
+"Le mot de passe reprend plus de %(n)d caractères consécutifs de %(attr)s."
+msgstr "Пароль повторяет более %(n)d подряд идущих символов из %(attr)s."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre adresse e-mail et/ou de votre nom de membre."
+msgstr "Твой пароль не может повторять более %(n)d подряд идущих символов твоего адреса электронной почты и/или твоего имени участника."
+
+#, python-format
+msgid ""
+"Votre mot de passe ne peut reprendre plus de %(n)d caractères consécutifs de "
+"votre mot de passe précédent."
+msgstr "Твой пароль не может повторять более %(n)d подряд идущих символов твоего предыдущего пароля."
+
+#~ msgid "couverture"
+#~ msgstr "обложка"
