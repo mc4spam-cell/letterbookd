@@ -32,7 +32,12 @@ def lists_index(request):
     return render(
         request,
         "clubs/lists_index.html",
-        {"lists": my_lists, "all_readings": all_readings},
+        {
+            "lists": my_lists,
+            "all_readings": all_readings,
+            "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
+                .annotate(items_count=Count("items")).order_by("name"),
+        },
     )
 
 

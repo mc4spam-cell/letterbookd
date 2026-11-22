@@ -1,0 +1,58 @@
+{% load i18n %}
+<style>
+    dialog#d-list .list-picker { list-style: none; padding: 0; margin: 12px 0; display: flex; flex-direction: column; gap: 6px; }
+    dialog#d-list .list-picker form { margin: 0; }
+    dialog#d-list .list-picker button {
+        display: flex; align-items: center; gap: 10px;
+        width: 100%; padding: 10px 14px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 4px;
+        text-align: left; cursor: pointer; font: inherit;
+    }
+    dialog#d-list .list-picker button:hover { border-color: var(--accent); color: var(--accent); background: var(--surface-2); }
+    dialog#d-list .list-picker em { color: var(--muted); font-size: 12px; margin-left: auto; }
+    dialog#d-list h4 { margin: 14px 0 6px; }
+</style>
+
+<dialog class="m" id="d-list">
+    <h3>{% translate "Ajouter à une liste" %}</h3>
+    {% if add_to_list_lists %}
+    <ul class="list-picker">
+        {% for l in add_to_list_lists %}
+        <li>
+            <form method="post" class="d-list-f">{% csrf_token %}
+                <input type="hidden" name="from_list_id" class="d-list-from">
+                <input type="hidden" name="list_id" value="{{ l.id }}">
+                <button type="submit">
+                    <span>{{ l.name }}</span>
+                    <em>{{ l.items_count }} {% translate "livre(s)" %}</em>
+                </button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>{% translate "Ou créer une nouvelle liste" %}</h4>
+    <form method="post" class="d-list-f">{% csrf_token %}
+        <input type="hidden" name="from_list_id" class="d-list-from">
+        <p><label>{% translate "Titre" %}
+            <input type="text" name="new_list_name" maxlength="120" required>
+        </label></p>
+        <div class="actions">
+            <button type="submit">{% translate "Publier" %}</button>
+            <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+        </div>
+    </form>
+</dialog>
+
+<script>
+function openAddToList(bookId, fromListId) {
+    const action = '/livres/' + bookId + '/ajouter-liste/';
+    document.querySelectorAll('#d-list .d-list-f').forEach(f => {
+        f.action = action;
+        const fromInput = f.querySelector('.d-list-from');
+        if (fromInput) fromInput.value = fromListId || '';
+    });
+    document.getElementById('d-list').showModal();
+}
+</script>

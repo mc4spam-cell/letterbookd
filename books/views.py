@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from clubs.models import Comment, Reading, ReadingStatus, ReviewReaction
+from clubs.models import Comment, Reading, ReadingList, ReadingStatus, ReviewReaction
 
 from . import openlibrary
 from .models import Book
@@ -153,5 +153,7 @@ def detail(request, book_id):
             "other_entries": other_entries,
             "highlighted_review_id": highlighted_id,
             "statuses": ReadingStatus.choices,
+            "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
+                .annotate(items_count=Count("items")).order_by("name"),
         },
     )

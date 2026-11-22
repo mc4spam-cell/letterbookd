@@ -77,7 +77,7 @@
     {% endif %}
     <p style="clear:both">
         <a href="#" onclick="document.getElementById('d-full').showModal(); return false">{% translate "Noter / écrire un avis" %}</a>
-        · <a href="{% url 'book_add_to_list' book_id=book.id %}">{% translate "Ajouter à une liste" %}</a>
+        · <a href="#" onclick="openAddToList({{ book.id }}, null); return false">{% translate "Ajouter à une liste" %}</a>
     </p>
 
     <dialog class="m" id="d-full">
@@ -109,6 +109,8 @@
             </div>
         </form>
     </dialog>
+
+    {% include "clubs/_add_to_list_modal.html" %}
 
     <h2>{% translate "Mon avis" %}</h2>
     {% if my_entry and my_entry.review %}
