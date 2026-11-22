@@ -411,26 +411,22 @@
         /* ───── Mobile (≤640px) ───── */
         @media (max-width: 640px) {
             header {
-                padding: 8px 10px;
-                gap: 2px 10px;
+                padding: 8px 6px;
+                gap: 0;
                 font-size: 13px;
-                justify-content: center;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
             }
-            header a.brand img { height: 44px; }
-            header a.brand { margin-right: 6px; width: 100%; justify-content: center; }
-            header .nav-ico { margin-right: 0; }
+            header a.brand img { height: 32px; }
+            header a.brand { margin: 0; flex: 0 0 auto; }
+            header .nav-ico { margin: 0; }
             header span[style*="flex:1"] { display: none; }
-            header .nav-user .nav-label,
-            header a[href="/"] .nav-label,
-            header a[href$="sorties/"] .nav-label,
-            header a[href$="prix/"] .nav-label,
-            header a[href$="inviter/"] .nav-label,
-            header a[href$="notifications/"] .nav-label,
-            header a[href$="moderation/"] .nav-label,
-            header form[action$="logout/"] .nav-label { display: none; }
-            header form { margin-left: 0; }
-            header { position: relative; justify-content: flex-start; }
-            .corner-tools { position: absolute; top: 8px; right: 10px; margin-left: 0; }
+            header .nav-label { display: none; }
+            header > a, header > form { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: 4px 0; min-width: 0; }
+            header > form button { padding: 0; background: none; border: 0; color: inherit; }
+            header { position: static; }
+            .corner-tools { position: static; margin-left: 0; display: inline-flex; gap: 4px; flex: 0 0 auto; }
             .corner-tools button { min-height: 30px; padding: 0; font-size: 16px; }
 
             main { padding: 14px 12px 40px; }
