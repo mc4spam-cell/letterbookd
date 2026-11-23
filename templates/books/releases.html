@@ -5,19 +5,19 @@
 <style>
     .rel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; }
     .rel-card { background:var(--surface); border:1px solid var(--border); border-radius:6px;
-        padding:10px; display:flex; flex-direction:column; gap:6px; position:relative; }
+        padding:10px; display:flex; flex-direction:column; gap:6px; position:relative; min-height:500px; }
     .rel-card img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:4px; background:var(--surface-2); }
     .rel-title { font-weight:600; font-size:14px; line-height:1.2; }
     .rel-author { color:var(--muted); font-size:12px; }
     .rel-summary { font-size:12px; color:var(--muted); display:-webkit-box;
         -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
-    .rel-card a.src { font-size:11px; color:var(--accent); text-decoration:none; margin-top:auto; }
-    .rel-actions { display:flex; gap:10px; align-items:center; }
+    .rel-card a.src { font-size:11px; color:var(--accent); text-decoration:none; line-height:20px; }
+    .rel-actions { display:flex; gap:10px; align-items:center; margin-top:auto; }
     .rel-actions svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
     .rel-actions .heart-btn { background:none; border:0; padding:0; cursor:pointer; line-height:0; color:var(--accent); }
     .rel-actions .heart-btn svg { stroke:var(--accent); fill:transparent; transition:fill .15s; }
     .rel-actions .heart-btn.on svg { fill:var(--accent); }
-    .rel-actions .move-btn { color:#46a2e4; text-decoration:none; }
+    .rel-actions .move-btn { color:#46a2e4; text-decoration:none; line-height:0; display:inline-flex; align-items:center; }
 </style>
 <h1>{% translate "Sorties" %}</h1>
 <p style="color:var(--muted)">{% translate "Nouveautés livres, récupérées chaque semaine dans « Le Monde des livres »." %}</p>

@@ -23,7 +23,11 @@ def search(query: str, limit: int = 10) -> list[dict]:
     q = (query or "").strip()
     if not q:
         return []
-    url = f"{SEARCH_URL}?{urlencode({'q': q, 'limit': limit})}"
+    url = f"{SEARCH_URL}?{urlencode({
+        'q': q,
+        'limit': limit,
+        'fields': 'key,title,author_name,isbn,number_of_pages_median,cover_i,first_publish_year',
+    })}"
     req = Request(url, headers={"User-Agent": USER_AGENT})
     with urlopen(req, timeout=10) as resp:
         data = json.loads(resp.read().decode("utf-8"))

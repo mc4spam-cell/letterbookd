@@ -29,9 +29,15 @@ def search(request):
                 book__olid__in=olids,
             ).values_list("book__olid", flat=True)
         )
+        prizes_by_olid: dict[str, list] = {}
+        for pw in PrizeWinner.objects.filter(
+            book__olid__in=olids
+        ).order_by("-year", "prize_name").select_related("book"):
+            prizes_by_olid.setdefault(pw.book.olid, []).append(pw)
         for r in results:
             r["rating"] = ratings.get(r.get("olid"))
             r["is_favorite"] = r.get("olid") in fav_olids
+            r["prizes"] = prizes_by_olid.get(r.get("olid"), [])
     return render(request, "books/search.html", {"q": q, "results": results})
 
 
@@ -76,12 +82,8 @@ def add(request):
         fav.save(update_fields=["updated_at"])
         return JsonResponse({"book_id": book.pk, "is_favorite": is_fav})
     if nxt == "inline_rate":
-        rating_raw = (request.POST.get("rating") or "").strip()
-        rating = (
-            int(rating_raw)
-            if rating_raw.isdigit() and 0 <= int(rating_raw) <= 10
-            else None
-        )
+        from clubs.review_views import _parse_rating
+        rating = _parse_rating(request.POST.get("rating"))
         reading = (
             Reading.objects.filter(user=request.user, book=book)
             .order_by("-updated_at")
@@ -165,6 +167,8 @@ def detail(request, book_id):
         book=book,
     ).exists()
 
+    prizes = list(book.prizewinner_set.order_by("-year", "prize_name"))
+
     highlighted = request.GET.get("avis")
     highlighted_id = int(highlighted) if highlighted and highlighted.isdigit() else None
     if highlighted_id is not None:
@@ -186,6 +190,7 @@ def detail(request, book_id):
             "highlighted_review_id": highlighted_id,
             "statuses": ReadingStatus.choices,
             "is_favorite": is_favorite,
+            "prizes": prizes,
             "open_list": request.GET.get("open_list") == "1",
             "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
                 .exclude(kind=ReadingList.Kind.FAVORITES)
@@ -217,11 +222,14 @@ def releases(request):
 
 @login_required
 def prizes(request):
-    items = list(PrizeWinner.objects.select_related("book"))
+    items = list(PrizeWinner.objects.select_related("book").order_by("-year"))
     fav_ids, lists = _fav_and_lists(request)
-    grouped = {}
+    grouped: dict[str, list] = {}
     for p in items:
         p.is_favorite = p.book_id in fav_ids if p.book_id else False
-        grouped.setdefault(p.prize_name, []).append(p)
+        bucket = grouped.setdefault(p.prize_name, [])
+        if len(bucket) < 4:
+            bucket.append(p)
+    grouped = dict(sorted(grouped.items(), key=lambda kv: kv[0].casefold()))
     return render(request, "books/prizes.html",
                   {"grouped": grouped, "add_to_list_lists": lists})

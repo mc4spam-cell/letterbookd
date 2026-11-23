@@ -24,11 +24,27 @@ services:
     expose:
       - "8000"
 
+  scheduler:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # Hebdomadaire : lance une fois au démarrage puis toutes les 7 jours.
+    command: >
+      sh -c 'while true; do
+        python manage.py fetch_prizes || true;
+        sleep 604800;
+      done'
+
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
+    env_file: .env
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data

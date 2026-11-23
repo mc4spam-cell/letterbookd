@@ -3,44 +3,62 @@
 {% block title %}{% translate "Accueil" %} · letterbookd{% endblock %}
 {% block content %}
 <style>
-    .tiles { display: flex; flex-wrap: wrap; gap: 14px; list-style: none; padding: 0; margin: 12px 0 0; }
-    .tile { position: relative; width: 160px; }
-    .tile-cover { display: block; }
-    .tile img { width: 100%; border-radius: 3px; box-shadow: 0 2px 6px rgba(0,0,0,.5); display: block; }
-    .tile .placeholder { height: 240px; background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.7)), url("{% static 'images/default-cover.jpg' %}") center/cover no-repeat, #2a2015; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.9); font-weight: 600; font-size: 14px; line-height: 1.2; padding: 10px; text-align: center; }
-    .tile .overlay {
-        position: absolute; left: 0; right: 0; bottom: 0;
-        padding: 6px 8px;
-        background: linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,0));
-        border-radius: 0 0 3px 3px;
-        color: #fff; font-size: 12px; display: block; text-decoration: none;
-    }
-    .tile .overlay strong { color: #fff; }
-    .tile .overlay:hover { background: linear-gradient(to top, rgba(0,192,48,.85), rgba(0,0,0,0)); }
-    .tile .stars { font-size: 11px; }
+    .prz-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; margin:8px 0 24px; }
+    .prz-card { background:var(--surface); border:1px solid var(--border); border-radius:6px;
+        padding:10px; display:flex; flex-direction:column; gap:6px; position:relative; min-height:550px; }
+    .prz-card .cover-wrap { position:relative; }
+    .prz-card .cover { width:100%; aspect-ratio:2/3; border-radius:4px; background:var(--surface-2);
+        display:block; overflow:hidden; position:relative; }
+    .prz-card .cover img { width:100%; height:100%; object-fit:cover; display:block; }
+    .prz-card .cover.default { background:url("{% static 'images/default-cover.jpg' %}") center/cover no-repeat, #2a2015; }
+    .prz-year-chip { position:absolute; top:4px; left:4px; padding:2px 6px; font-size:11px;
+        background:rgba(0,0,0,.7); color:#fff; border-radius:3px; text-decoration:none; }
+    .prz-year-chip:hover { background:rgba(0,192,48,.85); }
+    .prz-stars-overlay { position:absolute; top:4px; right:4px; padding:2px 6px;
+        background:rgba(0,0,0,.7); border-radius:3px;
+        color:var(--accent); font-size:12px; letter-spacing:1px; }
+    .prz-title { font-weight:700; color:#fff; font-size:14px; line-height:1.2; }
+    .prz-author { color:var(--muted); font-size:12px; line-height:1.2; }
+    .prz-summary { font-size:12px; color:#fff; font-weight:600; display:-webkit-box;
+        -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+    .prz-actions { display:flex; gap:10px; align-items:center; margin-top:auto; }
+    .prz-actions svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .prz-actions .heart-btn { background:none; border:0; padding:0; cursor:pointer; line-height:0; color:var(--accent); }
+    .prz-actions .heart-btn svg { stroke:var(--accent); fill:transparent; transition:fill .15s; }
+    .prz-actions .heart-btn.on svg { fill:var(--accent); }
+    .prz-actions .move-btn { color:#46a2e4; text-decoration:none; line-height:0; }
+    .prz-card a.src { font-size:11px; color:var(--accent); text-decoration:none; line-height:20px; margin-left:auto; }
 </style>
 
 <h1>{% translate "Nouveaux livres" %}</h1>
 
 <h2>{% translate "Membres que je suis" %}</h2>
 {% if followed_readings %}
-<ul class="tiles">
+<div class="prz-grid">
     {% for r in followed_readings %}
-    <li class="tile">
-        <a class="tile-cover" href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book.title }}">
-            {% if r.book.cover_id %}
-                <img src="{{ r.book.cover_url }}" alt="{{ r.book.title }}">
-            {% else %}
-                <div class="placeholder">{{ r.book.title }}</div>
-            {% endif %}
-        </a>
-        <a class="overlay" href="{% url 'profile_detail' user_id=r.user.id %}">
-            <strong>{{ r.user }}</strong>
-            {% if r.rating is not None %}<br><span class="stars">{{ r.rating|stars }}</span>{% endif %}
-        </a>
-    </li>
+    <div class="prz-card">
+        <div class="cover-wrap">
+            <a href="{% url 'books_detail' book_id=r.book_id %}" class="cover {% if not r.book.cover_id %}default{% endif %}" title="{{ r.book.title }}">
+                {% if r.book.cover_id %}<img src="{{ r.book.cover_url }}" alt="">{% endif %}
+                {% if r.rating is not None %}<span class="prz-stars-overlay">{{ r.rating|stars }}</span>{% endif %}
+            </a>
+            <a href="{% url 'profile_detail' user_id=r.user.id %}" class="prz-year-chip">{{ r.user }}</a>
+        </div>
+        <div class="prz-title">{{ r.book.title }}</div>
+        {% if r.book.authors %}<div class="prz-author">{{ r.book.authors }}</div>{% endif %}
+        {% if r.book.description %}<div class="prz-summary">{{ r.book.description }}</div>{% endif %}
+        <div class="prz-actions">
+            <button type="button" class="heart-btn" title="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ r.book_id }}, this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+            </button>
+            <a href="#" class="move-btn" title="{% translate 'Ajouter à une liste' %}" onclick="openAddToList({{ r.book_id }}, null); return false">
+                <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+            </a>
+            <a class="src" href="{% url 'books_detail' book_id=r.book_id %}">{% translate "Lire l'article →" %}</a>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% else %}
     <p>{% translate "Personne à suivre pour le moment." %}
        <a href="{% url 'members' %}">{% translate "Trouve des membres à suivre" %}</a>.</p>
@@ -48,22 +66,40 @@
 
 {% if others_readings %}
 <h2>{% translate "Autres membres" %}</h2>
-<ul class="tiles">
+<div class="prz-grid">
     {% for r in others_readings %}
-    <li class="tile">
-        <a class="tile-cover" href="{% url 'books_detail' book_id=r.book_id %}" title="{{ r.book.title }}">
-            {% if r.book.cover_id %}
-                <img src="{{ r.book.cover_url }}" alt="{{ r.book.title }}">
-            {% else %}
-                <div class="placeholder">{{ r.book.title }}</div>
-            {% endif %}
-        </a>
-        <a class="overlay" href="{% url 'profile_detail' user_id=r.user.id %}">
-            <strong>{{ r.user }}</strong>
-            {% if r.rating is not None %}<br><span class="stars">{{ r.rating|stars }}</span>{% endif %}
-        </a>
-    </li>
+    <div class="prz-card">
+        <div class="cover-wrap">
+            <a href="{% url 'books_detail' book_id=r.book_id %}" class="cover {% if not r.book.cover_id %}default{% endif %}" title="{{ r.book.title }}">
+                {% if r.book.cover_id %}<img src="{{ r.book.cover_url }}" alt="">{% endif %}
+                {% if r.rating is not None %}<span class="prz-stars-overlay">{{ r.rating|stars }}</span>{% endif %}
+            </a>
+            <a href="{% url 'profile_detail' user_id=r.user.id %}" class="prz-year-chip">{{ r.user }}</a>
+        </div>
+        <div class="prz-title">{{ r.book.title }}</div>
+        {% if r.book.authors %}<div class="prz-author">{{ r.book.authors }}</div>{% endif %}
+        {% if r.book.description %}<div class="prz-summary">{{ r.book.description }}</div>{% endif %}
+        <div class="prz-actions">
+            <button type="button" class="heart-btn" title="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ r.book_id }}, this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+            </button>
+            <a href="#" class="move-btn" title="{% translate 'Ajouter à une liste' %}" onclick="openAddToList({{ r.book_id }}, null); return false">
+                <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+            </a>
+            <a class="src" href="{% url 'books_detail' book_id=r.book_id %}">{% translate "Lire l'article →" %}</a>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endif %}
+
+{% include "clubs/_add_to_list_modal.html" %}
+<script>
+function toggleFavoriteBtn(bookId, btn) {
+    const fd = new FormData();
+    fd.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+    fetch('/livres/' + bookId + '/favori/', {method:'POST', body:fd, headers:{'x-requested-with':'fetch'}})
+      .then(r => r.json()).then(d => btn.classList.toggle('on', d.is_favorite)).catch(()=>{});
+}
+</script>
 {% endblock %}

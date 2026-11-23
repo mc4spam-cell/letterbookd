@@ -45,15 +45,6 @@ gpg --decrypt backup-YYYY-MM-DD.sql.gpg \
   | docker compose exec -T db psql -U "$POSTGRES_USER" "$POSTGRES_DB"
 ```
 
-## Cycle automatique
-
-Le vote mensuel s'ouvre et se clôt tout seul via une commande à lancer
-quotidiennement par cron :
-
-```bash
-python manage.py cycle_tick
-```
-
 ## Licence
 
 GPL-3.0. Voir [LICENSE](LICENSE).

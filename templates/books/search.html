@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n stars %}
+{% load i18n stars static %}
 {% block title %}{% translate "Chercher un livre" %}{% endblock %}
 {% block content %}
 <style>
@@ -7,11 +7,22 @@
     .search-row > .result-form { display: flex; align-items: flex-start; gap: 16px; margin: 0; }
     .search-row .as-link { background: none; border: 0; padding: 0; margin: 0; color: var(--text); text-align: left; cursor: pointer; font: inherit; letter-spacing: 0; text-transform: none; }
     .search-row .as-link:hover { background: none; color: var(--accent); }
-    .search-row .as-link.cover-btn img { display: block; width: 80px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
-    .search-row .as-link.cover-btn .placeholder { width: 80px; height: 120px; background: var(--surface-2); border-radius: 2px; }
+    .search-row .as-link.cover-btn img { display: block; width: 80px; height: 120px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
     .search-row .body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
     .search-row .title-line { line-height: 1.3; }
+    .search-row .row-prizes { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0; }
+    .search-row .row-prizes .chip { background: var(--surface-2); border: 1px solid var(--border);
+        border-radius: 12px; padding: 2px 10px; font-size: 12px; color: var(--text); }
+    .search-row .row-prizes .chip .yr { color: var(--muted); margin-left: 4px; }
     .search-row .actions { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+    .search-row .actions .star-picker label { width: 10px; height: 20px; }
+    .search-row .actions .star-picker label::before { font-size: 20px; width: 20px; }
+    .search-row .actions .star-picker label.right::before { left: -10px; }
+    .search-row .actions .heart-btn,
+    .search-row .actions .icon-btn { display: inline-flex; align-items: center; justify-content: center; }
+    .search-row .actions .move-btn { border: 0; background: none; padding: 2px 4px; }
+    .search-row .actions .move-btn svg { width: 20px; height: 20px; stroke: #46a2e4; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .search-row .actions .move-btn:hover svg { stroke: #68b6ee; }
     .icon-btn {
         background: none; border: 1px solid var(--border); border-radius: 4px;
         width: 32px; height: 32px; padding: 0;
@@ -80,7 +91,7 @@
             <input type="hidden" name="cover_id" value="{{ r.cover_id|default_if_none:'' }}">
 
             <button type="submit" name="next" value="detail" class="as-link cover-btn" aria-label="{% translate 'Consulter' %}">
-                {% if r.cover_id %}<img src="https://covers.openlibrary.org/b/id/{{ r.cover_id }}-S.jpg" alt="">{% else %}<span class="placeholder"></span>{% endif %}
+                {% if r.cover_id %}<img src="https://covers.openlibrary.org/b/id/{{ r.cover_id }}-M.jpg" alt="">{% elif r.prizes %}<img src="{% static 'images/Pochette_prix_defaut.jpg' %}" alt="">{% else %}<img src="{% static 'images/default-cover.jpg' %}" alt="">{% endif %}
             </button>
 
             <div class="body">
@@ -88,14 +99,23 @@
                     <button type="submit" name="next" value="detail" class="as-link"><strong>{{ r.title }}</strong></button>
                     {% if r.authors %}<em> — {{ r.authors }}</em>{% endif %}
                     {% if r.year %}<em> ({{ r.year }})</em>{% endif %}
+                    {% if r.isbn %}<div style="color:var(--muted);font-size:13px">ISBN {{ r.isbn }}</div>{% endif %}
                 </div>
+
+                {% if r.prizes %}
+                <div class="row-prizes">
+                    {% for p in r.prizes %}<span class="chip">{{ p.prize_name }}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
+                </div>
+                {% endif %}
 
                 <div class="actions">
                     {% star_picker r.rating prefix=r.olid %}
                     <button type="button" class="heart-btn fav-btn {% if r.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" aria-label="{% translate 'Favori' %}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
                     </button>
-                    <button type="submit" name="next" value="list" class="icon-btn" title="{% translate 'Ajouter à une liste' %}">＋</button>
+                    <button type="submit" name="next" value="list" class="move-btn" title="{% translate 'Ajouter à une liste' %}" aria-label="{% translate 'Ajouter à une liste' %}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+                    </button>
                 </div>
 
                 <div class="rate-ok" hidden>

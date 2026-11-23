@@ -543,7 +543,7 @@
         <span class="corner-tools">
             <button type="button" id="btn-info" aria-haspopup="dialog" title="{% translate 'À propos' %}" aria-label="{% translate 'À propos' %}">i</button>
             <button type="button" id="btn-lang" aria-haspopup="dialog" title="{% translate 'Langue' %}" aria-label="{% translate 'Langue' %}">
-                <span class="flag" aria-hidden="true">{% if LANGUAGE_CODE == 'en' %}🇬🇧{% elif LANGUAGE_CODE == 'es' %}🇪🇸{% elif LANGUAGE_CODE == 'de' %}🇩🇪{% elif LANGUAGE_CODE == 'ru' %}🇷🇺{% elif LANGUAGE_CODE == 'zh-hans' %}🇨🇳{% else %}🇫🇷{% endif %}</span>
+                <span class="flag" aria-hidden="true">{% if LANGUAGE_CODE == 'en' %}🇬🇧{% elif LANGUAGE_CODE == 'es' %}🇪🇸{% elif LANGUAGE_CODE == 'de' %}🇩🇪{% elif LANGUAGE_CODE == 'ru' %}🇷🇺{% else %}🇫🇷{% endif %}</span>
             </button>
         </span>
     </header>
@@ -568,7 +568,6 @@
                 <button type="submit" name="language" value="es" class="{% if LANGUAGE_CODE == 'es' %}on{% endif %}"><span class="flag">🇪🇸</span><span>Español</span></button>
                 <button type="submit" name="language" value="de" class="{% if LANGUAGE_CODE == 'de' %}on{% endif %}"><span class="flag">🇩🇪</span><span>Deutsch</span></button>
                 <button type="submit" name="language" value="ru" class="{% if LANGUAGE_CODE == 'ru' %}on{% endif %}"><span class="flag">🇷🇺</span><span>Русский</span></button>
-                <button type="submit" name="language" value="zh-hans" class="{% if LANGUAGE_CODE == 'zh-hans' %}on{% endif %}"><span class="flag">🇨🇳</span><span>中文</span></button>
             </div>
         </form>
     </dialog>

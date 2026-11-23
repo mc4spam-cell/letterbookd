@@ -2,11 +2,21 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "insecure-dev-key")
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+_SECRET_FROM_ENV = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = _SECRET_FROM_ENV or "insecure-dev-key"
+if (
+    not DEBUG
+    and not os.environ.get("ALLOW_INSECURE_SECRET")
+    and SECRET_KEY in ("", "insecure-dev-key", "change-me")
+):
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY doit être défini en production."
+    )
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
@@ -17,7 +27,15 @@ CSRF_TRUSTED_ORIGINS = [
     for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if o.strip()
 ]
+# Caddy transmet le vrai X-Forwarded-Proto (plus de réécriture en dur).
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Cookies et HSTS en prod. En dev local (HTTP), DEBUG=1 les désactive.
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_HSTS_SECONDS = 0 if DEBUG else 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -102,9 +120,16 @@ ACCOUNT_FORMS = {
 # un mail silencieux ; à repasser à True en prod.
 ACCOUNT_PREVENT_ENUMERATION = DEBUG is False
 
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_BACKEND = os.environ.get(
-    "EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend"
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.smtp.EmailBackend" if EMAIL_HOST
+    else "django.core.mail.backends.console.EmailBackend",
 )
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True").lower() == "true"
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@letterbookd.local")
 
 AUTH_PASSWORD_VALIDATORS = [

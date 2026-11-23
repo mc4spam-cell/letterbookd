@@ -18,20 +18,28 @@ def _auth(viewer) -> bool:
 
 def visible_users(viewer) -> QuerySet:
     User = get_user_model()
-    return User.objects.all() if _auth(viewer) else User.objects.none()
+    if not _auth(viewer):
+        return User.objects.none()
+    return User.objects.filter(is_deleted=False)
 
 
 def visible_reviews(viewer) -> QuerySet:
-    return Review.objects.all() if _auth(viewer) else Review.objects.none()
+    if not _auth(viewer):
+        return Review.objects.none()
+    return Review.objects.filter(reading__user__is_deleted=False)
 
 
 def visible_lists(viewer) -> QuerySet:
-    return ReadingList.objects.all() if _auth(viewer) else ReadingList.objects.none()
+    if not _auth(viewer):
+        return ReadingList.objects.none()
+    return ReadingList.objects.filter(owner__is_deleted=False)
 
 
 def followed_ids(viewer) -> list[int]:
     if not _auth(viewer):
         return []
     return list(
-        Follow.objects.filter(follower=viewer).values_list("followed_id", flat=True)
+        Follow.objects.filter(
+            follower=viewer, followed__is_deleted=False
+        ).values_list("followed_id", flat=True)
     )

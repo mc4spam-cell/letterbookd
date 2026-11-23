@@ -1,5 +1,7 @@
-:80 {
+{$CADDY_SITE_ADDRESS::80} {
     reverse_proxy app:8000 {
+        # Cloudflare Tunnel termine TLS en amont et n'envoie pas X-Forwarded-Proto :
+        # on l'indique à Django pour éviter la boucle SECURE_SSL_REDIRECT.
         header_up X-Forwarded-Proto https
     }
 }

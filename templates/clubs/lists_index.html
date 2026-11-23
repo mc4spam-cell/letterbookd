@@ -1,20 +1,40 @@
 {% extends "base.html" %}
-{% load i18n stars %}
+{% load i18n stars static %}
 {% block title %}{% translate "Listes" %}{% endblock %}
 {% block content %}
 <style>
-    .cover-cell { position: relative; }
-    .cover-actions {
-        display: flex; justify-content: center; align-items: center;
-        gap: 10px; margin-top: 4px; padding: 0 2px;
-    }
-    .cover-actions .icon-btn { padding: 2px 4px; display: inline-flex; align-items: center; }
-    .cover-actions svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .cover-actions .trash-btn svg { stroke: #e46; }
-    .cover-actions .move-btn svg { stroke: #46a2e4; }
-    .cover-actions .move-btn:hover svg { stroke: #68b6ee; }
-    .cover-actions form { margin: 0; }
-    .heart-btn svg { width: 18px; height: 18px; }
+    .prz-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; margin:8px 0 24px; }
+    .prz-card { background:var(--surface); border:1px solid var(--border); border-radius:6px;
+        padding:10px; display:flex; flex-direction:column; gap:6px; position:relative; min-height:550px; }
+    .prz-card .cover-wrap { position:relative; }
+    .prz-card .cover { width:100%; aspect-ratio:2/3; border-radius:4px; background:var(--surface-2);
+        display:block; overflow:hidden; position:relative; }
+    .prz-card .cover img { width:100%; height:100%; object-fit:cover; display:block; }
+    .prz-card .cover.default { background:url("{% static 'images/default-cover.jpg' %}") center/cover no-repeat, #2a2015; }
+    .prz-stars-overlay { position:absolute; top:4px; right:4px; padding:2px 6px;
+        background:rgba(0,0,0,.7); border-radius:3px;
+        color:var(--accent); font-size:12px; letter-spacing:1px; }
+    .prz-title { font-weight:700; color:#fff; font-size:14px; line-height:1.2; }
+    .prz-author { color:var(--muted); font-size:12px; line-height:1.2; }
+    .prz-summary { font-size:12px; color:#fff; font-weight:600; display:-webkit-box;
+        -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+    .prz-actions { display:flex; gap:10px; align-items:center; margin-top:auto; }
+    .prz-actions svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .prz-actions form { margin:0; line-height:0; }
+    .prz-actions .heart-btn { background:none; border:0; padding:0; cursor:pointer; line-height:0; color:var(--accent); }
+    .prz-actions .heart-btn svg { stroke:var(--accent); fill:transparent; transition:fill .15s; }
+    .prz-actions .heart-btn.on svg { fill:var(--accent); }
+    .prz-actions .move-btn { color:#46a2e4; text-decoration:none; line-height:0; }
+    .prz-actions .trash-btn { background:none; border:0; padding:0; cursor:pointer; line-height:0; color:#e46; }
+    .prz-card a.src { font-size:11px; color:var(--accent); text-decoration:none; line-height:20px; margin-left:auto; }
+
+    .prz-acc { margin-top:12px; }
+    .prz-acc summary { list-style:none; cursor:pointer; padding:10px 2px; font-size:18px;
+        font-weight:600; display:flex; align-items:center; gap:12px; }
+    .prz-acc summary::-webkit-details-marker { display:none; }
+    .prz-acc summary::before { content:"▸"; color:var(--muted); font-size:12px; transition:transform .15s; }
+    .prz-acc[open] summary::before { transform:rotate(90deg); }
+    .prz-acc section > h2, .prz-acc > section { border:0; }
 </style>
 
 <h1 style="display:flex;align-items:center;gap:12px">
@@ -24,41 +44,47 @@
 </h1>
 
 {% for l in lists %}
-<section>
-    <h2 style="display:flex;align-items:center;gap:12px;margin-top:24px">
+<details class="prz-acc" name="lists-acc" {% if forloop.first %}open{% endif %}>
+    <summary>
         <span>{% if l.kind == 'favorites' %}{% translate "Favoris" %}{% elif l.kind == 'toread' %}{% translate "À lire" %}{% else %}{{ l.name }}{% endif %}</span>
         <em style="font-weight:normal;color:var(--muted);font-size:14px">{{ l.items.count }} {% translate "livre(s)" %}</em>
         {% if l.kind == 'normal' %}
         <form method="post" action="{% url 'list_delete' list_id=l.id %}"
-              onsubmit="return confirm('{% blocktranslate with n=l.name %}Supprimer la liste « {{ n }} » ?{% endblocktranslate %}');"
+              onsubmit="event.stopPropagation(); return confirm('{% blocktranslate with n=l.name %}Supprimer la liste « {{ n }} » ?{% endblocktranslate %}');"
               style="margin:0">{% csrf_token %}
-            <button type="submit" class="icon-btn trash-btn" title="{% translate 'Supprimer la liste' %}" aria-label="{% translate 'Supprimer la liste' %}">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            <button type="submit" onclick="event.stopPropagation()" style="background:none;border:0;padding:0;color:#e46;cursor:pointer;line-height:0" title="{% translate 'Supprimer la liste' %}" aria-label="{% translate 'Supprimer la liste' %}">
+                <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
             </button>
         </form>
         {% endif %}
-    </h2>
+    </summary>
     {% if l.items.all %}
-    <div class="cover-grid">
+    <div class="prz-grid">
         {% for it in l.items.all %}
-        <div class="cover-cell">
-            <a href="{% url 'books_detail' book_id=it.book_id %}" title="{{ it.book }}">
-                {% include "books/_cover.html" with book=it.book %}
-                {% if it.my_rating %}<span class="stars-overlay">{{ it.my_rating|stars }}</span>{% endif %}
-            </a>
-            <div class="cover-actions">
+        <div class="prz-card">
+            <div class="cover-wrap">
+                <a href="{% url 'books_detail' book_id=it.book_id %}" class="cover {% if not it.book.cover_id %}default{% endif %}" title="{{ it.book.title }}">
+                    {% if it.book.cover_id %}<img src="{{ it.book.cover_url }}" alt="">{% endif %}
+                </a>
+                {% if it.my_rating %}<span class="prz-stars-overlay">{{ it.my_rating|stars }}</span>{% endif %}
+            </div>
+            <div class="prz-title">{{ it.book.title }}</div>
+            {% if it.book.authors %}<div class="prz-author">{{ it.book.authors }}</div>{% endif %}
+            {% if it.book.description %}<div class="prz-summary">{{ it.book.description }}</div>{% endif %}
+            <div class="prz-actions">
                 <form method="post" action="{% url 'list_remove' list_id=l.id item_id=it.id %}"
                       onsubmit="return confirm('{% blocktranslate with n=it.book %}Retirer « {{ n }} » de la liste ?{% endblocktranslate %}');">{% csrf_token %}
-                    <button type="submit" class="icon-btn trash-btn" title="{% translate 'Retirer de la liste' %}" aria-label="{% translate 'Retirer de la liste' %}">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    <button type="submit" class="trash-btn" title="{% translate 'Retirer de la liste' %}" aria-label="{% translate 'Retirer de la liste' %}">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
                     </button>
                 </form>
-                <button type="button" class="heart-btn {% if it.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" aria-label="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ it.book_id }}, this)">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+                <button type="button" class="heart-btn {% if it.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ it.book_id }}, this)">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
                 </button>
-                <a href="#" onclick="openAddToList({{ it.book_id }}, {% if l.kind == 'favorites' %}null{% else %}{{ l.id }}{% endif %}); return false" class="icon-btn move-btn" title="{% translate 'Ajouter à une liste' %}" aria-label="{% translate 'Ajouter à une liste' %}">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+                <a href="#" onclick="openAddToList({{ it.book_id }}, {% if l.kind == 'favorites' %}null{% else %}{{ l.id }}{% endif %}); return false" class="move-btn" title="{% translate 'Ajouter à une liste' %}">
+                    <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
                 </a>
+                <a class="src" href="{% url 'books_detail' book_id=it.book_id %}">{% translate "Lire l'article →" %}</a>
             </div>
         </div>
         {% endfor %}
@@ -66,35 +92,41 @@
     {% else %}
     <p><em>{% translate "Liste vide." %}</em></p>
     {% endif %}
-</section>
+</details>
 {% endfor %}
 
-<section>
-    <h2 style="display:flex;align-items:center;gap:12px;margin-top:24px">
+<details class="prz-acc" name="lists-acc">
+    <summary>
         <span>{% translate "Tous mes livres" %}</span>
         <em style="font-weight:normal;color:var(--muted);font-size:14px">{{ all_readings|length }} {% translate "livre(s)" %}</em>
-    </h2>
+    </summary>
     {% if all_readings %}
-    <div class="cover-grid">
+    <div class="prz-grid">
         {% for rd in all_readings %}
-        <div class="cover-cell">
-            <a href="{% url 'books_detail' book_id=rd.book_id %}" title="{{ rd.book }}">
-                {% include "books/_cover.html" with book=rd.book %}
-                {% if rd.my_rating %}<span class="stars-overlay">{{ rd.my_rating|stars }}</span>{% endif %}
-            </a>
-            <div class="cover-actions">
+        <div class="prz-card">
+            <div class="cover-wrap">
+                <a href="{% url 'books_detail' book_id=rd.book_id %}" class="cover {% if not rd.book.cover_id %}default{% endif %}" title="{{ rd.book.title }}">
+                    {% if rd.book.cover_id %}<img src="{{ rd.book.cover_url }}" alt="">{% endif %}
+                </a>
+                {% if rd.my_rating %}<span class="prz-stars-overlay">{{ rd.my_rating|stars }}</span>{% endif %}
+            </div>
+            <div class="prz-title">{{ rd.book.title }}</div>
+            {% if rd.book.authors %}<div class="prz-author">{{ rd.book.authors }}</div>{% endif %}
+            {% if rd.book.description %}<div class="prz-summary">{{ rd.book.description }}</div>{% endif %}
+            <div class="prz-actions">
                 <form method="post" action="{% url 'reading_delete' reading_id=rd.id %}"
                       onsubmit="return confirm('{% blocktranslate with n=rd.book %}Supprimer « {{ n }} » de tes livres (note et commentaires compris) ?{% endblocktranslate %}');">{% csrf_token %}
-                    <button type="submit" class="icon-btn trash-btn" title="{% translate 'Supprimer' %}" aria-label="{% translate 'Supprimer' %}">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    <button type="submit" class="trash-btn" title="{% translate 'Supprimer' %}" aria-label="{% translate 'Supprimer' %}">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
                     </button>
                 </form>
-                <button type="button" class="heart-btn {% if rd.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" aria-label="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ rd.book_id }}, this)">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+                <button type="button" class="heart-btn {% if rd.is_favorite %}on{% endif %}" title="{% translate 'Favori' %}" onclick="toggleFavoriteBtn({{ rd.book_id }}, this)">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
                 </button>
-                <a href="#" onclick="openAddToList({{ rd.book_id }}, null); return false" class="icon-btn move-btn" title="{% translate 'Ajouter à une liste' %}" aria-label="{% translate 'Ajouter à une liste' %}">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+                <a href="#" onclick="openAddToList({{ rd.book_id }}, null); return false" class="move-btn" title="{% translate 'Ajouter à une liste' %}">
+                    <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
                 </a>
+                <a class="src" href="{% url 'books_detail' book_id=rd.book_id %}">{% translate "Lire l'article →" %}</a>
             </div>
         </div>
         {% endfor %}
@@ -102,7 +134,7 @@
     {% else %}
     <p><em>{% translate "Aucun livre pour l'instant." %}</em></p>
     {% endif %}
-</section>
+</details>
 {% include "clubs/_add_to_list_modal.html" %}
 <script>
 function toggleFavoriteBtn(bookId, btn) {
@@ -110,7 +142,7 @@ function toggleFavoriteBtn(bookId, btn) {
     fd.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
     fetch('/livres/' + bookId + '/favori/', {
         method: 'POST', body: fd, headers: {'x-requested-with': 'fetch'}
-    }).then(() => location.reload()).catch(() => {});
+    }).then(r => r.json()).then(d => btn.classList.toggle('on', d.is_favorite)).catch(() => {});
 }
 </script>
 {% endblock %}

@@ -8,12 +8,16 @@ log = logging.getLogger(__name__)
 
 
 def _client_ip(request):
+    """IP du client via Caddy : dernière entrée de X-Forwarded-For.
+
+    Les autres en-têtes (X-Real-IP, CF-Connecting-IP) ne sont pas posées
+    par notre proxy et seraient contrôlables par le client.
+    """
     if request is None:
         return None
-    for h in ("HTTP_CF_CONNECTING_IP", "HTTP_X_REAL_IP", "HTTP_X_FORWARDED_FOR"):
-        v = request.META.get(h, "")
-        if v:
-            return v.split(",")[0].strip()
+    xff = request.META.get("HTTP_X_FORWARDED_FOR", "")
+    if xff:
+        return xff.split(",")[-1].strip()
     return request.META.get("REMOTE_ADDR") or None
 
 

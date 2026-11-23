@@ -88,14 +88,19 @@ def test_self_comments_do_not_notify(make_user, book):
 
 
 @pytest.mark.django_db
-def test_notifications_marks_read_on_view(make_user, book):
+def test_notifications_marks_read_on_post(make_user, book):
     author = make_user()
     mate = make_user()
     _login(author).post(reverse("read_book", args=[book.pk]), {"review_text": "ok"})
     review = Review.objects.get()
     _login(mate).post(reverse("review_detail", args=[review.pk]), {"text": "hop"})
     assert Notification.objects.filter(recipient=author, read_at__isnull=True).count() == 1
-    _login(author).get(reverse("notifications"))
+    client = _login(author)
+    # GET laisse les notifications non lues (évite les faux « vu » par preview).
+    client.get(reverse("notifications"))
+    assert Notification.objects.filter(recipient=author, read_at__isnull=True).count() == 1
+    # POST explicite = « tout marquer comme lu ».
+    client.post(reverse("notifications"))
     assert Notification.objects.filter(recipient=author, read_at__isnull=True).count() == 0
 
 

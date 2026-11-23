@@ -10,12 +10,15 @@ from .models import ListItem, Reading, ReadingList
 
 
 def ensure_default_lists(user):
+    if getattr(user, "_default_lists_ensured", False):
+        return
     ReadingList.objects.get_or_create(
         owner=user, kind=ReadingList.Kind.FAVORITES, defaults={"name": "Favoris"}
     )
     ReadingList.objects.get_or_create(
         owner=user, kind=ReadingList.Kind.TOREAD, defaults={"name": "À lire"}
     )
+    user._default_lists_ensured = True
 
 
 def _ordered_user_lists(user):
@@ -152,7 +155,5 @@ def toggle_favorite(request, book_id):
     fav.save(update_fields=["updated_at"])
     if request.headers.get("x-requested-with") == "fetch":
         return JsonResponse({"is_favorite": is_fav})
-    return redirect(
-        request.META.get("HTTP_REFERER")
-        or reverse("books_detail", args=[book_id])
-    )
+    from .safe_redirect import safe_back
+    return redirect(safe_back(request, reverse("books_detail", args=[book_id])))

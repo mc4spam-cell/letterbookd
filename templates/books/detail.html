@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n stars %}
+{% load i18n static stars %}
 {% block title %}{{ book.title }}{% endblock %}
 {% block content %}
 <style>
@@ -50,6 +50,12 @@
     .entry-highlight { background: rgba(64,188,244,.06); border-left: 3px solid var(--blue); padding-left: 10px; margin-left: -13px; }
     .heart-btn svg { width: 28px; height: 28px; }
     .page-heart svg { width: 22px; height: 22px; }
+    .book-prizes { margin: 2px 0 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .book-prizes .chip { background: var(--surface-2); border: 1px solid var(--border);
+        border-radius: 12px; padding: 2px 10px; font-size: 12px; color: var(--text); }
+    .book-prizes .chip .yr { color: var(--muted); margin-left: 4px; }
+    .default-cover-lg { width: 240px; aspect-ratio: 2/3; object-fit: cover; border-radius: 4px;
+        float: left; margin: 0 16px 8px 0; box-shadow: 0 2px 6px rgba(0,0,0,.5); }
     @media (max-width: 720px) {
         .book-aside { flex-basis: 100%; }
         .entry { flex-direction: column; gap: 6px; }
@@ -59,13 +65,24 @@
 
 <div class="book-layout">
 <div class="book-main">
-    {% include "books/_cover.html" with book=book size='lg' %}
+    {% if book.cover_id %}
+        {% include "books/_cover.html" with book=book size='lg' %}
+    {% elif prizes %}
+        <img class="default-cover-lg" src="{% static 'images/Pochette_prix_defaut.jpg' %}" alt="">
+    {% else %}
+        <img class="default-cover-lg" src="{% static 'images/default-cover.jpg' %}" alt="">
+    {% endif %}
     <h1>{{ book.title }}</h1>
+    {% if prizes %}
+    <div class="book-prizes">
+        {% for p in prizes %}<span class="chip">{{ p.prize_name }}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
+    </div>
+    {% endif %}
     <dl>
         {% if book.authors %}<dt>{% translate "Auteurs" %}</dt><dd>{{ book.authors }}</dd>{% endif %}
         {% if book.year %}<dt>{% translate "Année" %}</dt><dd>{{ book.year }}</dd>{% endif %}
-        {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
         {% if book.isbn %}<dt>ISBN</dt><dd>{{ book.isbn }}</dd>{% endif %}
+        {% if book.pages %}<dt>{% translate "Pages" %}</dt><dd>{{ book.pages }}</dd>{% endif %}
     </dl>
     {% if book.description %}
         <div style="clear:both">
@@ -78,7 +95,9 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
         </button>
         <a href="#" onclick="document.getElementById('d-full').showModal(); return false">{% translate "Noter / écrire un avis" %}</a>
-        · <a href="#" onclick="openAddToList({{ book.id }}, null); return false">{% translate "Ajouter à une liste" %}</a>
+        <a href="#" onclick="openAddToList({{ book.id }}, null); return false" class="move-btn" title="{% translate 'Ajouter à une liste' %}" aria-label="{% translate 'Ajouter à une liste' %}" style="display:inline-flex;align-items:center;line-height:0;padding:0;border:0;background:none">
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px;stroke:#46a2e4;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+        </a>
     </p>
 
     <dialog class="m" id="d-full">

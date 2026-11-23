@@ -23,6 +23,14 @@ def _parse_date(raw):
         return None
 
 
+def _parse_rating(raw):
+    try:
+        v = int((raw or "").strip())
+    except ValueError:
+        return None
+    return v if 0 <= v <= 10 else None
+
+
 @login_required
 def read_book(request, book_id):
     """Marque la lecture (statut + note + dates) et, si texte, crée/édite l'avis.
@@ -43,8 +51,7 @@ def read_book(request, book_id):
         status = request.POST.get("status") or ReadingStatus.READ
         if status not in ReadingStatus.values:
             status = ReadingStatus.READ
-        rating_raw = (request.POST.get("rating") or "").strip()
-        rating = int(rating_raw) if rating_raw.isdigit() and 0 <= int(rating_raw) <= 10 else None
+        rating = _parse_rating(request.POST.get("rating"))
         started_on = _parse_date(request.POST.get("started_on"))
         finished_on = _parse_date(request.POST.get("finished_on"))
         if reading is None:
@@ -121,9 +128,9 @@ def react_to_review(request, review_id):
             else:
                 existing.kind = kind
                 existing.save(update_fields=["kind"])
+    from .safe_redirect import safe_back
     return redirect(
-        request.META.get("HTTP_REFERER")
-        or reverse("books_detail", args=[review.reading.book_id])
+        safe_back(request, reverse("books_detail", args=[review.reading.book_id]))
     )
 
 
@@ -146,9 +153,9 @@ def notifications(request):
     qs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
     )
-    unread_ids = list(qs.filter(read_at__isnull=True).values_list("pk", flat=True))
-    if unread_ids:
-        Notification.objects.filter(pk__in=unread_ids).update(read_at=timezone.now())
+    if request.method == "POST":
+        qs.filter(read_at__isnull=True).update(read_at=timezone.now())
+        return redirect("notifications")
     author_ids = followed_ids(request.user) + [request.user.pk]
     reviews = (
         visible_reviews(request.user)
@@ -156,10 +163,11 @@ def notifications(request):
         .select_related("reading__user", "reading__book")
         .order_by("-created_at")[:50]
     )
+    notifications_list = list(qs[:100])
     return render(
         request,
         "clubs/notifications.html",
-        {"notifications": qs[:100], "reviews": reviews},
+        {"notifications": notifications_list, "reviews": reviews},
     )
 
 
@@ -185,7 +193,7 @@ def stats(request):
 
 @login_required
 def profile_readings(request, user_id):
-    other = get_object_or_404(get_user_model(), pk=user_id)
+    other = get_object_or_404(get_user_model(), pk=user_id, is_deleted=False)
     qs = Reading.objects.filter(user=other).select_related("book")
     status = request.GET.get("status")
     if status in ReadingStatus.values:
