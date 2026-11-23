@@ -1,14 +1,14 @@
 from books import wikipedia
 
-
-SAMPLE = """
-<table class="wikitable">
-<tr><th>Année</th><th>Auteur</th><th>Ouvrage</th></tr>
-<tr><td rowspan="2">2020</td><td>Alice Martin</td><td>Un titre<span style="display:none">x</span></td></tr>
-<tr><td>Bob Durand</td><td>Autre titre[1]</td></tr>
-<tr><td>2019</td><td>Clara Leroy</td><td>Troisième</td></tr>
-</table>
-"""
+SAMPLE = (
+    '<table class="wikitable">'
+    "<tr><th>Année</th><th>Auteur</th><th>Ouvrage</th></tr>"
+    '<tr><td rowspan="2">2020</td><td>Alice Martin</td>'
+    '<td>Un titre<span style="display:none">x</span></td></tr>'
+    "<tr><td>Bob Durand</td><td>Autre titre[1]</td></tr>"
+    "<tr><td>2019</td><td>Clara Leroy</td><td>Troisième</td></tr>"
+    "</table>"
+)
 
 
 def test_parse_handles_rowspan_hidden_and_footnote():

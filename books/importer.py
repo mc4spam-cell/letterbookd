@@ -45,7 +45,7 @@ def _resolve_canonical(title: str, author: str) -> Book | None:
 
 def _stable_placeholder(prefix: str, title: str, author: str) -> str:
     """olid déterministe quand OL ne trouve rien (pas de hash() aléatoire)."""
-    key = f"{title}|{author}".encode("utf-8")
+    key = f"{title}|{author}".encode()
     return f"{prefix}:{hashlib.md5(key).hexdigest()[:16]}"
 
 

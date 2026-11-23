@@ -12,18 +12,26 @@ import re
 import urllib.request
 
 PRIZES = [
-    ("goncourt",    "Prix_Goncourt",                                        "Prix Goncourt"),
-    ("lyceens",     "Prix_Goncourt_des_lyc%C3%A9ens",                       "Prix Goncourt des Lycéens"),
-    ("renaudot",    "Prix_Renaudot",                                        "Prix Renaudot"),
-    ("femina",      "Prix_Femina",                                          "Prix Femina"),
-    ("medicis",     "Prix_M%C3%A9dicis",                                    "Prix Médicis"),
-    ("interallie",  "Prix_Interalli%C3%A9",                                 "Prix Interallié"),
-    ("decembre",    "Prix_D%C3%A9cembre",                                   "Prix Décembre"),
-    ("academie",    "Grand_prix_du_roman_de_l%27Acad%C3%A9mie_fran%C3%A7aise", "Grand prix du roman de l'Académie française"),
-    ("livre_inter", "Prix_du_Livre_Inter",                                  "Prix du Livre Inter"),
-    ("libraires",   "Prix_des_libraires",                                   "Prix des Libraires"),
-    ("roman_fnac",  "Prix_du_roman_Fnac",                                   "Prix du roman Fnac"),
-    ("5continents", "Prix_des_cinq_continents_de_la_francophonie",          "Prix des cinq continents de la francophonie"),
+    ("goncourt",    "Prix_Goncourt",                            "Prix Goncourt"),
+    ("lyceens",     "Prix_Goncourt_des_lyc%C3%A9ens",           "Prix Goncourt des Lycéens"),
+    ("renaudot",    "Prix_Renaudot",                            "Prix Renaudot"),
+    ("femina",      "Prix_Femina",                              "Prix Femina"),
+    ("medicis",     "Prix_M%C3%A9dicis",                        "Prix Médicis"),
+    ("interallie",  "Prix_Interalli%C3%A9",                     "Prix Interallié"),
+    ("decembre",    "Prix_D%C3%A9cembre",                       "Prix Décembre"),
+    (
+        "academie",
+        "Grand_prix_du_roman_de_l%27Acad%C3%A9mie_fran%C3%A7aise",
+        "Grand prix du roman de l'Académie française",
+    ),
+    ("livre_inter", "Prix_du_Livre_Inter",                      "Prix du Livre Inter"),
+    ("libraires",   "Prix_des_libraires",                       "Prix des Libraires"),
+    ("roman_fnac",  "Prix_du_roman_Fnac",                       "Prix du roman Fnac"),
+    (
+        "5continents",
+        "Prix_des_cinq_continents_de_la_francophonie",
+        "Prix des cinq continents de la francophonie",
+    ),
 ]
 
 TABLE_RE = re.compile(r'<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>(.*?)</table>', re.DOTALL)
@@ -123,7 +131,7 @@ def _extract(grid: list[list[str]]) -> list[tuple[int, str, str]]:
 
 
 def _book_qid(year: int, author: str, title: str) -> str:
-    key = f"{year}|{author}|{title}".encode("utf-8")
+    key = f"{year}|{author}|{title}".encode()
     return "wp:" + hashlib.md5(key).hexdigest()[:20]
 
 

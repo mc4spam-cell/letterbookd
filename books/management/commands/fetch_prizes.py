@@ -38,7 +38,10 @@ def persist(rows, stdout=None) -> tuple[int, int]:
 
 
 class Command(BaseCommand):
-    help = "Scrape Wikipédia FR pour les 12 prix littéraires (toutes années) et enrichit depuis Open Library."
+    help = (
+        "Scrape Wikipédia FR pour les 12 prix littéraires (toutes années) "
+        "et enrichit depuis Open Library."
+    )
 
     def handle(self, **o):
         rows = fetch_wikipedia()
