@@ -79,6 +79,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
                 "clubs.context_processors.build_date",
+                "clubs.context_processors.unread_notifs",
             ],
         },
     },
