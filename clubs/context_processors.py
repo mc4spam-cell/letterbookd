@@ -18,8 +18,6 @@ def unread_notifs(request):
     user = getattr(request, "user", None)
     if not user or not user.is_authenticated:
         return {"has_unread_notifs": False}
-    has = (
-        Notification.objects.filter(recipient=user, read_at__isnull=True).exists()
-        or Suggestion.objects.filter(recipient=user, read_at__isnull=True).exists()
-    )
-    return {"has_unread_notifs": has}
+    n = Notification.objects.filter(recipient=user, read_at__isnull=True).values("pk")
+    s = Suggestion.objects.filter(recipient=user, read_at__isnull=True).values("pk")
+    return {"has_unread_notifs": n.union(s).exists()}
