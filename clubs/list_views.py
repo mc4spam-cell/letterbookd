@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import JsonResponse
@@ -6,7 +7,20 @@ from django.urls import reverse
 
 from books.models import Book
 
-from .models import ListItem, Reading, ReadingList
+from .models import Follow, ListItem, Reading, ReadingList
+
+
+def _suggest_recipients(request):
+    return (
+        get_user_model()
+        .objects.filter(
+            is_deleted=False,
+            pk__in=Follow.objects.filter(follower=request.user).values_list(
+                "followed_id", flat=True
+            ),
+        )
+        .order_by("display_name")
+    )
 
 
 def ensure_default_lists(user):
@@ -64,6 +78,7 @@ def lists_index(request):
             "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
                 .exclude(kind=ReadingList.Kind.FAVORITES)
                 .annotate(items_count=Count("items")).order_by("name"),
+            "suggest_recipients": _suggest_recipients(request),
         },
     )
 

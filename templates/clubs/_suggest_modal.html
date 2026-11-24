@@ -1,0 +1,64 @@
+{% load i18n %}
+<style>
+    dialog#d-suggest .sug-picker { list-style: none; padding: 0; margin: 12px 0; display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; }
+    dialog#d-suggest .sug-picker label {
+        display: flex; align-items: center; gap: 10px;
+        width: 100%; padding: 10px 14px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 4px;
+        cursor: pointer;
+    }
+    dialog#d-suggest .sug-picker label:hover { border-color: var(--accent); }
+    dialog#d-suggest .sug-picker input[type=radio] { margin: 0; }
+    dialog#d-suggest textarea { width: 100%; box-sizing: border-box; min-height: 60px; }
+    dialog#d-suggest .counter { color: var(--muted); font-size: 12px; margin-left: 6px; }
+    dialog#d-suggest h4 { margin: 14px 0 6px; }
+    dialog#d-suggest .no-rec { color: var(--muted); }
+</style>
+
+<dialog class="m" id="d-suggest">
+    <h3>{% translate "Suggérer ce livre" %}</h3>
+    <form method="post" class="d-suggest-f">{% csrf_token %}
+        {% if suggest_recipients %}
+        <p>{% translate "À qui ?" %}</p>
+        <ul class="sug-picker">
+            {% for u in suggest_recipients %}
+            <li>
+                <label>
+                    <input type="radio" name="recipient_id" value="{{ u.id }}" {% if forloop.first %}checked{% endif %}>
+                    <span>{{ u }}</span>
+                </label>
+            </li>
+            {% endfor %}
+        </ul>
+        <h4>{% translate "Message (facultatif)" %}<span class="counter"><span class="sug-count">0</span>/280</span></h4>
+        <p><textarea name="message" maxlength="280" placeholder="{% translate 'Un mot pour accompagner la suggestion…' %}"></textarea></p>
+        <div class="actions">
+            <button type="submit">{% translate "Envoyer" %}</button>
+            <button type="button" onclick="this.closest('dialog').close()">{% translate "Annuler" %}</button>
+        </div>
+        {% else %}
+        <p class="no-rec">{% translate "Tu ne suis personne pour le moment. Suis un membre pour pouvoir lui suggérer un livre." %}</p>
+        <div class="actions">
+            <button type="button" onclick="this.closest('dialog').close()">{% translate "Fermer" %}</button>
+        </div>
+        {% endif %}
+    </form>
+</dialog>
+
+<script>
+function openSuggest(bookId) {
+    const dlg = document.getElementById('d-suggest');
+    if (!dlg) return;
+    const f = dlg.querySelector('.d-suggest-f');
+    if (f) f.action = '/livres/' + bookId + '/suggerer/';
+    const ta = dlg.querySelector('textarea[name=message]');
+    const c = dlg.querySelector('.sug-count');
+    if (ta && c) {
+        ta.value = '';
+        c.textContent = '0';
+        ta.oninput = () => { c.textContent = ta.value.length; };
+    }
+    dlg.showModal();
+}
+</script>

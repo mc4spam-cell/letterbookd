@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 22:17+0000\n"
+"POT-Creation-Date: 2026-11-24 11:50+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: ru\n"
@@ -92,6 +92,26 @@ msgstr "Новый комментарий к твоему отзыву"
 msgid "Nouvelle réponse à ton commentaire"
 msgstr "Новый ответ на твой комментарий"
 
+msgid "Erreur serveur"
+msgstr "Ошибка сервера"
+
+msgid "Erreur 500"
+msgstr "Ошибка 500"
+
+msgid "Quelque chose a flanché côté serveur."
+msgstr "На сервере что-то пошло не так."
+
+msgid ""
+"C'est généralement passager. Reviens en arrière et retente ta demande, ça "
+"repart presque toujours."
+msgstr "Обычно это временно. Вернись назад и повтори действие — почти всегда получается."
+
+msgid "Revenir en arrière"
+msgstr "Назад"
+
+msgid "Accueil"
+msgstr "Главная"
+
 msgid "Sign In"
 msgstr "Войти"
 
@@ -103,9 +123,6 @@ msgstr "Отправь мне код для входа"
 
 msgid "Aller au contenu"
 msgstr "Перейти к содержимому"
-
-msgid "Accueil"
-msgstr "Главная"
 
 msgid "Livres"
 msgstr "Книги"
@@ -262,8 +279,8 @@ msgstr "Оценок пока нет."
 msgid "4 dernières années par prix. Historique complet dans les fiches livres."
 msgstr "Последние 4 года по премии. Полная история — на странице книги."
 
-msgid "Lire l'article →"
-msgstr "Читать статью →"
+msgid "Fiche →"
+msgstr "Карточка →"
 
 msgid "Aucun lauréat enregistré pour l'instant."
 msgstr "Лауреатов пока нет."
@@ -576,6 +593,9 @@ msgstr "Очистить"
 msgid "Notifications"
 msgstr "Уведомления"
 
+msgid "Tout marquer comme lu"
+msgstr ""
+
 msgid "voir"
 msgstr "открыть"
 
@@ -585,8 +605,8 @@ msgstr "Уведомлений нет."
 msgid "Flux des avis"
 msgstr "Лента отзывов"
 
-msgid "a écrit sur"
-msgstr "написал(а) о"
+msgid "a écrit un avis"
+msgstr "написал(а) отзыв"
 
 msgid "voir l'avis"
 msgstr "посмотреть отзыв"
@@ -727,6 +747,9 @@ msgstr ""
 "Твой пароль не может повторять более %(n)d подряд идущих символов твоего "
 "предыдущего пароля."
 
+#~ msgid "a écrit sur"
+#~ msgstr "написал(а) о"
+
 #~ msgid "Lauréats des 5 dernières années, via Wikidata."
 #~ msgstr "Лауреаты за последние 5 лет, из Wikidata."
 
@@ -776,5 +799,38 @@ msgstr ""
 #~ msgid "couverture"
 #~ msgstr "обложка"
 
-msgid "a écrit un avis"
-msgstr "написал(а) отзыв"
+msgid "Prix Goncourt"
+msgstr "Гонкуровская премия"
+
+msgid "Prix Goncourt des Lycéens"
+msgstr "Гонкуровская премия лицеистов"
+
+msgid "Prix Renaudot"
+msgstr "Премия Ренодо"
+
+msgid "Prix Femina"
+msgstr "Премия Фемина"
+
+msgid "Prix Médicis"
+msgstr "Премия Медичи"
+
+msgid "Prix Interallié"
+msgstr "Премия Интералье"
+
+msgid "Prix Décembre"
+msgstr "Премия Декабрь"
+
+msgid "Grand prix du roman de l'Académie française"
+msgstr "Большая премия Французской академии за роман"
+
+msgid "Prix du Livre Inter"
+msgstr "Премия Livre Inter"
+
+msgid "Prix des Libraires"
+msgstr "Премия книготорговцев"
+
+msgid "Prix du roman Fnac"
+msgstr "Премия Fnac за роман"
+
+msgid "Prix des cinq continents de la francophonie"
+msgstr "Премия пяти континентов франкофонии"

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Suggérer un livre" %}{% endblock %}
+{% block content %}
+<h1>{% blocktranslate with t=book.title %}Suggérer « {{ t }} »{% endblocktranslate %}</h1>
+
+{% if recipients %}
+<form method="post">{% csrf_token %}
+    <p>{% translate "À qui ?" %}
+        <select name="recipient_id" required>
+            {% for u in recipients %}<option value="{{ u.id }}">{{ u }}</option>{% endfor %}
+        </select>
+    </p>
+    <p><label>{% translate "Message (facultatif)" %}
+        <textarea name="message" maxlength="280" rows="3" style="width:100%"></textarea>
+    </label></p>
+    <button type="submit">{% translate "Envoyer" %}</button>
+</form>
+{% else %}
+<p>{% translate "Tu ne suis personne pour le moment. Suis un membre pour pouvoir lui suggérer un livre." %}</p>
+{% endif %}
+
+<p><a href="{% url 'books_detail' book_id=book.id %}">{% translate "Retour à la fiche" %}</a></p>
+{% endblock %}

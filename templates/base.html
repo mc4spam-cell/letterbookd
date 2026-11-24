@@ -29,10 +29,16 @@
         .no-cover-md { width: 100%; aspect-ratio: 2/3; font-size: 13px; }
         .no-cover-sm { width: 40px; aspect-ratio: 2/3; font-size: 9px; margin-right: 8px; padding: 4px; }
         .no-cover-lg { width: 180px; aspect-ratio: 2/3; font-size: 18px; float: left; margin: 0 16px 16px 0; }
-        .trash-btn { padding: 4px 6px; line-height: 0; vertical-align: middle; }
+        /* Boutons-icône : centrage vertical uniforme quelle que soit la taille du SVG,
+           pour que plusieurs pictos côte à côte s'alignent sur leur axe vertical. */
+        .heart-btn, .trash-btn, .move-btn, .suggest-btn, .fav-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            line-height: 0;
+        }
+        .trash-btn { padding: 4px 6px; }
         .trash-btn svg { width: 18px; height: 18px; stroke: #e46; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
         .trash-btn:hover svg { stroke: #ff5566; }
-        .heart-btn { background: none; border: 0; padding: 4px; cursor: pointer; line-height: 0; vertical-align: middle; }
+        .heart-btn { background: none; border: 0; padding: 4px; cursor: pointer; }
         .heart-btn svg { width: 22px; height: 22px; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: #3a4550; transition: fill .15s ease; }
         .heart-btn.on svg { fill: var(--accent); }
         .heart-btn:hover svg { fill: #5a6672; }

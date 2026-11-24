@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 22:17+0000\n"
+"POT-Creation-Date: 2026-11-24 11:50+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: de\n"
@@ -92,6 +92,26 @@ msgstr "Neuer Kommentar zu deiner Rezension"
 msgid "Nouvelle réponse à ton commentaire"
 msgstr "Neue Antwort auf deinen Kommentar"
 
+msgid "Erreur serveur"
+msgstr "Serverfehler"
+
+msgid "Erreur 500"
+msgstr "Fehler 500"
+
+msgid "Quelque chose a flanché côté serveur."
+msgstr "Auf dem Server ist etwas schiefgelaufen."
+
+msgid ""
+"C'est généralement passager. Reviens en arrière et retente ta demande, ça "
+"repart presque toujours."
+msgstr "Das ist meist vorübergehend. Geh zurück und versuch es noch einmal – fast immer klappt es dann."
+
+msgid "Revenir en arrière"
+msgstr "Zurück"
+
+msgid "Accueil"
+msgstr "Startseite"
+
 msgid "Sign In"
 msgstr "Anmelden"
 
@@ -103,9 +123,6 @@ msgstr "Anmeldecode an mich senden"
 
 msgid "Aller au contenu"
 msgstr "Zum Inhalt springen"
-
-msgid "Accueil"
-msgstr "Startseite"
 
 msgid "Livres"
 msgstr "Bücher"
@@ -262,8 +279,8 @@ msgstr "Noch keine Bewertung."
 msgid "4 dernières années par prix. Historique complet dans les fiches livres."
 msgstr "Letzte 4 Jahre pro Preis. Vollständige Historie auf den Buchseiten."
 
-msgid "Lire l'article →"
-msgstr "Artikel lesen →"
+msgid "Fiche →"
+msgstr "Buchseite →"
 
 msgid "Aucun lauréat enregistré pour l'instant."
 msgstr "Noch keine Preisträger erfasst."
@@ -422,7 +439,8 @@ msgstr "Alle meine Bücher"
 
 #, python-format
 msgid "Supprimer « %(n)s » de tes livres (note et commentaires compris) ?"
-msgstr "„%(n)s“ aus deinen Büchern entfernen (inkl. Bewertung und Kommentaren)?"
+msgstr ""
+"„%(n)s“ aus deinen Büchern entfernen (inkl. Bewertung und Kommentaren)?"
 "„%(n)s“ aus deinen Büchern löschen (inklusive Bewertung und Kommentaren)?"
 
 msgid "Supprimer"
@@ -576,6 +594,9 @@ msgstr "Löschen"
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
+msgid "Tout marquer comme lu"
+msgstr ""
+
 msgid "voir"
 msgstr "ansehen"
 
@@ -585,8 +606,8 @@ msgstr "Keine Benachrichtigungen."
 msgid "Flux des avis"
 msgstr "Rezensions-Feed"
 
-msgid "a écrit sur"
-msgstr "hat geschrieben über"
+msgid "a écrit un avis"
+msgstr "hat eine Rezension geschrieben"
 
 msgid "voir l'avis"
 msgstr "Rezension ansehen"
@@ -733,6 +754,9 @@ msgstr ""
 "Dein Passwort darf nicht mehr als %(n)d aufeinanderfolgende Zeichen deines "
 "vorherigen Passworts wiederverwenden."
 
+#~ msgid "a écrit sur"
+#~ msgstr "hat geschrieben über"
+
 #~ msgid "Lauréats des 5 dernières années, via Wikidata."
 #~ msgstr "Preisträger der letzten 5 Jahre, über Wikidata."
 
@@ -782,5 +806,38 @@ msgstr ""
 #~ msgid "couverture"
 #~ msgstr "Umschlag"
 
-msgid "a écrit un avis"
-msgstr "hat eine Rezension geschrieben"
+msgid "Prix Goncourt"
+msgstr "Prix Goncourt"
+
+msgid "Prix Goncourt des Lycéens"
+msgstr "Prix Goncourt der Gymnasiasten"
+
+msgid "Prix Renaudot"
+msgstr "Prix Renaudot"
+
+msgid "Prix Femina"
+msgstr "Prix Femina"
+
+msgid "Prix Médicis"
+msgstr "Prix Médicis"
+
+msgid "Prix Interallié"
+msgstr "Prix Interallié"
+
+msgid "Prix Décembre"
+msgstr "Prix Décembre"
+
+msgid "Grand prix du roman de l'Académie française"
+msgstr "Großer Romanpreis der Académie française"
+
+msgid "Prix du Livre Inter"
+msgstr "Prix du Livre Inter"
+
+msgid "Prix des Libraires"
+msgstr "Buchhändlerpreis"
+
+msgid "Prix du roman Fnac"
+msgstr "Fnac-Romanpreis"
+
+msgid "Prix des cinq continents de la francophonie"
+msgstr "Preis der fünf Kontinente der Frankophonie"

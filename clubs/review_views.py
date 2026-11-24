@@ -9,7 +9,16 @@ from django.utils import timezone
 
 from books.models import Book
 
-from .models import Comment, Notification, Reading, ReadingStatus, Review, ReviewReaction
+from .models import (
+    Comment,
+    Follow,
+    Notification,
+    Reading,
+    ReadingStatus,
+    Review,
+    ReviewReaction,
+    Suggestion,
+)
 from .visibility import followed_ids, visible_reviews
 
 
@@ -153,8 +162,12 @@ def notifications(request):
     qs = Notification.objects.filter(recipient=request.user).select_related(
         "actor", "comment__review__reading__book"
     )
+    sqs = Suggestion.objects.filter(recipient=request.user).select_related(
+        "sender", "book"
+    )
     if request.method == "POST":
         qs.filter(read_at__isnull=True).update(read_at=timezone.now())
+        sqs.filter(read_at__isnull=True).update(read_at=timezone.now())
         return redirect("notifications")
     author_ids = followed_ids(request.user) + [request.user.pk]
     reviews = (
@@ -164,10 +177,47 @@ def notifications(request):
         .order_by("-created_at")[:50]
     )
     notifications_list = list(qs[:100])
+    suggestions_list = list(sqs[:100])
     return render(
         request,
         "clubs/notifications.html",
-        {"notifications": notifications_list, "reviews": reviews},
+        {
+            "notifications": notifications_list,
+            "suggestions": suggestions_list,
+            "reviews": reviews,
+        },
+    )
+
+
+@login_required
+def suggest_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    recipients = (
+        get_user_model()
+        .objects.filter(
+            is_deleted=False,
+            pk__in=Follow.objects.filter(follower=request.user).values_list(
+                "followed_id", flat=True
+            ),
+        )
+        .order_by("display_name")
+    )
+    if request.method == "POST":
+        recipient_id = request.POST.get("recipient_id")
+        if not recipient_id or not recipients.filter(pk=recipient_id).exists():
+            return redirect("books_detail", book_id=book.pk)
+        message = (request.POST.get("message") or "").strip()[:280]
+        Suggestion.objects.create(
+            sender=request.user,
+            recipient_id=recipient_id,
+            book=book,
+            message=message,
+        )
+        return redirect("books_detail", book_id=book.pk)
+    return render(
+        request,
+        "clubs/book_suggest.html",
+        {"book": book, "recipients": recipients},
     )
 
 

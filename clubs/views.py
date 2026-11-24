@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
+from .list_views import _suggest_recipients
 from .models import Follow, Invitation, Reading
 from .safe_redirect import safe_back
 from .visibility import followed_ids
@@ -26,7 +27,11 @@ def home(request):
     return render(
         request,
         "clubs/home.html",
-        {"followed_readings": followed_readings, "others_readings": others_readings},
+        {
+            "followed_readings": followed_readings,
+            "others_readings": others_readings,
+            "suggest_recipients": _suggest_recipients(request),
+        },
     )
 
 

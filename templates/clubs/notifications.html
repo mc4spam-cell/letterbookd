@@ -21,11 +21,19 @@
 </style>
 
 <h1>{% translate "Notifications" %}</h1>
-{% if notifications %}
+{% if notifications or suggestions %}
 <form method="post" style="margin:4px 0 12px">{% csrf_token %}
     <button type="submit">{% translate "Tout marquer comme lu" %}</button>
 </form>
 <ul>
+    {% for s in suggestions %}
+    <li{% if not s.read_at %} style="font-weight:bold"{% endif %}>
+        <strong>{{ s.sender }}</strong> — {% translate "te suggère" %}
+        <a href="{% url 'books_detail' book_id=s.book_id %}">« {{ s.book.title }} »</a>
+        {% if s.message %}<br><em>{{ s.message }}</em>{% endif %}
+        · {{ s.created_at|date:"Y-m-d H:i" }}
+    </li>
+    {% endfor %}
     {% for n in notifications %}
     <li>
         <strong>{{ n.actor }}</strong> — {{ n.get_kind_display }}
@@ -60,7 +68,7 @@
                 {% with prizes=r.book.prizewinner_set.all %}
                 {% if prizes %}
                 <div class="row-prizes">
-                    {% for p in prizes %}<span class="chip">{{ p.prize_name }}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
+                    {% for p in prizes %}<span class="chip">{% translate p.prize_name %}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
                 </div>
                 {% endif %}
                 {% endwith %}

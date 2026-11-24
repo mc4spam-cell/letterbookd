@@ -17,7 +17,8 @@
     .rel-actions .heart-btn { background:none; border:0; padding:0; cursor:pointer; line-height:0; color:var(--accent); }
     .rel-actions .heart-btn svg { stroke:var(--accent); fill:transparent; transition:fill .15s; }
     .rel-actions .heart-btn.on svg { fill:var(--accent); }
-    .rel-actions .move-btn { color:#46a2e4; text-decoration:none; line-height:0; display:inline-flex; align-items:center; }
+    .rel-actions .move-btn,
+    .rel-actions .suggest-btn { color:#46a2e4; text-decoration:none; line-height:0; display:inline-flex; align-items:center; }
 </style>
 <h1>{% translate "Sorties" %}</h1>
 <p style="color:var(--muted)">{% translate "Nouveautés livres, récupérées chaque semaine dans « Le Monde des livres »." %}</p>
@@ -38,6 +39,9 @@
             <a href="#" class="move-btn" title="{% translate 'Ajouter à une liste' %}" onclick="openAddToList({{ it.book_id }}, null); return false">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
             </a>
+            <a href="#" class="suggest-btn" title="{% translate 'Suggérer à un membre' %}" onclick="openSuggest({{ it.book_id }}); return false">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </a>
             {% endif %}
             {% if it.source_url %}<a class="src" style="margin-left:auto" href="{{ it.source_url }}" target="_blank" rel="noopener">{% translate "Lire l'article →" %}</a>{% endif %}
         </div>
@@ -49,6 +53,7 @@
 {% endif %}
 
 {% include "clubs/_add_to_list_modal.html" %}
+{% include "clubs/_suggest_modal.html" %}
 <script>
 function toggleFavoriteBtn(bookId, btn) {
     const fd = new FormData();

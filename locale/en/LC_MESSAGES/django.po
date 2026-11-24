@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: letterbookd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 22:17+0000\n"
+"POT-Creation-Date: 2026-11-24 11:50+0100\n"
 "PO-Revision-Date: 2026-11-20 21:10+0000\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -92,6 +92,26 @@ msgstr "New comment on your review"
 msgid "Nouvelle réponse à ton commentaire"
 msgstr "New reply to your comment"
 
+msgid "Erreur serveur"
+msgstr "Server error"
+
+msgid "Erreur 500"
+msgstr "Error 500"
+
+msgid "Quelque chose a flanché côté serveur."
+msgstr "Something went wrong on the server."
+
+msgid ""
+"C'est généralement passager. Reviens en arrière et retente ta demande, ça "
+"repart presque toujours."
+msgstr "It's usually temporary. Go back and try again — it almost always works."
+
+msgid "Revenir en arrière"
+msgstr "Go back"
+
+msgid "Accueil"
+msgstr "Home"
+
 msgid "Sign In"
 msgstr "Sign In"
 
@@ -103,9 +123,6 @@ msgstr "Send me a sign-in code"
 
 msgid "Aller au contenu"
 msgstr "Skip to content"
-
-msgid "Accueil"
-msgstr "Home"
 
 msgid "Livres"
 msgstr "Books"
@@ -262,8 +279,8 @@ msgstr "No rating yet."
 msgid "4 dernières années par prix. Historique complet dans les fiches livres."
 msgstr "Last 4 years per prize. Full history in each book's page."
 
-msgid "Lire l'article →"
-msgstr "Read article →"
+msgid "Fiche →"
+msgstr "Book page →"
 
 msgid "Aucun lauréat enregistré pour l'instant."
 msgstr "No winners recorded yet."
@@ -574,6 +591,9 @@ msgstr "Clear"
 msgid "Notifications"
 msgstr "Notifications"
 
+msgid "Tout marquer comme lu"
+msgstr ""
+
 msgid "voir"
 msgstr "view"
 
@@ -583,8 +603,8 @@ msgstr "No notifications."
 msgid "Flux des avis"
 msgstr "Review feed"
 
-msgid "a écrit sur"
-msgstr "wrote about"
+msgid "a écrit un avis"
+msgstr "wrote a review"
 
 msgid "voir l'avis"
 msgstr "see the review"
@@ -728,6 +748,9 @@ msgstr ""
 "Your password cannot reuse more than %(n)d consecutive characters from your "
 "previous password."
 
+#~ msgid "a écrit sur"
+#~ msgstr "wrote about"
+
 #~ msgid "Lauréats des 5 dernières années, via Wikidata."
 #~ msgstr "Winners from the past 5 years, via Wikidata."
 
@@ -777,5 +800,38 @@ msgstr ""
 #~ msgid "couverture"
 #~ msgstr "cover"
 
-msgid "a écrit un avis"
-msgstr "wrote a review"
+msgid "Prix Goncourt"
+msgstr "Goncourt Prize"
+
+msgid "Prix Goncourt des Lycéens"
+msgstr "Goncourt Prize of High-School Students"
+
+msgid "Prix Renaudot"
+msgstr "Renaudot Prize"
+
+msgid "Prix Femina"
+msgstr "Femina Prize"
+
+msgid "Prix Médicis"
+msgstr "Médicis Prize"
+
+msgid "Prix Interallié"
+msgstr "Interallié Prize"
+
+msgid "Prix Décembre"
+msgstr "December Prize"
+
+msgid "Grand prix du roman de l'Académie française"
+msgstr "Grand Prize for the Novel of the Académie française"
+
+msgid "Prix du Livre Inter"
+msgstr "Livre Inter Prize"
+
+msgid "Prix des Libraires"
+msgstr "Booksellers' Prize"
+
+msgid "Prix du roman Fnac"
+msgstr "Fnac Novel Prize"
+
+msgid "Prix des cinq continents de la francophonie"
+msgstr "Five Continents of the Francophonie Prize"

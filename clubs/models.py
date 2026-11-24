@@ -67,4 +67,5 @@ from .review_models import (  # noqa: E402, F401
     ReadingStatus,
     Review,
     ReviewReaction,
+    Suggestion,
 )

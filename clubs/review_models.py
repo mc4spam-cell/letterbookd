@@ -2,7 +2,7 @@
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
+from django.db.models import F, Q
 from django.utils.translation import gettext_lazy as _
 
 
@@ -98,6 +98,30 @@ class ReviewReaction(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.kind} {self.review_id}"
+
+
+class Suggestion(models.Model):
+    sender = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="suggestions_sent"
+    )
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="suggestions_received"
+    )
+    book = models.ForeignKey("books.Book", on_delete=models.CASCADE)
+    message = models.CharField(_("message"), max_length=280, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    read_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        constraints = [
+            models.CheckConstraint(
+                condition=~Q(sender=F("recipient")), name="suggestion_no_self"
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.sender} → {self.recipient} : {self.book}"
 
 
 class Notification(models.Model):

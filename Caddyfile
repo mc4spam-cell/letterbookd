@@ -1,7 +1,17 @@
 {$CADDY_SITE_ADDRESS::80} {
-    reverse_proxy app:8000 {
+    reverse_proxy {
+        # DNS Docker ré-résolu à chaque requête : plus besoin de redémarrer
+        # Caddy quand on recrée le container `app`.
+        dynamic a {
+            name app
+            port 8000
+            refresh 1s
+        }
         # Cloudflare Tunnel termine TLS en amont et n'envoie pas X-Forwarded-Proto :
         # on l'indique à Django pour éviter la boucle SECURE_SSL_REDIRECT.
         header_up X-Forwarded-Proto https
+        # Rejoue brièvement la requête si l'upstream hoquette.
+        lb_try_duration 5s
+        lb_try_interval 250ms
     }
 }

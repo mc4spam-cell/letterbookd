@@ -4,8 +4,10 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from django.contrib.auth import get_user_model
+
 from clubs.list_views import ensure_default_lists
-from clubs.models import Comment, ListItem, Reading, ReadingList, ReadingStatus, ReviewReaction
+from clubs.models import Comment, Follow, ListItem, Reading, ReadingList, ReadingStatus, ReviewReaction
 
 from . import openlibrary
 from .models import Book, NewRelease, PrizeWinner
@@ -13,7 +15,18 @@ from .models import Book, NewRelease, PrizeWinner
 
 @login_required
 def search(request):
+    # Si on arrive sur /chercher/ sans paramètre `q` (nav latérale, retour),
+    # on rejoue la dernière recherche mémorisée en session.
+    if "q" not in request.GET and request.session.get("last_search_q"):
+        from urllib.parse import urlencode
+        return redirect(
+            f"{reverse('books_search')}?{urlencode({'q': request.session['last_search_q']})}"
+        )
     q = (request.GET.get("q") or "").strip()
+    if q:
+        request.session["last_search_q"] = q
+    else:
+        request.session.pop("last_search_q", None)
     results = openlibrary.search(q) if q else []
     if results:
         olids = [r["olid"] for r in results if r.get("olid")]
@@ -101,6 +114,8 @@ def add(request):
         return redirect("read_book", book_id=book.pk)
     if nxt == "list":
         return redirect(f"{reverse('books_detail', args=[book.pk])}?open_list=1")
+    if nxt == "suggest":
+        return redirect(f"{reverse('books_detail', args=[book.pk])}?open_suggest=1")
     return redirect("books_detail", book_id=book.pk)
 
 
@@ -192,9 +207,11 @@ def detail(request, book_id):
             "is_favorite": is_favorite,
             "prizes": prizes,
             "open_list": request.GET.get("open_list") == "1",
+            "open_suggest": request.GET.get("open_suggest") == "1",
             "add_to_list_lists": ReadingList.objects.filter(owner=request.user)
                 .exclude(kind=ReadingList.Kind.FAVORITES)
                 .annotate(items_count=Count("items")).order_by("name"),
+            "suggest_recipients": _suggest_recipients(request),
         },
     )
 
@@ -210,6 +227,19 @@ def _fav_and_lists(request):
     return fav_ids, lists
 
 
+def _suggest_recipients(request):
+    return (
+        get_user_model()
+        .objects.filter(
+            is_deleted=False,
+            pk__in=Follow.objects.filter(follower=request.user).values_list(
+                "followed_id", flat=True
+            ),
+        )
+        .order_by("display_name")
+    )
+
+
 @login_required
 def releases(request):
     items = list(NewRelease.objects.select_related("book"))
@@ -217,7 +247,8 @@ def releases(request):
     for it in items:
         it.is_favorite = it.book_id in fav_ids if it.book_id else False
     return render(request, "books/releases.html",
-                  {"items": items, "add_to_list_lists": lists})
+                  {"items": items, "add_to_list_lists": lists,
+                   "suggest_recipients": _suggest_recipients(request)})
 
 
 @login_required
@@ -232,4 +263,5 @@ def prizes(request):
             bucket.append(p)
     grouped = dict(sorted(grouped.items(), key=lambda kv: kv[0].casefold()))
     return render(request, "books/prizes.html",
-                  {"grouped": grouped, "add_to_list_lists": lists})
+                  {"grouped": grouped, "add_to_list_lists": lists,
+                   "suggest_recipients": _suggest_recipients(request)})

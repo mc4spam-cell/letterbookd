@@ -20,9 +20,14 @@
     .search-row .actions .star-picker label.right::before { left: -10px; }
     .search-row .actions .heart-btn,
     .search-row .actions .icon-btn { display: inline-flex; align-items: center; justify-content: center; }
-    .search-row .actions .move-btn { border: 0; background: none; padding: 2px 4px; }
-    .search-row .actions .move-btn svg { width: 20px; height: 20px; stroke: #46a2e4; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .search-row .actions .move-btn:hover svg { stroke: #68b6ee; }
+    .search-row .actions .move-btn,
+    .search-row .actions .suggest-btn { border: 0; background: none; padding: 2px 4px; }
+    .search-row .actions .move-btn svg,
+    .search-row .actions .suggest-btn svg { stroke: #46a2e4; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .search-row .actions .move-btn svg { width: 20px; height: 20px; }
+    .search-row .actions .suggest-btn svg { width: 17px; height: 17px; }
+    .search-row .actions .move-btn:hover svg,
+    .search-row .actions .suggest-btn:hover svg { stroke: #68b6ee; }
     .icon-btn {
         background: none; border: 1px solid var(--border); border-radius: 4px;
         width: 32px; height: 32px; padding: 0;
@@ -104,7 +109,7 @@
 
                 {% if r.prizes %}
                 <div class="row-prizes">
-                    {% for p in r.prizes %}<span class="chip">{{ p.prize_name }}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
+                    {% for p in r.prizes %}<span class="chip">{% translate p.prize_name %}{% if p.year %}<span class="yr">{{ p.year }}</span>{% endif %}</span>{% endfor %}
                 </div>
                 {% endif %}
 
@@ -115,6 +120,9 @@
                     </button>
                     <button type="submit" name="next" value="list" class="move-btn" title="{% translate 'Ajouter à une liste' %}" aria-label="{% translate 'Ajouter à une liste' %}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10a2 2 0 0 1-2 2H3z"/><polyline points="12 13 15 16 12 19"/><line x1="8" y1="16" x2="15" y2="16"/></svg>
+                    </button>
+                    <button type="submit" name="next" value="suggest" class="suggest-btn" title="{% translate 'Suggérer à un membre' %}" aria-label="{% translate 'Suggérer à un membre' %}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                     </button>
                 </div>
 

@@ -37,6 +37,11 @@ urlpatterns = [
         name="book_add_to_list",
     ),
     path(
+        "livres/<int:book_id>/suggerer/",
+        review_views.suggest_book,
+        name="book_suggest",
+    ),
+    path(
         "livres/<int:book_id>/favori/",
         list_views.toggle_favorite,
         name="toggle_favorite",
