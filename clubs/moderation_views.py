@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Case, Count, IntegerField, Value, When
 from django.shortcuts import get_object_or_404, redirect, render
@@ -28,11 +28,13 @@ def _serve_gated(request, path, root, needs_staff):
 
 
 def general_doc(request, path):
-    return _serve_gated(request, path, str(settings.BASE_DIR / "documentation_public"), needs_staff=False)
+    root = str(settings.BASE_DIR / "documentation_public")
+    return _serve_gated(request, path, root, needs_staff=False)
 
 
 def moderation_doc(request, path):
-    return _serve_gated(request, path, str(settings.BASE_DIR / "documentation_admin"), needs_staff=True)
+    root = str(settings.BASE_DIR / "documentation_admin")
+    return _serve_gated(request, path, root, needs_staff=True)
 
 PAGE_SIZE = 50
 
