@@ -1,0 +1,28 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Notifications</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Rassembler tout ce qui te concerne personnellement : suggestions reçues d'autres membres, réactions sur tes avis, commentaires sous tes avis. Et plus bas, le flux de tous les avis récents de ton club.</div>
+  <figure><img class="shot" src="screenshots/fr/notifications.png" alt="Notifications"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>La page a deux sections. 'Notifications' en haut : une ligne par événement, avec pseudo de l'émetteur, type d'action ('te suggère', 'a réagi à', 'a commenté') et un lien vers le livre/avis concerné. Un bouton 'Tout marquer comme lu' efface le badge sur la cloche. En bas, 'Flux des avis' : les avis récents postés dans ton club, chacun avec couverture, livre, auteur du livre, auteur de l'avis et note en étoiles, plus un lien 'voir l'avis'.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Bouton 'Tout marquer comme lu'</td><td>Formulaire POST.</td><td>Marque toutes tes notifications comme lues. La cloche en haut à droite passe du vert au gris. Les notifications restent visibles en historique mais ne sont plus comptées comme non lues.</td></tr>
+      <tr><td>Lien dans une notification (titre du livre, 'voir l'avis')</td><td>—</td><td>Ouvre le contexte : fiche du livre, ancre vers l'avis commenté.</td></tr>
+      <tr><td>Lien 'voir l'avis' dans le flux</td><td>—</td><td>Ouvre la fiche du livre positionnée sur l'avis en question.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

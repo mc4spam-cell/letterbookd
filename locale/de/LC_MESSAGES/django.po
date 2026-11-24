@@ -841,3 +841,6 @@ msgstr "Fnac-Romanpreis"
 
 msgid "Prix des cinq continents de la francophonie"
 msgstr "Preis der fünf Kontinente der Frankophonie"
+
+msgid "Guide de modération"
+msgstr "Moderations-Handbuch"

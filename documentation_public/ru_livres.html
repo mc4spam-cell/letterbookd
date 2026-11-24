@@ -1,0 +1,35 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Книги — Поиск — Руководство letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="ru_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="ru_index.html">← Назад к указателю</a></nav>
+</header>
+<main>
+  <h1>Книги — Поиск</h1>
+  <div class="goal"><strong>Зачем это нужно:</strong> Найти книгу в общем каталоге клуба. Если её там нет, предложи её через Open Library: она появится в каталоге примерно через несколько минут.</div>
+  <figure><img class="shot" src="screenshots/ru/livres.png" alt="Книги — Поиск"></figure>
+  <h2>Как это устроено</h2>
+  <div class="walkthrough">
+    <p>Введи начало названия, имя автора или ISBN в строку поиска и нажми Enter (или значок лупы). Пример: «Le Rêve du jaguar» выводит карточку книги с пометкой «Премия Фемина / Гран-при Французской академии 2024». Если книги нет, пройди по ссылке «искать в Open Library», затем «создать карточку там»: Open Library передаст карточку в letterbookd примерно через несколько минут.</p>
+  </div>
+  <h2>Цепочки действий</h2>
+  <p style="color:var(--muted)">Каждая строка — это триггер в интерфейсе, модалка или форма, которые он открывает, и результат.</p>
+  <table class="chains">
+    <thead><tr><th>Триггер</th><th>Модалка / Поля</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Строка поиска</td><td>Текстовое поле (название, автор или ISBN). Отправка: Enter или клик по лупе.</td><td>Перезагружает страницу с найденными результатами. В адресе появляется параметр «?q=…», чтобы поделиться поиском.</td></tr>
+      <tr><td>Ссылка «искать в Open Library» / «создать карточку там»</td><td>Форма Open Library (вне letterbookd).</td><td>Создаёт карточку на Open Library; letterbookd подтянет её в течение нескольких минут. Обновление поиска покажет новую книгу.</td></tr>
+      <tr><td>Значок сердца (строка результата)</td><td>—</td><td>Добавляет книгу в системный список «Избранное» или убирает её оттуда.</td></tr>
+      <tr><td>Значок папки (строка результата)</td><td>Открывает окно «Добавить в список» (см. ниже).</td><td>Добавляет книгу в выбранный список или в новый, созданный на лету.</td></tr>
+      <tr><td>Значок «поделиться» / треугольник (строка результата)</td><td>Открывает окно «Предложить эту книгу».</td><td>Отправляет приватное предложение участнику твоего клуба с необязательным сообщением (до 280 символов).</td></tr>
+      <tr><td>Серые звёзды (строка результата)</td><td>Клик по звёздам открывает полную форму оценки на карточке книги.</td><td>Переводит на карточку книги, где ждёт твоя оценка.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/ru/modal-ajouter-liste.png" alt="Окно «Добавить в список»"><figcaption>Окно «Добавить в список»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/ru/modal-suggerer.png" alt="Окно «Предложить эту книгу»"><figcaption>Окно «Предложить эту книгу»</figcaption></figure>
+  <footer class="doc">Руководство сгенерировано 24 ноября 2026 г. — letterbookd</footer>
+</main>
+</body></html>

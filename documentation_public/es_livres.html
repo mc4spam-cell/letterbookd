@@ -1,0 +1,34 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Libros — Buscar — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Libros — Buscar</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Encontrar un libro en el catálogo compartido del club. Si el libro no está, puedes proponerlo a través de Open Library: aparecerá en el catálogo unos minutos después.</div>
+  <figure><img class="shot" src="screenshots/es/livres.png" alt="Libros — Buscar"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Escribe el inicio de un título, un nombre de autor o un ISBN en la barra de búsqueda y pulsa Intro (o haz clic en la lupa). Si el libro no aparece, sigue el enlace «buscar en Open Library» y luego «crear una ficha allí»: Open Library envía la ficha a letterbookd en unos minutos.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Barra de búsqueda</td><td>Un campo de texto (título, autor o ISBN). Envío: Intro o clic en la lupa.</td><td>Recarga la página con los resultados correspondientes. La URL lleva el parámetro «?q=…» para compartir la búsqueda.</td></tr>
+      <tr><td>Enlace «buscar en Open Library» / «crear una ficha allí»</td><td>Formulario de Open Library (fuera de letterbookd).</td><td>Crea una ficha en Open Library; letterbookd la recupera en los minutos siguientes. Repetir la búsqueda hará aparecer el libro nuevo.</td></tr>
+      <tr><td>Icono de corazón (fila de resultado)</td><td>—</td><td>Añade o quita el libro de tu lista del sistema «Favoritos».</td></tr>
+      <tr><td>Icono de carpeta (fila de resultado)</td><td>Abre la ventana «Añadir a una lista» (ver más abajo).</td><td>Añade el libro a la lista elegida o a una nueva lista creada en el momento.</td></tr>
+      <tr><td>Icono de compartir / triángulo (fila de resultado)</td><td>Abre la ventana «Sugerir este libro».</td><td>Envía una sugerencia privada a un miembro de tu club, con un mensaje opcional (280 caracteres como máximo).</td></tr>
+      <tr><td>Estrellas grises (fila de resultado)</td><td>Al hacer clic en las estrellas se abre el formulario completo de puntuación en la ficha del libro.</td><td>Redirige a la ficha del libro y espera tu nota.</td></tr>
+    </tbody>
+  </table>
+  <h2>Ventanas</h2>
+  <figure><img class="shot" src="screenshots/es/modal-ajouter-liste.png" alt="Ventana «Añadir a una lista»"><figcaption>Ventana «Añadir a una lista»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/modal-suggerer.png" alt="Ventana «Sugerir este libro»"><figcaption>Ventana «Sugerir este libro»</figcaption></figure>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

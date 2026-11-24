@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book page — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Book page</h1>
+  <div class="goal"><strong>Why it exists:</strong> Everything your club knows about a book: cover, metadata, summary, average rating, rating breakdown, your own history, and other members' reviews with their comments. Example: Le Rêve du jaguar (Miguel Bonnefoy), Prix Femina and Grand Prix du roman de l'Académie française 2024.</div>
+  <figure><img class="shot" src="screenshots/en/livre-detail.png" alt="Book page"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The cover is at the top left, with the metadata next to it (authors, year, ISBN, pages, prizes won). On the right, the 'Average rating' box shows the score out of 10, the number of voters, and a histogram of the distribution from 1 to 5 stars. Further down is the summary, then the action row: 'Rate / write a review', favorite (heart), add to a list (folder), and suggest (triangle).</p>
+    <p>The 'My review' section is empty until you rate the book; after that, it shows your rating and text. 'Other members' reviews' lists, for each review, the stars, the date, an excerpt, three reactions (thumbs up / question mark / thumbs down), and a 'Reply' link to post a comment under the review.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'Rate / write a review' link (or click the stars)</td><td>Modal with: 'Add to favorites' (heart), Status (to read / reading / read), Start date, End date, Rating (5 stars, half stars allowed), Review (textarea), 'Contains spoilers' checkbox.</td><td>Saves a reading linked to this book. Your rating shows immediately under 'My review', it enters the average, and your review appears in the review feed of your clubs. If you tick 'spoilers', others see your review hidden by default and must click to reveal it.</td></tr>
+      <tr><td>Heart icon (bottom of the summary)</td><td>—</td><td>Adds or removes the book from your 'Favorites' system list. Filled heart = favorite; empty heart = not a favorite.</td></tr>
+      <tr><td>Folder icon (bottom of the summary)</td><td>'Add to a list' modal with your existing lists (name and number of books) and a 'Title' field to create a new list.</td><td>Adds the book to the chosen list, or creates a new one. A confirmation appears on the matching list page.</td></tr>
+      <tr><td>Share / triangle icon (bottom of the summary)</td><td>'Suggest this book' modal: radio buttons for the members you follow, plus a 'Message (optional)' textarea (counter 0/280).</td><td>Sends a notification to the recipient, who gets an entry in 'Notifs' like 'X suggests &lt;book&gt;: &lt;your message&gt;'. If you follow nobody, the modal tells you to follow a member first.</td></tr>
+      <tr><td>Thumbs up / question mark / thumbs down under a review</td><td>—</td><td>Records your reaction (positive, mixed, or negative) to the review. The counters update, and the review's author can see the reactions.</td></tr>
+      <tr><td>'Reply' link under a review</td><td>Modal with a 'Your comment...' textarea and 'Post' / 'Cancel' buttons.</td><td>Posts a nested comment under the review. Other club members can see it, and the review's author gets a notification. Comments can be deleted only by their author or an administrator.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/en/modal-noter.png" alt="Rate and review modal on a book page"><figcaption>The rating and review modal.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/livre-avis.png" alt="Review section on a book page"><figcaption>The 'My review' and other members' reviews section.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/modal-commenter.png" alt="Comment modal on a book page"><figcaption>The comment modal, opened from 'Reply'.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/modal-ajouter-liste.png" alt="Add to a list modal on a book page"><figcaption>The 'Add to a list' modal.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/modal-suggerer.png" alt="Suggest this book modal on a book page"><figcaption>The 'Suggest this book' modal.</figcaption></figure>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

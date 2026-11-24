@@ -840,3 +840,6 @@ msgstr "Premio de novela Fnac"
 
 msgid "Prix des cinq continents de la francophonie"
 msgstr "Premio de los cinco continentes de la francofonía"
+
+msgid "Guide de modération"
+msgstr "Guía de moderación"

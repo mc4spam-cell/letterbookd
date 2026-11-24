@@ -1,0 +1,27 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conexión — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Conexión</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Entrar en tu club. letterbookd es privado: el acceso se hace mediante un enlace de invitación. Si te han enviado un enlace, síguelo; si no, usa esta página para retomar tu sesión.</div>
+  <figure><img class="shot" src="screenshots/es/login.png" alt="Conexión"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Llegas aquí si no has iniciado sesión, o al hacer clic en «Conexión» arriba a la derecha. Escribe la dirección de correo de tu cuenta y tu contraseña, y luego haz clic en «Conexión». Puedes marcar «Recordarme» para seguir conectado en este navegador. El enlace «¿Olvidaste tu contraseña?» envía un correo de restablecimiento; vuelves aquí con una contraseña nueva. Tras conectarte, aterrizas en el inicio.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Botón «Conexión» (formulario principal)</td><td>Correo electrónico (obligatorio), Contraseña (obligatoria), Recordarme (casilla, opcional)</td><td>Sesión iniciada y redirección al inicio. Si hay un error, el formulario se recarga con un mensaje claro (dirección desconocida, contraseña incorrecta).</td></tr>
+      <tr><td>Enlace «¿Olvidaste tu contraseña?»</td><td>Formulario de solicitud por correo (página aparte)</td><td>Se envía un enlace de restablecimiento a la dirección indicada. Sigue el enlace, elige una contraseña nueva e inicia sesión de nuevo.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

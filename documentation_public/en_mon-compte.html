@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My account — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>My account</h1>
+  <div class="goal"><strong>Why it exists:</strong> Customise your identity in the club (display name, bio) and manage your security (password). You can also check your reading stats, or permanently delete your account if you want to leave.</div>
+  <figure><img class="shot" src="screenshots/en/mon-compte.png" alt="My account"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>At the top are two quick links: 'View my stats' (your personal stats page) and 'Change my password'. Below them is the profile form: 'Display name' (your public username) and 'Bio' (free text, visible on your profile to members of your clubs). Click 'Save' to apply your changes.</p>
+    <p>Further down, the 'Delete my account' section has a trash icon that opens a confirmation. Deletion is permanent: your profile, reads, reviews, lists and everything else is erased.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'View my stats' link</td><td>—</td><td>Opens your stats page: number of books read, average rating, favourite authors, and changes over time.</td></tr>
+      <tr><td>'Change my password' link</td><td>Allauth form: old password, then new password (twice).</td><td>Replaces your password. Other open sessions remain valid.</td></tr>
+      <tr><td>'Save' button (profile form)</td><td>Display name (username, required), Bio (free text, optional).</td><td>Updates your profile. The changes appear everywhere your username is shown.</td></tr>
+      <tr><td>Trash icon under 'Delete my account'</td><td>Confirmation form (separate page).</td><td>Permanently deletes your account, reads, reviews, lists and invitations. This action cannot be undone.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

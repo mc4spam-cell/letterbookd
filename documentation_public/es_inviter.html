@@ -1,0 +1,27 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invitaciones — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Invitaciones</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Invitar a un nuevo miembro a uno de tus clubs sin compartir contraseñas. Un clic en «+» genera un enlace que puedes pegar en un correo, un SMS o un mensaje privado: quien lo siga crea su cuenta y se une al club.</div>
+  <figure><img class="shot" src="screenshots/es/inviter.png" alt="Invitaciones"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>La página muestra tus enlaces de invitación existentes: una URL por línea, con su estado (pendiente o «usada el ... por ...»). Un clic en «+» crea un enlace de invitación nuevo y único. IMPORTANTE: cada enlace nuevo invalida el anterior si no se ha usado. Por seguridad, solo puedes tener un enlace activo a la vez. Copia el enlace con el icono correspondiente y compártelo como quieras.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Botón «+» junto a Invitaciones</td><td>Formulario POST sin parámetros.</td><td>Genera un nuevo enlace de invitación único (URL firmada). El enlace activo anterior queda desactivado. El nuevo enlace aparece al principio de la lista.</td></tr>
+      <tr><td>Icono «copiar» junto a una URL de invitación</td><td>—</td><td>Copia la URL al portapapeles. Después puedes pegarla en la herramienta que prefieras.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

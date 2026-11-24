@@ -1,0 +1,30 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Модерация — Чтения — Руководство letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="ru_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="ru_index.html">← Назад к указателю</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Эта страница руководства описывает функцию, доступную только администраторам клуба. Открывается только для пользователей со статусом staff.</div>
+  <h1>Модерация — Чтения <span class="badge-admin">Только для админов</span></h1>
+  <div class="goal"><strong>Зачем это нужно:</strong> Список каждой записи о чтении (участник × книга) в клубе. Позволяет удалить запись, если она дублирует другую, явно ложная или брошенная.</div>
+  <figure><img class="shot" src="screenshots/ru/moderation-lectures.png" alt="Модерация — Чтения"></figure>
+  <h2>Как это устроено</h2>
+  <div class="walkthrough">
+    <p>Таблица: Участник (ник), Название (книга), Дата (когда чтение было записано), Действия (крестик для удаления). Правила сортировки и фильтрации те же, что на вкладке «Участники». Удаление чтения также удаляет привязанный к нему отзыв, но не комментарии других участников под этим отзывом: они остаются без отзыва и их нужно разобрать на вкладке «Комментарии».</p>
+  </div>
+  <h2>Цепочки действий</h2>
+  <p style="color:var(--muted)">Каждая строка — это триггер в интерфейсе, модалка или форма, которые он открывает, и результат.</p>
+  <table class="chains">
+    <thead><tr><th>Триггер</th><th>Модалка / Поля</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Значки сортировки и фильтра</td><td>—</td><td>Тот же механизм, что на вкладке «Участники».</td></tr>
+      <tr><td>Кнопка крестика (×) в строке</td><td>Подтверждающая POST-форма.</td><td>Удаляет запись о чтении И привязанный к ней отзыв. Комментарии остаются, но ссылаются на удалённый отзыв.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Руководство сгенерировано 24 ноября 2026 г. — letterbookd</footer>
+</main>
+</body></html>

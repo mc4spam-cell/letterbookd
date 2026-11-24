@@ -1,0 +1,35 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modération — Membres — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Cette page de documentation décrit une fonctionnalité réservée aux administrateurs du club. Elle n'est accessible qu'aux utilisateurs ayant le statut staff.</div>
+<h1>Modération — Membres <span class="badge-admin">Réservé aux administrateurs</span></h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Vue admin. Panorama de tous les comptes du club : qui est actif, qui est admin, qui a été signalé via son adresse IP, et actions pour suspendre, promouvoir ou supprimer un membre. Les e-mails sont floutés dans cette documentation ; ils apparaissent en clair dans l'application.</div>
+  <figure><img class="shot" src="screenshots/fr/moderation-membres.png" alt="Modération — Membres"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>Quatre onglets en haut : Membres (ici), Lectures, Avis, Commentaires. Le tableau membre liste pour chaque compte : Nom (pseudo, cliquable → profil), E-mail (texte clair dans l'app), Inscrit le (date), Livres (nombre de lectures), IP (badge rouge 'IP' si une adresse IP suspecte a été relevée, tiret sinon), État (point vert = actif, éclair vert = admin). La colonne Actions fournit trois boutons icône par ligne : pause (suspendre), étoile (donner/retirer les droits admin), croix (supprimer). Chaque colonne est triable (▲▼) et filtrable via l'icône loupe qui ouvre le modal filtre.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Onglets Membres / Lectures / Avis / Commentaires</td><td>Navigation par ?tab=…</td><td>Change la vue sans recharger la page entière (navigation standard).</td></tr>
+      <tr><td>Flèches ▲▼ dans un en-tête de colonne</td><td>—</td><td>Trie la colonne en ascendant (▲) ou descendant (▼). Le tri est mémorisé dans l'URL.</td></tr>
+      <tr><td>Icône loupe dans un en-tête de colonne (ouvre le modal Filtre)</td><td>Modal avec champ texte 'Filtrer — &lt;colonne&gt;' et boutons 'Appliquer' / 'Effacer' / 'Annuler'.</td><td>Filtre le tableau sur la colonne choisie. 'Effacer' retire le filtre. Plusieurs colonnes peuvent être filtrées en cumulé.</td></tr>
+      <tr><td>Bouton pause (||) sur une ligne membre</td><td>Formulaire POST confirmatif.</td><td>Suspend le compte : le membre ne peut plus se connecter ni poster. Il peut être réactivé plus tard (même bouton).</td></tr>
+      <tr><td>Bouton étoile (☆/★) sur une ligne membre</td><td>Formulaire POST.</td><td>Accorde ou retire les droits admin (is_staff + is_superuser). L'éclair vert dans la colonne État reflète immédiatement le changement. Un admin qui retire ses propres droits perd l'accès à la modération.</td></tr>
+      <tr><td>Bouton croix (×) sur une ligne membre</td><td>Formulaire POST confirmatif.</td><td>Supprime définitivement le compte et toutes ses données (lectures, avis, commentaires, listes, invitations). Irréversible.</td></tr>
+      <tr><td>Pied de tableau : 'Aller à [n] / X' et flèches</td><td>Pagination simple.</td><td>Navigation entre les pages de résultats.</td></tr>
+    </tbody>
+  </table>
+  <h2>Modales</h2>
+  <figure><img class="shot" src="screenshots/fr/modal-filtre.png" alt="Filtre des membres"><figcaption>Filtre des membres</figcaption></figure>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd — <a href="../fr_index.html">Guide membre</a></footer>
+</main>
+</body></html>

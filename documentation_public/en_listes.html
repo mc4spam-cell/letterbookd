@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lists — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Lists</h1>
+  <div class="goal"><strong>Why it exists:</strong> Organise your reads: favorites, to-read list, books you have finished, plus any themed lists you want to create (genres, themes, reading challenges).</div>
+  <figure><img class="shot" src="screenshots/en/listes.png" alt="Lists"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>Three system lists are always present: 'Favorites' (heart), 'To read' (queue), and 'All my books' (everything you have saved). Your personal lists follow them. Each list collapses and expands via its chevron, shows its book count, and displays its books as covers with star ratings overlaid.</p>
+    <p>A '+' button at the top creates a new list.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'+' button next to 'Lists'</td><td>'Title' field (120 characters max).</td><td>Creates a new empty list. It appears immediately in the left column, ready to be filled from book pages.</td></tr>
+      <tr><td>Chevron in front of a list</td><td>—</td><td>Opens or closes the accordion. Only one list can be open at a time (name='lists-acc').</td></tr>
+      <tr><td>Trash icon next to a book (in a list)</td><td>Confirmation POST form.</td><td>Removes the book from the list. The book stays in the catalogue and in your other lists.</td></tr>
+      <tr><td>Trash icon on a personal list</td><td>Confirmation POST form.</td><td>Deletes the whole list. The books themselves are kept; only the list disappears. System lists cannot be deleted.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

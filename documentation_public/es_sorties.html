@@ -1,0 +1,32 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Novedades — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Novedades</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Seguir las novedades literarias cada semana. La aplicación recupera automáticamente la selección de Le Monde des livres para dar ideas de lectura a los clubs.</div>
+  <figure><img class="shot" src="screenshots/es/sorties.png" alt="Novedades"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Cuadrícula de tarjetas, una por novedad reciente: portada o imagen, título entre comillas, extracto y una barra de acciones abajo (favoritos, añadir a una lista, sugerir y «Leer el artículo»). La recuperación se ejecuta una vez por semana en segundo plano (planificador de Django).</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Icono de corazón</td><td>—</td><td>Añade o quita la novedad de tus «Favoritos». Si la novedad todavía no es un libro del catálogo, entra en él en ese momento.</td></tr>
+      <tr><td>Icono de carpeta</td><td>Ventana «Añadir a una lista».</td><td>Coloca la novedad en una lista (existente o nueva).</td></tr>
+      <tr><td>Icono de compartir / triángulo</td><td>Ventana «Sugerir este libro».</td><td>Envía una sugerencia privada a un miembro que sigues.</td></tr>
+      <tr><td>Enlace «Leer el artículo»</td><td>—</td><td>Abre el artículo original de Le Monde en una pestaña nueva.</td></tr>
+    </tbody>
+  </table>
+  <h2>Ventanas</h2>
+  <figure><img class="shot" src="screenshots/es/modal-ajouter-liste.png" alt="Ventana «Añadir a una lista»"><figcaption>Ventana «Añadir a una lista»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/modal-suggerer.png" alt="Ventana «Sugerir este libro»"><figcaption>Ventana «Sugerir este libro»</figcaption></figure>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

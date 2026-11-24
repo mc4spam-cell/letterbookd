@@ -1,0 +1,41 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buchdetails — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Buchdetails</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Alles, was dein Club über ein Buch weiß: Cover, Metadaten, Zusammenfassung, Durchschnittsnote, Verteilung der Bewertungen, deine eigene Historie und die Rezensionen der anderen Mitglieder mit ihren Kommentaren. Beispiel: Le Rêve du jaguar (Miguel Bonnefoy), Prix Femina + Grand prix du roman de l’Académie française 2024.</div>
+  <figure><img class="shot" src="screenshots/de/livre-detail.png" alt="Buchdetails"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Oben links siehst du das Cover, daneben die Metadaten (Autoren, Jahr, ISBN, Seitenzahl, erhaltene Preise). Rechts steht der Kasten „Durchschnittsnote“ mit der Note von 10, der Anzahl der Stimmen und einem Histogramm der Verteilung (1 bis 5 Sterne).</p>
+    <p>Darunter folgen die Zusammenfassung und die Aktionsleiste: „Bewerten / Rezension schreiben“, zu den Favoriten hinzufügen (Herz), zu einer Liste hinzufügen (Ordner) und vorschlagen (Dreieck).</p>
+    <p>Der Abschnitt „Meine Meinung“ ist leer, solange du noch nicht bewertet hast; danach zeigt er deine Note und deinen Text.</p>
+    <p>Ganz unten stehen die „Rezensionen anderer Mitglieder“ mit jeweils Sternen, Datum, Auszug, drei Reaktionen (Daumen hoch / Fragezeichen / Daumen runter) und einem Link „Reagieren“, um einen Kommentar unter der Rezension zu veröffentlichen.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Link „Bewerten / Rezension schreiben“ (oder Klick auf die Sterne)</td><td>Modal mit: „Zu Favoriten hinzufügen“ (Herz), Status (noch zu lesen / in Arbeit / gelesen), Startdatum, Enddatum, Bewertung (5 Sterne, halbe Sterne möglich), Rezension (Textfeld), Checkbox „Enthält Spoiler“.</td><td>Speichert eine Lektüre (reading) zu diesem Buch: Deine Note wird sofort unter „Meine Meinung“ angezeigt, fließt in den Durchschnitt ein, und deine Rezension erscheint im Rezensionsstrom deiner Clubs. Wenn du „Spoiler“ aktivierst, wird deine Rezension für andere standardmäßig ausgeblendet; sie müssen klicken, um sie einzublenden.</td></tr>
+      <tr><td>Herz-Symbol (unten im Abschnitt Zusammenfassung)</td><td>—</td><td>Fügt das Buch der Systemliste „Favoriten“ hinzu bzw. entfernt es. Ein gefülltes Herz = Favorit; ein leeres Herz = kein Favorit.</td></tr>
+      <tr><td>Ordner-Symbol (unten im Abschnitt Zusammenfassung)</td><td>Modal „Zu einer Liste hinzufügen“ mit deinen vorhandenen Listen (Name + Anzahl der Bücher) und einem Feld „Titel“, um eine neue Liste anzulegen.</td><td>Fügt das Buch der gewählten Liste hinzu (oder legt eine neue an). Die Bestätigung erscheint in der jeweiligen Listenansicht.</td></tr>
+      <tr><td>Teilen-/Dreieck-Symbol (unten im Abschnitt Zusammenfassung)</td><td>Modal „Dieses Buch vorschlagen“: Auswahlfelder der Mitglieder, denen du folgst, sowie Textfeld „Nachricht (optional)“ (Zähler 0/280).</td><td>Sendet dem Empfänger eine Benachrichtigung: Er erhält unter „Benachrichtigungen“ einen Eintrag der Art „X schlägt dir &lt;Buch&gt; vor: &lt;deine Nachricht&gt;“. Folgst du niemandem, erklärt das Modal, dass du zuerst ein Mitglied abonnieren musst.</td></tr>
+      <tr><td>Daumen hoch / Fragezeichen / Daumen runter unter einer Rezension</td><td>—</td><td>Speichert deine Reaktion (positiv / gemischt / negativ) auf die Rezension. Die Zähler werden aktualisiert; der Verfasser der Rezension sieht die Reaktionen.</td></tr>
+      <tr><td>Link „Reagieren“ unter einer Rezension</td><td>Modal mit Textfeld „Dein Kommentar ...“ und Schaltflächen „Veröffentlichen“ / „Abbrechen“.</td><td>Veröffentlicht einen verschachtelten Kommentar unter der Rezension. Die anderen Mitglieder des Clubs sehen ihn; der Verfasser der Rezension erhält eine Benachrichtigung. Kommentare können nur von ihrem Autor oder einem Administrator gelöscht werden.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/de/modal-noter.png" alt="Modal „Bewerten / Rezension schreiben“"><figcaption>Modal „Bewerten / Rezension schreiben“</figcaption></figure>
+  <figure><img class="shot" src="screenshots/de/livre-avis.png" alt="Rezensionen anderer Mitglieder auf der Buchseite"><figcaption>Rezensionen anderer Mitglieder auf der Buchseite</figcaption></figure>
+  <figure><img class="shot" src="screenshots/de/modal-commenter.png" alt="Modal „Kommentar schreiben“"><figcaption>Modal „Kommentar schreiben“</figcaption></figure>
+  <figure><img class="shot" src="screenshots/de/modal-ajouter-liste.png" alt="Modal „Zu einer Liste hinzufügen“"><figcaption>Modal „Zu einer Liste hinzufügen“</figcaption></figure>
+  <figure><img class="shot" src="screenshots/de/modal-suggerer.png" alt="Modal „Dieses Buch vorschlagen“"><figcaption>Modal „Dieses Buch vorschlagen“</figcaption></figure>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notificaciones — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Notificaciones</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Reunir todo lo que te concierne personalmente: sugerencias recibidas de otros miembros, reacciones a tus reseñas y comentarios bajo tus reseñas. Y más abajo, el flujo de todas las reseñas recientes de tu club.</div>
+  <figure><img class="shot" src="screenshots/es/notifications.png" alt="Notificaciones"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>La página tiene dos secciones. «Notificaciones» arriba: una línea por evento, con el nombre de usuario del emisor, el tipo de acción («te sugiere», «ha reaccionado a», «ha comentado») y un enlace al libro o reseña correspondiente. El botón «Marcar todo como leído» borra el distintivo de la campana. Abajo, «Flujo de reseñas»: las reseñas recientes publicadas en tu club, cada una con portada, libro, autor del libro, autor de la reseña y nota en estrellas, más un enlace «ver la reseña».</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Botón «Marcar todo como leído»</td><td>Formulario POST.</td><td>Marca todas tus notificaciones como leídas. La campana, arriba a la derecha, pasa de verde a gris. Las notificaciones siguen visibles en el historial, pero ya no cuentan como no leídas.</td></tr>
+      <tr><td>Enlace en una notificación (título del libro, «ver la reseña»)</td><td>—</td><td>Abre el contexto: ficha del libro, con un ancla a la reseña comentada.</td></tr>
+      <tr><td>Enlace «ver la reseña» en el flujo</td><td>—</td><td>Abre la ficha del libro posicionada en la reseña en cuestión.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

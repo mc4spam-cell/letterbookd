@@ -1,0 +1,36 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bücher — Suche — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Bücher — Suche</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Ein Buch im gemeinsamen Katalog deines Clubs finden. Fehlt das Buch, kannst du es über Open Library vorschlagen; es erscheint wenige Minuten später im Katalog.</div>
+  <figure><img class="shot" src="screenshots/de/livres.png" alt="Bücher — Suche"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Gib den Anfang eines Titels, einen Autorennamen oder eine ISBN in das Suchfeld ein und drücke die Eingabetaste (oder klicke auf die Lupe). Beispiel: „Le Rêve du jaguar“ liefert die Karte mit dem Prix Femina und dem Grand prix du roman de l’Académie française 2024.</p>
+    <p>Fehlt das Buch, folge dem Link „Bei Open Library suchen“ und danach „Dort einen Eintrag anlegen“. Open Library übernimmt den Eintrag innerhalb weniger Minuten in letterbookd.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Suchfeld</td><td>Ein Textfeld (Titel, Autor oder ISBN). Absenden: Eingabetaste oder Klick auf die Lupe.</td><td>Lädt die Seite mit den passenden Ergebnissen neu. Die URL enthält den Parameter „?q=…“, damit du die Suche teilen kannst.</td></tr>
+      <tr><td>Link „Bei Open Library suchen“ / „Dort einen Eintrag anlegen“</td><td>Formular bei Open Library (außerhalb von letterbookd).</td><td>Legt einen Eintrag bei Open Library an; letterbookd übernimmt ihn innerhalb weniger Minuten. Ein Neuladen der Suche zeigt das neue Buch an.</td></tr>
+      <tr><td>Herz-Symbol (Ergebniszeile)</td><td>—</td><td>Fügt das Buch deiner Systemliste „Favoriten“ hinzu bzw. entfernt es.</td></tr>
+      <tr><td>Ordner-Symbol (Ergebniszeile)</td><td>Öffnet das Modal „Zu einer Liste hinzufügen“ (siehe unten).</td><td>Fügt das Buch der gewählten Liste oder einer spontan angelegten neuen Liste hinzu.</td></tr>
+      <tr><td>Teilen-/Dreieck-Symbol (Ergebniszeile)</td><td>Öffnet das Modal „Dieses Buch vorschlagen“.</td><td>Sendet einen privaten Vorschlag an ein Mitglied deines Clubs, optional mit einer Nachricht (max. 280 Zeichen).</td></tr>
+      <tr><td>Graue Sterne (Ergebniszeile)</td><td>Ein Klick auf die Sterne öffnet das vollständige Bewertungsformular auf der Buchseite.</td><td>Leitet zur Buchseite weiter, wo deine Bewertung erwartet wird.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/de/modal-ajouter-liste.png" alt="Modal „Zu einer Liste hinzufügen“"><figcaption>Modal „Zu einer Liste hinzufügen“</figcaption></figure>
+  <figure><img class="shot" src="screenshots/de/modal-suggerer.png" alt="Modal „Dieses Buch vorschlagen“"><figcaption>Modal „Dieses Buch vorschlagen“</figcaption></figure>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

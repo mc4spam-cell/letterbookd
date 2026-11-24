@@ -1,0 +1,27 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connexion — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Connexion</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Entrer dans ton club. letterbookd est privé : l'accès se fait par lien d'invitation. Si on t'a envoyé un lien, suis-le ; sinon, utilise cette page pour reprendre ta session.</div>
+  <figure><img class="shot" src="screenshots/fr/login.png" alt="Connexion"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>Tu arrives ici si tu n'es pas connecté, ou en cliquant sur 'Connexion' en haut à droite. Remplis l'adresse e-mail de ton compte et ton mot de passe, puis clique 'Connexion'. Tu peux cocher 'Se souvenir de moi' pour rester connecté sur ce navigateur. Un lien 'Mot de passe oublié ?' envoie un e-mail de réinitialisation ; tu reviens ici avec un nouveau mot de passe. Après connexion, tu atterris sur l'accueil.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Bouton 'Connexion' (formulaire principal)</td><td>E-mail (obligatoire), Mot de passe (obligatoire), Se souvenir de moi (case à cocher, optionnelle)</td><td>Session ouverte, redirection vers l'accueil. En cas d'erreur, le formulaire se recharge avec un message explicite (adresse inconnue, mot de passe incorrect).</td></tr>
+      <tr><td>Lien 'Mot de passe oublié ?'</td><td>Formulaire de demande par e-mail (page séparée)</td><td>Un lien de réinitialisation est envoyé à l'adresse saisie. Suis le lien, choisis un nouveau mot de passe, et reconnecte-toi.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

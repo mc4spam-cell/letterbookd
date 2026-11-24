@@ -1,0 +1,29 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Литературные премии — Руководство letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="ru_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="ru_index.html">← Назад к указателю</a></nav>
+</header>
+<main>
+  <h1>Литературные премии</h1>
+  <div class="goal"><strong>Зачем это нужно:</strong> Просматривать недавних лауреатов крупных французских литературных премий. Полезно, чтобы подбирать варианты для следующей книги месяца и открывать признанные книги-эталоны.</div>
+  <figure><img class="shot" src="screenshots/ru/prix.png" alt="Литературные премии"></figure>
+  <h2>Как это устроено</h2>
+  <div class="walkthrough">
+    <p>У каждой премии есть сворачиваемый блок (&lt;details&gt;), который открывается и закрывается. Внутри показаны 4 последних года в виде карточек «Гран-при» (золотой кубок) или «Премия Фемина» (обложка книги-лауреата). Каждая карточка содержит год, название, автора и отрывок из описания. Клик по карточке ведёт на карточку книги. Полная история премии доступна через карточку её лауреатов, а не на этой странице.</p>
+  </div>
+  <h2>Цепочки действий</h2>
+  <p style="color:var(--muted)">Каждая строка — это триггер в интерфейсе, модалка или форма, которые он открывает, и результат.</p>
+  <table class="chains">
+    <thead><tr><th>Триггер</th><th>Модалка / Поля</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Шеврон (▸/▾) рядом с названием премии</td><td>—</td><td>Раскрывает или сворачивает блок премии. Одновременно может быть раскрыта только одна премия (name=&#x27;prizes-acc&#x27;).</td></tr>
+      <tr><td>Карточка лауреата</td><td>—</td><td>Открывает карточку книги-лауреата с плашками полученных премий.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Руководство сгенерировано 24 ноября 2026 г. — letterbookd</footer>
+</main>
+</body></html>

@@ -1,0 +1,37 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiche d'un livre — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Fiche d'un livre</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Tout ce que ton club sait sur un livre : couverture, métadonnées, résumé, note moyenne, répartition des notes, ton propre historique et les avis des autres membres avec leurs commentaires. Exemple : Le Rêve du jaguar (Miguel Bonnefoy), Prix Femina + Grand prix du roman de l'Académie française 2024.</div>
+  <figure><img class="shot" src="screenshots/fr/livre-detail.png" alt="Fiche d'un livre"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>En haut à gauche la couverture, à côté les métadonnées (auteurs, année, ISBN, pages, prix obtenus). À droite, l'encart 'Note moyenne' avec note sur 10, nombre de votants, et un histogramme de la répartition (1 à 5 étoiles). Plus bas le résumé, puis la ligne d'actions : 'Noter / écrire un avis', ajouter aux favoris (cœur), ajouter à une liste (dossier), suggérer (triangle). Section 'Mon avis' : si tu n'as pas encore noté, elle est vide ; sinon, ta note et ton texte. Enfin 'Avis des autres membres' avec, pour chacun, étoiles, date, extrait d'avis, trois réactions (pouce haut / point d'interrogation / pouce bas) et un lien 'Réagir' pour poster un commentaire sous l'avis.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Lien 'Noter / écrire un avis' (ou clic sur les étoiles)</td><td>Modal avec : 'Ajouter aux favoris' (cœur), Statut (à lire / en cours / lu), Date début, Date fin, Note (5 étoiles, demi-étoiles possibles), Avis (textarea), case 'Contient des spoilers'.</td><td>Enregistre une 'lecture' (reading) liée à ce livre : ta note s'affiche immédiatement dans 'Mon avis', elle entre dans la moyenne, et ton avis apparaît dans le flux des avis de tes clubs. Si tu coches 'spoilers', ton avis est masqué par défaut aux autres (ils doivent cliquer pour le révéler).</td></tr>
+      <tr><td>Icône cœur (en bas du résumé)</td><td>—</td><td>Ajoute/retire le livre de ta liste système 'Favoris'. Un cœur plein = favori ; un cœur vide = non favori.</td></tr>
+      <tr><td>Icône dossier (en bas du résumé)</td><td>Modal 'Ajouter à une liste' avec tes listes existantes (nom + nombre de livres) et un champ 'Titre' pour créer une nouvelle liste.</td><td>Ajoute le livre à la liste choisie (ou en crée une nouvelle). Confirmation dans la fiche de la liste correspondante.</td></tr>
+      <tr><td>Icône partage/triangle (en bas du résumé)</td><td>Modal 'Suggérer ce livre' : radios des membres que tu suis + textarea 'Message (facultatif)' (compteur 0/280).</td><td>Envoie une notification au destinataire : il reçoit une entrée dans 'Notifs' du type 'X te suggère &lt;livre&gt; : &lt;ton message&gt;'. Si tu ne suis personne, le modal explique qu'il faut d'abord suivre un membre.</td></tr>
+      <tr><td>Pouce haut / point d'interrogation / pouce bas sous un avis</td><td>—</td><td>Enregistre ta réaction (positive / mitigée / négative) à l'avis. Les compteurs se mettent à jour ; l'auteur de l'avis voit les réactions.</td></tr>
+      <tr><td>Lien 'Réagir' sous un avis</td><td>Modal avec un champ textarea 'Ton commentaire...' et boutons 'Publier' / 'Annuler'.</td><td>Poste un commentaire imbriqué sous l'avis. Les autres membres du club le voient ; l'auteur de l'avis reçoit une notification. Les commentaires sont supprimables uniquement par leur auteur ou un administrateur.</td></tr>
+    </tbody>
+  </table>
+  <h2>Modales</h2>
+  <figure><img class="shot" src="screenshots/fr/modal-noter.png" alt="Modal « Noter ce livre »"><figcaption>Modal « Noter ce livre »</figcaption></figure>
+  <figure><img class="shot" src="screenshots/fr/livre-avis.png" alt="Écrire un avis"><figcaption>Écrire un avis</figcaption></figure>
+  <figure><img class="shot" src="screenshots/fr/modal-commenter.png" alt="Modal « Commenter »"><figcaption>Modal « Commenter »</figcaption></figure>
+  <figure><img class="shot" src="screenshots/fr/modal-ajouter-liste.png" alt="Modal « Ajouter à une liste »"><figcaption>Modal « Ajouter à une liste »</figcaption></figure>
+  <figure><img class="shot" src="screenshots/fr/modal-suggerer.png" alt="Modal « Suggérer ce livre »"><figcaption>Modal « Suggérer ce livre »</figcaption></figure>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

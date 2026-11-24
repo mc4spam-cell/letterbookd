@@ -1,0 +1,31 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Benachrichtigungen — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Benachrichtigungen</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Alles bündeln, was dich persönlich betrifft: erhaltene Vorschläge anderer Mitglieder, Reaktionen auf deine Rezensionen und Kommentare unter deinen Rezensionen. Darunter der Strom aller aktuellen Rezensionen deines Clubs.</div>
+  <figure><img class="shot" src="screenshots/de/notifications.png" alt="Benachrichtigungen"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Die Seite hat zwei Bereiche. Oben „Benachrichtigungen“: eine Zeile pro Ereignis, mit dem Namen des Absenders, der Art der Aktion („schlägt dir vor“, „hat reagiert auf“, „hat kommentiert“) und einem Link zum betreffenden Buch bzw. zur Rezension. Die Schaltfläche „Alle als gelesen markieren“ entfernt die Anzeige an der Glocke.</p>
+    <p>Unten folgt der „Rezensionen-Stream“: die aktuellen Rezensionen, die in deinem Club veröffentlicht wurden, jeweils mit Cover, Buch, Buchautor, Name des Rezensenten und Sternenbewertung sowie einem Link „Rezension ansehen“.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Schaltfläche „Alle als gelesen markieren“</td><td>POST-Formular.</td><td>Markiert alle deine Benachrichtigungen als gelesen. Die Glocke oben rechts wechselt von Grün zu Grau. Die Benachrichtigungen bleiben als Verlauf sichtbar, zählen aber nicht mehr als ungelesen.</td></tr>
+      <tr><td>Link in einer Benachrichtigung (Buchtitel, „Rezension ansehen“)</td><td>—</td><td>Öffnet den Kontext: Buchseite, mit Anker zur kommentierten Rezension.</td></tr>
+      <tr><td>Link „Rezension ansehen“ im Stream</td><td>—</td><td>Öffnet die Buchseite, positioniert auf der betreffenden Rezension.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

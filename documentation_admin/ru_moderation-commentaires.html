@@ -1,0 +1,30 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Модерация — Комментарии — Руководство letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="ru_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="ru_index.html">← Назад к указателю</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Эта страница руководства описывает функцию, доступную только администраторам клуба. Открывается только для пользователей со статусом staff.</div>
+  <h1>Модерация — Комментарии <span class="badge-admin">Только для админов</span></h1>
+  <div class="goal"><strong>Зачем это нужно:</strong> Модерация вложенных обсуждений под отзывами. Неуместный комментарий удаляется точечно, без влияния на родительский отзыв и другие ответы в ветке.</div>
+  <figure><img class="shot" src="screenshots/ru/moderation-commentaires.png" alt="Модерация — Комментарии"></figure>
+  <h2>Как это устроено</h2>
+  <div class="walkthrough">
+    <p>Таблица: Автор (ник комментатора), Книга (книга, чей отзыв содержит комментарий), Дата, Комментарий (фрагмент, сортируется и фильтруется), Действия (крестик для удаления). Удаление комментария атомарно: остальные комментарии той же ветки сохраняются.</p>
+  </div>
+  <h2>Цепочки действий</h2>
+  <p style="color:var(--muted)">Каждая строка — это триггер в интерфейсе, модалка или форма, которые он открывает, и результат.</p>
+  <table class="chains">
+    <thead><tr><th>Триггер</th><th>Модалка / Поля</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Значки сортировки и фильтра (лупа в колонке «Комментарий»)</td><td>—</td><td>Тот же механизм, что и на других вкладках.</td></tr>
+      <tr><td>Кнопка крестика (×) в строке</td><td>Подтверждающая POST-форма.</td><td>Удаляет комментарий. Ветка остаётся целой (без каскадного удаления), родительский отзыв не затрагивается.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Руководство сгенерировано 24 ноября 2026 г. — letterbookd</footer>
+</main>
+</body></html>

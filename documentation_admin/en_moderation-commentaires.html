@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Comments — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">This page of the guide describes a feature restricted to club administrators. It is only accessible to users with staff status.</div>
+  <h1>Moderation — Comments<span class="badge-admin">Admin only</span></h1>
+  <div class="goal"><strong>Why it exists:</strong> Moderate the nested discussions under reviews. An inappropriate comment is removed here, surgically, without affecting the parent review or the other replies in the thread.</div>
+  <figure><img class="shot" src="screenshots/en/moderation-commentaires.png" alt="Moderation — Comments"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The table has these columns: Author (commenter's username), Book (the book whose review carries the comment), Date, Comment (excerpt, sortable and filterable), and Actions (cross to delete).</p>
+    <p>Deleting a comment is atomic: the other comments in the same thread are kept.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Sort / filter icons (magnifier on the Comment column)</td><td>—</td><td>Same behaviour.</td></tr>
+      <tr><td>Cross (×) button on a row</td><td>Confirmation POST form.</td><td>Deletes the comment. The thread stays consistent (no cascade), and the parent review is not affected.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

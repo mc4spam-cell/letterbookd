@@ -50,6 +50,8 @@ urlpatterns = [
     path("inviter/", views.invites, name="invites"),
     path("invitation/<str:token>/", views.accept_invitation, name="accept_invitation"),
     path("moderation/", moderation_views.moderation, name="moderation"),
+    path("moderation/doc/<path:path>", moderation_views.moderation_doc, name="moderation_doc"),
+    path("doc/<path:path>", moderation_views.general_doc, name="general_doc"),
     path(
         "moderation/membre/<int:user_id>/<str:action>/",
         moderation_views.moderation_user_action,

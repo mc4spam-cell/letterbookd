@@ -1,0 +1,40 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Benutzerhandbuch — letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><button type="button" id="btn-lang" class="btn-lang" title="Language"><span class="flag">🇩🇪</span></button></nav>
+</header>
+<main>
+<h1>Benutzerhandbuch</h1>
+<p class="lead">Alles, was in deinem Leseclub passiert, auf 11 Seiten.</p>
+<h2>Mitgliederseiten</h2>
+<div class="card-grid"><a class="card" href="de_login.html"><h3>Anmeldung</h3></a>
+<a class="card" href="de_accueil.html"><h3>Startseite</h3></a>
+<a class="card" href="de_livres.html"><h3>Bücher — Suchen</h3></a>
+<a class="card" href="de_livre-detail.html"><h3>Buchseite</h3></a>
+<a class="card" href="de_sorties.html"><h3>Neuerscheinungen</h3></a>
+<a class="card" href="de_prix.html"><h3>Literaturpreise</h3></a>
+<a class="card" href="de_membres.html"><h3>Mitglieder</h3></a>
+<a class="card" href="de_listes.html"><h3>Listen</h3></a>
+<a class="card" href="de_notifications.html"><h3>Benachrichtigungen</h3></a>
+<a class="card" href="de_inviter.html"><h3>Einladungen</h3></a>
+<a class="card" href="de_mon-compte.html"><h3>Mein Konto</h3></a></div>
+<footer class="doc">Generiert am 24. November 2026</footer>
+</main>
+<dialog id="dlg-lang">
+  <div class="lang-grid">
+    <a href="fr_index.html" class=""><span class="flag">🇫🇷</span><span>Français</span></a>
+    <a href="en_index.html" class=""><span class="flag">🇬🇧</span><span>English</span></a>
+    <a href="es_index.html" class=""><span class="flag">🇪🇸</span><span>Español</span></a>
+    <a href="de_index.html" class="on"><span class="flag">🇩🇪</span><span>Deutsch</span></a>
+    <a href="ru_index.html" class=""><span class="flag">🇷🇺</span><span>Русский</span></a>
+  </div>
+</dialog>
+<script>
+  document.getElementById('btn-lang').addEventListener('click', function(){document.getElementById('dlg-lang').showModal();});
+  document.getElementById('dlg-lang').addEventListener('click', function(e){if(e.target===this)this.close();});
+</script>
+</body></html>

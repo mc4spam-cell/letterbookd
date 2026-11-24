@@ -1,0 +1,32 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sorties — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Sorties</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Suivre les nouveautés littéraires chaque semaine. L'application récupère automatiquement la sélection du Monde des livres pour nourrir les clubs en idées de lecture.</div>
+  <figure><img class="shot" src="screenshots/fr/sorties.png" alt="Sorties"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>Grille de cartes, une par sortie récente : couverture ou image, titre avec guillemets, extrait, et une barre d'actions en bas (favoris / ajouter à une liste / suggérer / 'Lire l'article'). La récupération tourne une fois par semaine en tâche de fond (planificateur Django).</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Icône cœur</td><td>—</td><td>Ajoute/retire la sortie à tes 'Favoris'. Si la sortie n'est pas encore un livre du catalogue, elle y entre à ce moment-là.</td></tr>
+      <tr><td>Icône dossier</td><td>Modal 'Ajouter à une liste'.</td><td>Place la sortie dans une liste (existante ou nouvelle).</td></tr>
+      <tr><td>Icône partage/triangle</td><td>Modal 'Suggérer ce livre'.</td><td>Envoie une suggestion privée à un membre que tu suis.</td></tr>
+      <tr><td>Lien 'Lire l'article'</td><td>—</td><td>Ouvre l'article d'origine du Monde dans un nouvel onglet.</td></tr>
+    </tbody>
+  </table>
+  <h2>Modales</h2>
+  <figure><img class="shot" src="screenshots/fr/modal-ajouter-liste.png" alt="Modal « Ajouter à une liste »"><figcaption>Modal « Ajouter à une liste »</figcaption></figure>
+  <figure><img class="shot" src="screenshots/fr/modal-suggerer.png" alt="Modal « Suggérer ce livre »"><figcaption>Modal « Suggérer ce livre »</figcaption></figure>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

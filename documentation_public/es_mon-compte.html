@@ -1,0 +1,29 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi cuenta — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Mi cuenta</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Personalizar tu identidad en el club (nombre de usuario, biografía) y gestionar la seguridad (contraseña). También puedes consultar tus estadísticas de lectura y eliminar definitivamente tu cuenta si quieres salir.</div>
+  <figure><img class="shot" src="screenshots/es/mon-compte.png" alt="Mi cuenta"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Arriba, dos enlaces rápidos: «Ver mis estadísticas» (página de estadísticas personales) y «Cambiar mi contraseña». Debajo, el formulario de perfil: «Nombre visible» (tu nombre público) y «Biografía» (texto libre, visible en tu perfil para los miembros de tus clubs). Haz clic en «Guardar» para aplicar los cambios. Más abajo, la sección «Eliminar mi cuenta»: un icono de papelera abre una confirmación. La eliminación es definitiva: perfil, lecturas, reseñas, listas, todo se borra.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Enlace «Ver mis estadísticas»</td><td>—</td><td>Abre tu página de estadísticas: número de libros leídos, media de notas, autores favoritos y evolución en el tiempo.</td></tr>
+      <tr><td>Enlace «Cambiar mi contraseña»</td><td>Formulario allauth: contraseña anterior + nueva (dos veces).</td><td>Sustituye tu contraseña. Las demás sesiones abiertas siguen siendo válidas.</td></tr>
+      <tr><td>Botón «Guardar» (formulario de perfil)</td><td>Nombre visible (nombre de usuario, obligatorio), Biografía (texto libre, opcional).</td><td>Actualiza tu perfil. Los cambios aparecen en todos los lugares donde se muestra tu nombre de usuario.</td></tr>
+      <tr><td>Icono de papelera bajo «Eliminar mi cuenta»</td><td>Formulario de confirmación (página aparte).</td><td>Elimina definitivamente tu cuenta, tus lecturas, reseñas, listas e invitaciones. Acción irreversible.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

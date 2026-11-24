@@ -1,0 +1,30 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Einladungen — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Einladungen</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Ein neues Mitglied in einen deiner Clubs einladen, ohne ein Passwort weiterzugeben. Ein Klick auf „+“ erzeugt einen Link, den du in eine E-Mail, eine SMS oder eine private Nachricht einfügen kannst. Wer ihm folgt, legt sein Konto an und tritt dem Club bei.</div>
+  <figure><img class="shot" src="screenshots/de/inviter.png" alt="Einladungen"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Die Seite zeigt deine bestehenden Einladungslinks: eine URL pro Zeile, mit Status („ausstehend“ oder „verwendet am ... von ...“). Ein Klick auf „+“ erstellt einen neuen, einmaligen Einladungslink.</p>
+    <p>WICHTIG: Jeder neue Link macht den vorherigen, noch nicht verwendeten Link ungültig. Aus Sicherheitsgründen kann nur ein Link gleichzeitig aktiv sein. Kopiere den Link mit dem Kopier-Symbol und teile ihn, wie du möchtest.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Schaltfläche „+“ neben „Einladungen“</td><td>POST-Formular ohne Parameter.</td><td>Erzeugt einen neuen, einmaligen Einladungslink (signierte URL). Der zuvor aktive Link wird deaktiviert. Der neue Link erscheint ganz oben in der Liste.</td></tr>
+      <tr><td>Kopier-Symbol neben einer Einladungs-URL</td><td>—</td><td>Kopiert die URL in die Zwischenablage. Anschließend kannst du sie im Programm deiner Wahl einfügen.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

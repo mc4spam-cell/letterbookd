@@ -1,0 +1,29 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Listes — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Listes</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Organiser tes lectures : favoris, à lire, livres déjà parcourus, plus toutes les listes thématiques que tu veux créer (genres, thèmes, défis de lecture).</div>
+  <figure><img class="shot" src="screenshots/fr/listes.png" alt="Listes"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>Trois listes système sont toujours présentes : 'Favoris' (cœur), 'À lire' (file d'attente), 'Tous mes livres' (tout ce que tu as enregistré). Elles sont suivies de tes listes personnelles. Chaque liste se replie/déplie via son chevron, affiche son compteur de livres, et expose ses livres sous forme de couvertures avec étoiles de note en surimpression. Un 'Publier' (+) en haut crée une nouvelle liste.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Bouton '+' à côté de 'Listes'</td><td>Champ 'Titre' (120 caractères max).</td><td>Crée une nouvelle liste vide ; elle apparaît immédiatement dans la colonne de gauche prête à être garnie depuis les fiches livres.</td></tr>
+      <tr><td>Chevron devant une liste</td><td>—</td><td>Ouvre/ferme l'accordéon. Une seule liste peut être ouverte à la fois (name='lists-acc').</td></tr>
+      <tr><td>Icône corbeille à côté d'un livre (dans une liste)</td><td>Formulaire POST confirmatif.</td><td>Retire le livre de la liste. Le livre reste dans le catalogue et dans tes autres listes.</td></tr>
+      <tr><td>Icône corbeille sur une liste personnelle</td><td>Formulaire POST confirmatif.</td><td>Supprime la liste en entier (les livres eux-mêmes sont conservés, seule la liste disparaît). Les listes système ne sont pas supprimables.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

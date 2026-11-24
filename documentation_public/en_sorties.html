@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Releases — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Releases</h1>
+  <div class="goal"><strong>Why it exists:</strong> Follow new literary releases every week. The app automatically pulls Le Monde's book selection to give clubs ideas for their next reads.</div>
+  <figure><img class="shot" src="screenshots/en/sorties.png" alt="Releases"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The page is a grid of cards, one per recent release. Each card shows a cover or image, the title, an excerpt, and an action bar at the bottom: favorites, add to a list, suggest, and 'Read the article'.</p>
+    <p>The fetch runs once a week in the background (Django scheduler).</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Heart icon</td><td>—</td><td>Adds or removes the release from your 'Favorites'. If the release is not yet a book in the catalogue, it is added at that point.</td></tr>
+      <tr><td>Folder icon</td><td>'Add to a list' modal.</td><td>Places the release in a list (existing or new).</td></tr>
+      <tr><td>Share / triangle icon</td><td>'Suggest this book' modal.</td><td>Sends a private suggestion to a member you follow.</td></tr>
+      <tr><td>'Read the article' link</td><td>—</td><td>Opens the original Le Monde article in a new tab.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/en/modal-ajouter-liste.png" alt="Add to a list modal on the Releases page"><figcaption>The 'Add to a list' modal.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/modal-suggerer.png" alt="Suggest this book modal on the Releases page"><figcaption>The 'Suggest this book' modal.</figcaption></figure>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Notifications</h1>
+  <div class="goal"><strong>Why it exists:</strong> Gather everything that concerns you personally: suggestions from other members, reactions to your reviews, and comments under your reviews. Further down is the feed of all recent reviews in your club.</div>
+  <figure><img class="shot" src="screenshots/en/notifications.png" alt="Notifications"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The page has two sections. 'Notifications' is at the top, with one line per event: the sender's username, the type of action ('suggests to you', 'reacted to', 'commented on'), and a link to the relevant book or review. A 'Mark all as read' button clears the badge on the bell.</p>
+    <p>At the bottom, 'Review feed' lists recent reviews posted in your club, each with its cover, book, book author, review author and star rating, plus a 'view review' link.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'Mark all as read' button</td><td>POST form.</td><td>Marks all your notifications as read. The bell at the top right changes from green to grey. Notifications stay in the history but are no longer counted as unread.</td></tr>
+      <tr><td>Link in a notification (book title, 'view review')</td><td>—</td><td>Opens the context: the book page, anchored to the commented review.</td></tr>
+      <tr><td>'view review' link in the feed</td><td>—</td><td>Opens the book page, positioned on that review.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

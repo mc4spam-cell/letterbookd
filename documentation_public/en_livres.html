@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Books — Search — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Books — Search</h1>
+  <div class="goal"><strong>Why it exists:</strong> Find a book in your club's shared catalogue. If the book is not there, you can propose it via Open Library: it will appear in the catalogue a few minutes later.</div>
+  <figure><img class="shot" src="screenshots/en/livres.png" alt="Books — Search"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>Type the start of a title, an author's name or an ISBN in the search bar, then press Enter (or click the magnifier). For example, 'Le Rêve du jaguar' returns the book page for the 2024 Prix Femina and Grand Prix du roman de l'Académie française winner.</p>
+    <p>If the book is missing, follow the 'search on Open Library' link, then 'create a record there'. Open Library pushes the record into letterbookd within a few minutes.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Search bar</td><td>One text field (title, author, or ISBN). Submit with Enter or the magnifier.</td><td>Reloads the page with matching results. The URL carries a '?q=…' parameter, so you can share the search.</td></tr>
+      <tr><td>'search on Open Library' / 'create a record there' link</td><td>Open Library form (outside letterbookd).</td><td>Creates a record on Open Library; letterbookd picks it up within minutes. Refreshing the search will show the new book.</td></tr>
+      <tr><td>Heart icon (result row)</td><td>—</td><td>Adds or removes the book from your 'Favorites' system list.</td></tr>
+      <tr><td>Folder icon (result row)</td><td>Opens the 'Add to a list' modal (see below).</td><td>Adds the book to the chosen list, or to a new list created on the spot.</td></tr>
+      <tr><td>Share / triangle icon (result row)</td><td>Opens the 'Suggest this book' modal.</td><td>Sends a private suggestion to a member of your club, with an optional message (280 characters max).</td></tr>
+      <tr><td>Grey stars (result row)</td><td>Clicking the stars opens the full rating form on the book page.</td><td>Redirects to the book page, where you can give your rating.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/en/modal-ajouter-liste.png" alt="Add to a list modal on the Books page"><figcaption>The 'Add to a list' modal.</figcaption></figure>
+  <figure><img class="shot" src="screenshots/en/modal-suggerer.png" alt="Suggest this book modal on the Books page"><figcaption>The 'Suggest this book' modal.</figcaption></figure>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

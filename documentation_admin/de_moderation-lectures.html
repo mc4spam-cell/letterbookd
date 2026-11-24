@@ -1,0 +1,31 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Lesevorgänge — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Diese Handbuchseite beschreibt eine Funktion, die nur Club-Administratoren zur Verfügung steht. Nur für Nutzer mit Staff-Status zugänglich.</div>
+  <h1>Moderation — Lesevorgänge <span class="badge-admin">Nur Admin</span></h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Jeden Lesevorgang (Mitglied × Buch) des Clubs auflisten. Ermöglicht es, einen Lesevorgang zu löschen, wenn er doppelt, offensichtlich falsch oder abgebrochen ist.</div>
+  <figure><img class="shot" src="screenshots/de/moderation-lectures.png" alt="Moderation — Lesevorgänge"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Tabelle: Mitglied (Name), Titel (Buch), Datum (wann der Lesevorgang erfasst wurde) und Aktionen (Kreuz zum Löschen). Es gelten dieselben Sortier- und Filtermechanismen wie im Reiter Mitglieder.</p>
+    <p>Das Löschen eines Lesevorgangs entfernt auch die daran hängende Rezension, nicht aber die Kommentare anderer Mitglieder zu dieser Rezension. Diese werden zu verwaisten Kommentaren, die im Reiter Kommentare bearbeitet werden müssen.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Sortier-/Filtersymbole</td><td>—</td><td>Gleiche Mechanik wie im Reiter Mitglieder.</td></tr>
+      <tr><td>Kreuz-Schaltfläche (×) in einer Zeile</td><td>Bestätigendes POST-Formular.</td><td>Löscht den Lesevorgang UND die daran hängende Rezension. Die Kommentare bleiben bestehen, verweisen dann aber auf eine gelöschte Rezension.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

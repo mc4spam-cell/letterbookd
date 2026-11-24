@@ -1,12 +1,38 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Case, Count, IntegerField, Value, When
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.cache import patch_cache_control
+from django.views.static import serve as static_serve
 
 from .review_models import Comment, Reading, Review
 
 staff_required = user_passes_test(lambda u: u.is_authenticated and u.is_staff)
+
+
+def _private(resp):
+    # Cloudflare / any shared cache must never keep a 302-to-login response
+    # and later replay it to a signed-in user.
+    patch_cache_control(resp, private=True, no_store=True)
+    return resp
+
+
+def _serve_gated(request, path, root, needs_staff):
+    if not request.user.is_authenticated:
+        return _private(redirect(f"{settings.LOGIN_URL}?next={request.path}"))
+    if needs_staff and not request.user.is_staff:
+        return _private(redirect("home"))
+    return _private(static_serve(request, path, document_root=root))
+
+
+def general_doc(request, path):
+    return _serve_gated(request, path, str(settings.BASE_DIR / "documentation_public"), needs_staff=False)
+
+
+def moderation_doc(request, path):
+    return _serve_gated(request, path, str(settings.BASE_DIR / "documentation_admin"), needs_staff=True)
 
 PAGE_SIZE = 50
 

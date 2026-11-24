@@ -1,0 +1,30 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modération — Avis — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Cette page de documentation décrit une fonctionnalité réservée aux administrateurs du club. Elle n'est accessible qu'aux utilisateurs ayant le statut staff.</div>
+<h1>Modération — Avis <span class="badge-admin">Réservé aux administrateurs</span></h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Tous les avis écrits dans le club, avec un extrait du texte. Permet aux admins de supprimer rapidement un avis déplacé sans toucher à la fiche de lecture elle-même.</div>
+  <figure><img class="shot" src="screenshots/fr/moderation-avis.png" alt="Modération — Avis"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>Tableau : Membre (auteur de l'avis), Titre (livre concerné), Date (date de l'avis), Avis (extrait du texte), Actions (croix pour supprimer). La colonne Avis est triable et filtrable sur le texte — utile pour chercher un mot-clé qui aurait motivé un signalement. Supprimer un avis retire le texte mais garde la fiche de lecture (note + statut) — ainsi l'étoile du membre reste dans la moyenne.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Icônes tri/filtre (avec loupe sur la colonne Avis)</td><td>—</td><td>Tri standard ; filtre texte sur le contenu de l'avis.</td></tr>
+      <tr><td>Bouton croix (×) sur une ligne</td><td>Formulaire POST confirmatif.</td><td>Supprime UNIQUEMENT le texte de l'avis. La note reste, la fiche de lecture reste, les commentaires attachés restent mais perdent leur contexte.</td></tr>
+    </tbody>
+  </table>
+  <h2>Filtre</h2>
+  <p>Le filtre fonctionne de la même façon que dans l'onglet Membres : voir la figure de la page <a href="fr_moderation-membres.html">Modération — Membres</a>.</p>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd — <a href="../fr_index.html">Guide membre</a></footer>
+</main>
+</body></html>

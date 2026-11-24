@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderación — Lecturas — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Esta página de la guía describe una funcionalidad reservada a administradores del club. Solo accesible a usuarios con estatus de staff.</div>
+  <h1>Moderación — Lecturas <span class="badge-admin">Solo administradores</span></h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Listar cada registro de lectura (miembro × libro) del club. Permite eliminar una ficha de lectura si está duplicada, es claramente falsa o ha sido abandonada.</div>
+  <figure><img class="shot" src="screenshots/es/moderation-lectures.png" alt="Moderación — Lecturas"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Tabla: Miembro (nombre de usuario), Título (libro), Fecha (cuándo se registró la lectura) y Acciones (cruz para eliminar). Los mismos patrones de orden y filtro que la pestaña Miembros. Eliminar una lectura también elimina la reseña asociada, pero no los comentarios de otros miembros sobre esa reseña: quedan como comentarios huérfanos que hay que gestionar en la pestaña Comentarios.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Iconos de orden / filtro</td><td>—</td><td>Misma mecánica que en la pestaña Miembros.</td></tr>
+      <tr><td>Botón cruz (×) en una fila</td><td>Formulario POST de confirmación.</td><td>Elimina la ficha de lectura Y su reseña asociada. Los comentarios se conservan, pero apuntan a una reseña eliminada.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

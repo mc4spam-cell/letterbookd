@@ -1,0 +1,37 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha de un libro — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Ficha de un libro</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Todo lo que tu club sabe sobre un libro: portada, metadatos, resumen, nota media, distribución de notas, tu propio historial y las reseñas de los demás miembros con sus comentarios. Ejemplo: Le Rêve du jaguar (Miguel Bonnefoy), Prix Femina + Grand prix du roman de l'Académie française 2024.</div>
+  <figure><img class="shot" src="screenshots/es/livre-detail.png" alt="Ficha de un libro"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Arriba a la izquierda, la portada; al lado, los metadatos (autores, año, ISBN, páginas, premios obtenidos). A la derecha, el recuadro «Nota media» con la nota sobre 10, el número de votantes y un histograma de la distribución (de 1 a 5 estrellas). Más abajo, el resumen y la fila de acciones: «Puntuar / escribir una reseña», añadir a favoritos (corazón), añadir a una lista (carpeta) y sugerir (triángulo). La sección «Mi reseña» está vacía si aún no has puntuado; si no, verás tu nota y tu texto. Por último, «Reseñas de otros miembros» muestra, para cada una, estrellas, fecha, extracto, tres reacciones (pulgar arriba / signo de interrogación / pulgar abajo) y un enlace «Reaccionar» para publicar un comentario bajo la reseña.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Enlace «Puntuar / escribir una reseña» (o clic en las estrellas)</td><td>Ventana con: «Añadir a favoritos» (corazón), Estado (por leer / leyendo / leído), Fecha de inicio, Fecha de fin, Nota (5 estrellas, medias estrellas posibles), Reseña (área de texto), casilla «Contiene spoilers».</td><td>Guarda una «lectura» vinculada a este libro: tu nota aparece al instante en «Mi reseña», entra en la media y tu reseña aparece en el flujo de reseñas de tus clubs. Si marcas «spoilers», tu reseña queda oculta por defecto para los demás, que deben hacer clic para verla.</td></tr>
+      <tr><td>Icono de corazón (bajo el resumen)</td><td>—</td><td>Añade o quita el libro de tu lista del sistema «Favoritos». Corazón lleno = favorito; corazón vacío = no favorito.</td></tr>
+      <tr><td>Icono de carpeta (bajo el resumen)</td><td>Ventana «Añadir a una lista» con tus listas existentes (nombre + número de libros) y un campo «Título» para crear una lista nueva.</td><td>Añade el libro a la lista elegida o crea una nueva. Confirmación en la ficha de la lista correspondiente.</td></tr>
+      <tr><td>Icono de compartir / triángulo (bajo el resumen)</td><td>Ventana «Sugerir este libro»: botones de opción con los miembros que sigues + área de texto «Mensaje (opcional)» (contador 0/280).</td><td>Envía una notificación al destinatario, que recibe una entrada en «Notifs» del tipo «X te sugiere &lt;libro&gt;: &lt;tu mensaje&gt;». Si no sigues a nadie, la ventana te pide primero seguir a un miembro.</td></tr>
+      <tr><td>Pulgar arriba / signo de interrogación / pulgar abajo bajo una reseña</td><td>—</td><td>Guarda tu reacción (positiva, mixta o negativa) a la reseña. Los contadores se actualizan; el autor de la reseña ve las reacciones.</td></tr>
+      <tr><td>Enlace «Reaccionar» bajo una reseña</td><td>Ventana con un área de texto «Tu comentario...» y botones «Publicar» / «Cancelar».</td><td>Publica un comentario anidado bajo la reseña. Los demás miembros del club lo ven y el autor de la reseña recibe una notificación. Los comentarios solo pueden eliminarlos su autor o un administrador.</td></tr>
+    </tbody>
+  </table>
+  <h2>Ventanas</h2>
+  <figure><img class="shot" src="screenshots/es/modal-noter.png" alt="Ventana «Puntuar / escribir una reseña»"><figcaption>Ventana «Puntuar / escribir una reseña»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/livre-avis.png" alt="Reseñas de los demás miembros"><figcaption>Reseñas de los demás miembros</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/modal-commenter.png" alt="Ventana «Reaccionar» (comentario)"><figcaption>Ventana «Reaccionar» (comentario)</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/modal-ajouter-liste.png" alt="Ventana «Añadir a una lista»"><figcaption>Ventana «Añadir a una lista»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/es/modal-suggerer.png" alt="Ventana «Sugerir este libro»"><figcaption>Ventana «Sugerir este libro»</figcaption></figure>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

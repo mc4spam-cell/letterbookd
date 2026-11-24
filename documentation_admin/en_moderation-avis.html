@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Reviews — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">This page of the guide describes a feature restricted to club administrators. It is only accessible to users with staff status.</div>
+  <h1>Moderation — Reviews<span class="badge-admin">Admin only</span></h1>
+  <div class="goal"><strong>Why it exists:</strong> All reviews written in the club, with an excerpt of the text. Lets admins quickly remove an inappropriate review without touching the reading record itself.</div>
+  <figure><img class="shot" src="screenshots/en/moderation-avis.png" alt="Moderation — Reviews"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The table has these columns: Member (review author), Title (book concerned), Date (review date), Review (text excerpt), and Actions (cross to delete). The Review column can be sorted and filtered by its text, which is useful for finding a keyword that prompted a report.</p>
+    <p>Deleting a review removes the text but keeps the reading record (rating and status), so the member's rating stays in the average.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Sort / filter icons (magnifier on the Review column)</td><td>—</td><td>Standard sorting; text filter on the content of the reviews.</td></tr>
+      <tr><td>Cross (×) button on a row</td><td>Confirmation POST form.</td><td>Deletes ONLY the review text. The rating stays, the reading record stays, and attached comments stay but lose their context.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

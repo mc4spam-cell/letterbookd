@@ -1,0 +1,29 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mon compte — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Mon compte</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Personnaliser ton identité dans le club (pseudo, bio) et gérer la sécurité (mot de passe). Également : lire tes stats de lecture et supprimer définitivement ton compte si tu souhaites quitter.</div>
+  <figure><img class="shot" src="screenshots/fr/mon-compte.png" alt="Mon compte"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>En haut, deux liens rapides : 'Voir mes stats' (page de stats personnelles) et 'Changer mon mot de passe'. Dessous, formulaire de profil : 'Nom affiché' (ton pseudo public) et 'Bio' (texte libre, visible sur ton profil par les membres de tes clubs). Clique 'Enregistrer' pour appliquer. Plus bas, section 'Supprimer mon compte' : une icône corbeille qui ouvre une confirmation. La suppression est définitive : profil, lectures, avis, listes, tout est effacé.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Lien 'Voir mes stats'</td><td>—</td><td>Ouvre ta page de stats : nombre de livres lus, moyenne de notes, auteurs favoris, évolution dans le temps.</td></tr>
+      <tr><td>Lien 'Changer mon mot de passe'</td><td>Formulaire allauth : ancien mot de passe + nouveau (deux fois).</td><td>Remplace ton mot de passe. Les autres sessions ouvertes restent valides.</td></tr>
+      <tr><td>Bouton 'Enregistrer' (formulaire de profil)</td><td>Nom affiché (pseudo, obligatoire), Bio (texte libre, optionnelle).</td><td>Met à jour ton profil. Les changements apparaissent partout où ton pseudo est affiché.</td></tr>
+      <tr><td>Icône corbeille sous 'Supprimer mon compte'</td><td>Formulaire de confirmation (page séparée).</td><td>Supprime définitivement ton compte, tes lectures, tes avis, tes listes et tes invitations. Action irréversible.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

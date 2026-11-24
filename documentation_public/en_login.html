@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log in — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Log in</h1>
+  <div class="goal"><strong>Why it exists:</strong> Get into your club. letterbookd is private: access is by invitation link. If someone sent you a link, follow it; otherwise, use this page to resume your session.</div>
+  <figure><img class="shot" src="screenshots/en/login.png" alt="Log in"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>You land here if you are not logged in, or when you click 'Log in' in the top right. Enter the email address of your account and your password, then click 'Log in'. Tick 'Remember me' to stay logged in on this browser.</p>
+    <p>The 'Forgot password?' link sends a reset email. Follow it, choose a new password, then log in again. After logging in, you land on the home page.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'Log in' button (main form)</td><td>Email (required), Password (required), Remember me (checkbox, optional)</td><td>Session opened, redirect to the home page. On error, the form reloads with an explicit message (unknown address, incorrect password).</td></tr>
+      <tr><td>'Forgot password?' link</td><td>Request form by email (separate page)</td><td>A reset link is sent to the address you entered. Follow the link, choose a new password, and log in again.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

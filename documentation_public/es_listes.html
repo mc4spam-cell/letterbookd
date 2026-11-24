@@ -1,0 +1,29 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Listas — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <h1>Listas</h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Organizar tus lecturas: favoritos, por leer, libros ya leídos y todas las listas temáticas que quieras crear (géneros, temas, retos de lectura).</div>
+  <figure><img class="shot" src="screenshots/es/listes.png" alt="Listas"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Tres listas del sistema están siempre presentes: «Favoritos» (corazón), «Por leer» (cola de espera) y «Todos mis libros» (todo lo que has registrado). Van seguidas de tus listas personales. Cada lista se pliega o despliega con su chevrón, muestra su contador de libros y expone sus libros en forma de portadas con las estrellas de nota superpuestas. Un botón «+» arriba crea una lista nueva.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Botón «+» junto a «Listas»</td><td>Campo «Título» (120 caracteres como máximo).</td><td>Crea una lista nueva vacía. Aparece al instante en la columna izquierda, lista para llenarse desde las fichas de libros.</td></tr>
+      <tr><td>Chevrón delante de una lista</td><td>—</td><td>Abre o cierra el acordeón. Solo puede estar abierta una lista a la vez.</td></tr>
+      <tr><td>Icono de papelera junto a un libro (dentro de una lista)</td><td>Formulario POST de confirmación.</td><td>Quita el libro de la lista. El libro sigue en el catálogo y en tus otras listas.</td></tr>
+      <tr><td>Icono de papelera en una lista personal</td><td>Formulario POST de confirmación.</td><td>Elimina la lista completa. Los libros se conservan; solo desaparece la lista. Las listas del sistema no se pueden eliminar.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

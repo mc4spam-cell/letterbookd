@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Members — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">This page of the guide describes a feature restricted to club administrators. It is only accessible to users with staff status.</div>
+  <h1>Moderation — Members<span class="badge-admin">Admin only</span></h1>
+  <div class="goal"><strong>Why it exists:</strong> Admin view. An overview of every account in the club: who is active, who is an admin, who was flagged by IP address, and actions to suspend, promote or delete a member. Emails are blurred in this documentation; they appear in clear text in the app.</div>
+  <figure><img class="shot" src="screenshots/en/moderation-membres.png" alt="Moderation — Members"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>There are four tabs at the top: Members (here), Reads, Reviews and Comments. The members table lists, for each account: Name (username, clickable to open the profile), Email (clear text in the app), Joined (date), Books (number of reads), IP (red 'IP' badge if a suspicious IP address was recorded, a dash otherwise), and Status (green dot = active, green bolt = admin).</p>
+    <p>The Actions column has three icon buttons per row: pause (suspend), star (grant or remove admin rights), and cross (delete). Each column can be sorted (▲ ▼) and filtered with the magnifier icon, which opens the filter modal.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>Members / Reads / Reviews / Comments tabs</td><td>Navigation via ?tab=…</td><td>Switches the view without reloading the whole page (standard navigation).</td></tr>
+      <tr><td>▲ ▼ arrows in a column header</td><td>—</td><td>Sorts the column ascending (▲) or descending (▼). The sort is kept in the URL.</td></tr>
+      <tr><td>Magnifier icon in a column header (opens the Filter modal)</td><td>Modal with a text field 'Filter — &lt;column&gt;' and 'Apply' / 'Clear' / 'Cancel' buttons.</td><td>Filters the table on the chosen column. 'Clear' removes the filter. Several columns can be filtered together.</td></tr>
+      <tr><td>Pause (||) button on a member row</td><td>Confirmation POST form.</td><td>Suspends the account: the member can no longer log in or post. It can be reactivated later with the same button.</td></tr>
+      <tr><td>Star (☆ / ★) button on a member row</td><td>POST form.</td><td>Grants or removes admin rights (is_staff and is_superuser). The green bolt in the Status column updates immediately. An admin who removes their own rights loses access to moderation.</td></tr>
+      <tr><td>Cross (×) button on a member row</td><td>Confirmation POST form.</td><td>Permanently deletes the account and all its data (reads, reviews, comments, lists, invitations). Irreversible.</td></tr>
+      <tr><td>Table footer: 'Go to [n] / X' and arrows</td><td>Simple pagination.</td><td>Navigates between result pages.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/en/modal-filtre.png" alt="Filter modal opened from a column header"><figcaption>The filter modal, opened from a column header's magnifier.</figcaption></figure>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

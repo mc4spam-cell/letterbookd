@@ -1,0 +1,32 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anmeldung — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Anmeldung</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Melde dich in deinem Club an. letterbookd ist privat: Der Zugang erfolgt über einen Einladungslink. Wenn dir ein Link geschickt wurde, folge ihm; ansonsten nutze diese Seite, um deine Sitzung wieder aufzunehmen.</div>
+  <figure><img class="shot" src="screenshots/de/login.png" alt="Anmeldung"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Du landest hier, wenn du nicht angemeldet bist, oder wenn du oben rechts auf „Anmelden“ klickst.</p>
+    <p>Gib die E-Mail-Adresse deines Kontos und dein Passwort ein und klicke auf „Anmelden“. Mit „Angemeldet bleiben“ bleibst du in diesem Browser eingeloggt.</p>
+    <p>Über „Passwort vergessen?“ erhältst du eine E-Mail zum Zurücksetzen. Danach kommst du hierher zurück und meldest dich mit deinem neuen Passwort an.</p>
+    <p>Nach der Anmeldung landest du auf der Startseite.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Schaltfläche „Anmelden“ (Hauptformular)</td><td>E-Mail (Pflichtfeld), Passwort (Pflichtfeld), Angemeldet bleiben (Checkbox, optional)</td><td>Sitzung wird geöffnet, Weiterleitung auf die Startseite. Bei einem Fehler lädt das Formular mit einer eindeutigen Meldung neu (unbekannte Adresse, falsches Passwort).</td></tr>
+      <tr><td>Link „Passwort vergessen?“</td><td>Anforderungsformular per E-Mail (eigene Seite)</td><td>An die eingegebene Adresse wird ein Link zum Zurücksetzen gesendet. Folge dem Link, wähle ein neues Passwort und melde dich erneut an.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

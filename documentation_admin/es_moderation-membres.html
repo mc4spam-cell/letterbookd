@@ -1,0 +1,35 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderación — Miembros — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Esta página de la guía describe una funcionalidad reservada a administradores del club. Solo accesible a usuarios con estatus de staff.</div>
+  <h1>Moderación — Miembros <span class="badge-admin">Solo administradores</span></h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Vista de administrador. Panorama de todas las cuentas del club: quién está activo, quién es administrador, quién ha sido marcado por su dirección IP, y acciones para suspender, promover o eliminar a un miembro. Los correos aparecen difuminados en esta documentación; en la aplicación se ven en texto claro.</div>
+  <figure><img class="shot" src="screenshots/es/moderation-membres.png" alt="Moderación — Miembros"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Cuatro pestañas arriba: Miembros (aquí), Lecturas, Reseñas y Comentarios. La tabla de miembros muestra para cada cuenta: Nombre (nombre de usuario, en el que se puede hacer clic para abrir el perfil), Correo (en texto claro en la aplicación), Registrado el (fecha), Libros (número de lecturas), IP (distintivo rojo «IP» si se ha registrado una dirección sospechosa; guion si no) y Estado (punto verde = activo, rayo verde = administrador). La columna Acciones ofrece tres botones de icono por fila: pausa (suspender), estrella (conceder o retirar derechos de administrador) y cruz (eliminar). Cada columna se puede ordenar (▲▼) y filtrar mediante el icono de lupa, que abre la ventana de filtro.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Pestañas Miembros / Lecturas / Reseñas / Comentarios</td><td>Navegación mediante ?tab=…</td><td>Cambia la vista sin recargar la página completa.</td></tr>
+      <tr><td>Flechas ▲▼ en un encabezado de columna</td><td>—</td><td>Ordena la columna de forma ascendente (▲) o descendente (▼). El orden queda guardado en la URL.</td></tr>
+      <tr><td>Icono de lupa en un encabezado de columna (abre la ventana Filtro)</td><td>Ventana con campo de texto «Filtrar — &lt;columna&gt;» y botones «Aplicar», «Borrar» y «Cancelar».</td><td>Filtra la tabla por la columna elegida. «Borrar» quita el filtro. Se pueden filtrar varias columnas a la vez.</td></tr>
+      <tr><td>Botón pausa (||) en una fila de miembro</td><td>Formulario POST de confirmación.</td><td>Suspende la cuenta: el miembro ya no puede iniciar sesión ni publicar. Se puede reactivar más tarde con el mismo botón.</td></tr>
+      <tr><td>Botón estrella (☆/★) en una fila de miembro</td><td>Formulario POST.</td><td>Concede o retira los derechos de administrador (is_staff + is_superuser). El rayo verde de la columna Estado refleja el cambio al instante. Si un administrador se retira sus propios derechos, pierde el acceso a la moderación.</td></tr>
+      <tr><td>Botón cruz (×) en una fila de miembro</td><td>Formulario POST de confirmación.</td><td>Elimina definitivamente la cuenta y todos sus datos (lecturas, reseñas, comentarios, listas, invitaciones). Irreversible.</td></tr>
+      <tr><td>Pie de tabla: «Ir a [n] / X» y flechas</td><td>Paginación sencilla.</td><td>Navegación entre las páginas de resultados.</td></tr>
+    </tbody>
+  </table>
+  <h2>Ventanas</h2>
+  <figure><img class="shot" src="screenshots/es/modal-filtre.png" alt="Ventana «Filtrar»"><figcaption>Ventana «Filtrar»</figcaption></figure>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

@@ -557,7 +557,8 @@
     <dialog class="sheet" id="dlg-info">
         <h2>{% translate "À propos de letterbookd" %}</h2>
         <p>{% translate "Un outil pour animer un club de lecture privé : choisir le livre du mois, noter, écrire des avis, en discuter." %}</p>
-        <p><a href="{% static 'documentation/' %}{{ LANGUAGE_CODE }}_index.html" target="_blank" rel="noopener">📖 {% translate "Guide d'utilisation" %}</a></p>
+        <p><a href="/doc/{{ LANGUAGE_CODE }}_index.html" target="_blank" rel="noopener">📖 {% translate "Guide d'utilisation" %}</a></p>
+        {% if user.is_staff %}<p><a href="/moderation/doc/{{ LANGUAGE_CODE }}_index.html" target="_blank" rel="noopener">🛡 {% translate "Guide de modération" %}</a></p>{% endif %}
         <div class="sheet-foot">
             {% translate "Auteur" %} : MC4Spam<br>
             {% translate "Dernière mise à jour" %} : {% if BUILD_DATE %}{{ BUILD_DATE|date:"j F Y" }}{% else %}—{% endif %}

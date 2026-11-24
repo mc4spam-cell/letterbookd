@@ -1,0 +1,33 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Новинки — Руководство letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="ru_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="ru_index.html">← Назад к указателю</a></nav>
+</header>
+<main>
+  <h1>Новинки</h1>
+  <div class="goal"><strong>Зачем это нужно:</strong> Следить за литературными новинками каждую неделю. Приложение автоматически забирает подборку Le Monde des livres, чтобы подкидывать клубам идеи для чтения.</div>
+  <figure><img class="shot" src="screenshots/ru/sorties.png" alt="Новинки"></figure>
+  <h2>Как это устроено</h2>
+  <div class="walkthrough">
+    <p>Сетка карточек, по одной на каждую недавнюю новинку: обложка или изображение, название в кавычках, отрывок и панель действий внизу (избранное, добавить в список, предложить, «Читать статью»). Сбор новинок идёт раз в неделю в фоновом режиме (планировщик Django).</p>
+  </div>
+  <h2>Цепочки действий</h2>
+  <p style="color:var(--muted)">Каждая строка — это триггер в интерфейсе, модалка или форма, которые он открывает, и результат.</p>
+  <table class="chains">
+    <thead><tr><th>Триггер</th><th>Модалка / Поля</th><th>Эффект</th></tr></thead>
+    <tbody>
+      <tr><td>Значок сердца</td><td>—</td><td>Добавляет новинку в «Избранное» или убирает её. Если новинка ещё не является книгой каталога, в этот момент она в него попадает.</td></tr>
+      <tr><td>Значок папки</td><td>Окно «Добавить в список».</td><td>Помещает новинку в список (существующий или новый).</td></tr>
+      <tr><td>Значок «поделиться» / треугольник</td><td>Окно «Предложить эту книгу».</td><td>Отправляет приватное предложение участнику, на которого ты подписан.</td></tr>
+      <tr><td>Ссылка «Читать статью»</td><td>—</td><td>Открывает оригинальную статью из Le Monde в новой вкладке.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/ru/modal-ajouter-liste.png" alt="Окно «Добавить в список»"><figcaption>Окно «Добавить в список»</figcaption></figure>
+  <figure><img class="shot" src="screenshots/ru/modal-suggerer.png" alt="Окно «Предложить эту книгу»"><figcaption>Окно «Предложить эту книгу»</figcaption></figure>
+  <footer class="doc">Руководство сгенерировано 24 ноября 2026 г. — letterbookd</footer>
+</main>
+</body></html>

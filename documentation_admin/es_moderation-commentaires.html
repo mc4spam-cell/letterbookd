@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderación — Comentarios — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Esta página de la guía describe una funcionalidad reservada a administradores del club. Solo accesible a usuarios con estatus de staff.</div>
+  <h1>Moderación — Comentarios <span class="badge-admin">Solo administradores</span></h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Moderar las conversaciones anidadas bajo las reseñas. Un comentario inapropiado se retira aquí, de forma quirúrgica, sin afectar a la reseña padre ni a las demás respuestas del hilo.</div>
+  <figure><img class="shot" src="screenshots/es/moderation-commentaires.png" alt="Moderación — Comentarios"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Tabla: Autor (nombre de usuario del comentarista), Libro (libro cuya reseña contiene el comentario), Fecha, Comentario (extracto, ordenable y filtrable) y Acciones (cruz para eliminar). La eliminación de un comentario es atómica: los demás comentarios del mismo hilo se conservan.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Iconos de orden / filtro (lupa en la columna Comentario)</td><td>—</td><td>Misma mecánica.</td></tr>
+      <tr><td>Botón cruz (×) en una fila</td><td>Formulario POST de confirmación.</td><td>Elimina el comentario. El hilo sigue coherente (sin eliminación en cascada) y la reseña padre no se ve afectada.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

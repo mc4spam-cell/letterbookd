@@ -1,0 +1,27 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invitations — Guide letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="fr_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="fr_index.html">← Retour à l'index</a></nav>
+</header>
+<main>
+  <h1>Invitations</h1>
+  <div class="goal"><strong>À quoi ça sert :</strong> Inviter un nouveau membre dans un de tes clubs sans partager de mot de passe. Un clic sur '+' génère un lien que tu peux coller dans un e-mail, un SMS, un message privé — celui qui le suit crée son compte et rejoint le club.</div>
+  <figure><img class="shot" src="screenshots/fr/inviter.png" alt="Invitations"></figure>
+  <h2>Parcours</h2>
+  <div class="walkthrough"><p>La page affiche tes liens d'invitation existants : une URL par ligne, avec statut (en attente ou 'utilisée le ... par ...'). Un clic sur '+' crée un nouveau lien d'invitation unique. IMPORTANT : chaque nouveau lien invalide le précédent non utilisé — tu ne peux avoir qu'un lien actif à la fois, pour la sécurité. Copie le lien avec l'icône dédiée puis partage-le comme tu veux.</p></div>
+  <h2>Chaînes d'action</h2>
+  <p style="color:var(--muted)">Chaque ligne décrit un déclencheur dans l'interface, ce qu'il ouvre (modal ou formulaire), et l'effet produit.</p>
+  <table class="chains">
+    <thead><tr><th>Déclencheur</th><th>Modal / Champs</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td>Bouton '+' à côté d'Invitations</td><td>Formulaire POST sans paramètre.</td><td>Génère un nouveau lien d'invitation unique (URL signée). Le lien précédemment actif est désactivé. Le nouveau lien apparaît en tête de la liste.</td></tr>
+      <tr><td>Icône 'copier' à côté d'une URL d'invitation</td><td>—</td><td>Copie l'URL dans le presse-papier. Tu peux ensuite la coller dans l'outil de ton choix.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Documentation générée le 24 novembre 2026 — letterbookd</footer>
+</main>
+</body></html>

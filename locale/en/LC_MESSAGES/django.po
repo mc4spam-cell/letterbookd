@@ -835,3 +835,6 @@ msgstr "Fnac Novel Prize"
 
 msgid "Prix des cinq continents de la francophonie"
 msgstr "Five Continents of the Francophonie Prize"
+
+msgid "Guide de modération"
+msgstr "Moderation guide"

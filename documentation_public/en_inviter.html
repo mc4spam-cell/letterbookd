@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invitations — letterbookd guide</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="en_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="en_index.html">← Back to index</a></nav>
+</header>
+<main>
+  <h1>Invitations</h1>
+  <div class="goal"><strong>Why it exists:</strong> Invite a new member into one of your clubs without sharing a password. A click on '+' generates a link you can paste into an email, a text message or a private message. The person who follows it creates an account and joins the club.</div>
+  <figure><img class="shot" src="screenshots/en/inviter.png" alt="Invitations"></figure>
+  <h2>Walkthrough</h2>
+  <div class="walkthrough">
+    <p>The page lists your existing invitation links, one URL per line, with a status (pending, or 'used on ... by ...'). A click on '+' creates a new unique invitation link.</p>
+    <p>Important: each new link invalidates the previous unused one. For security, you can only have one active link at a time. Copy the link with the dedicated icon, then share it however you like.</p>
+  </div>
+  <h2>Action chains</h2>
+  <p style="color:var(--muted)">Each row describes a trigger in the UI, the modal or form it opens, and the resulting effect.</p>
+  <table class="chains">
+    <thead><tr><th>Trigger</th><th>Modal / Fields</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>'+' button next to Invitations</td><td>POST form with no parameters.</td><td>Generates a new unique invitation link (signed URL). The previously active link is disabled. The new link appears at the top of the list.</td></tr>
+      <tr><td>'Copy' icon next to an invitation URL</td><td>—</td><td>Copies the URL to the clipboard, so you can paste it into the tool of your choice.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guide generated on 2026-11-24 — letterbookd</footer>
+</main>
+</body></html>

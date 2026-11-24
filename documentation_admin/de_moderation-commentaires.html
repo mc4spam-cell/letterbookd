@@ -1,0 +1,30 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Kommentare — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Diese Handbuchseite beschreibt eine Funktion, die nur Club-Administratoren zur Verfügung steht. Nur für Nutzer mit Staff-Status zugänglich.</div>
+  <h1>Moderation — Kommentare <span class="badge-admin">Nur Admin</span></h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Die verschachtelten Diskussionen unter den Rezensionen moderieren. Ein unangemessener Kommentar wird hier gezielt entfernt, ohne die übergeordnete Rezension oder die übrigen Antworten im Thread zu beeinträchtigen.</div>
+  <figure><img class="shot" src="screenshots/de/moderation-commentaires.png" alt="Moderation — Kommentare"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Tabelle: Autor (Name des Kommentierenden), Buch (Buch, dessen Rezension den Kommentar trägt), Datum, Kommentar (Auszug, sortier- und filterbar) und Aktionen (Kreuz zum Löschen). Die Löschung eines Kommentars ist atomar: Die übrigen Kommentare desselben Threads bleiben erhalten.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Sortier-/Filtersymbole (Lupe in der Spalte Kommentar)</td><td>—</td><td>Gleiche Mechanik.</td></tr>
+      <tr><td>Kreuz-Schaltfläche (×) in einer Zeile</td><td>Bestätigendes POST-Formular.</td><td>Löscht den Kommentar. Der Thread bleibt konsistent (keine Kaskadierung), und die übergeordnete Rezension ist nicht betroffen.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

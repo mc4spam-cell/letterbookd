@@ -1,0 +1,32 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mein Konto — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Mein Konto</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Deine Identität im Club anpassen (Name, Bio) und die Sicherheit verwalten (Passwort). Außerdem kannst du deine Lesestatistiken einsehen und dein Konto endgültig löschen, falls du austreten möchtest.</div>
+  <figure><img class="shot" src="screenshots/de/mon-compte.png" alt="Mein Konto"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Oben findest du zwei Schnelllinks: „Meine Statistiken ansehen“ (persönliche Statistikseite) und „Passwort ändern“. Darunter steht das Profilformular: „Anzeigename“ (dein öffentlicher Name) und „Bio“ (Freitext, auf deinem Profil für Mitglieder deiner Clubs sichtbar). Klicke auf „Speichern“, um die Änderungen zu übernehmen.</p>
+    <p>Weiter unten findest du den Abschnitt „Mein Konto löschen“: Ein Papierkorb-Symbol öffnet eine Bestätigung. Die Löschung ist endgültig: Profil, Lektüren, Rezensionen und Listen werden vollständig entfernt.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Link „Meine Statistiken ansehen“</td><td>—</td><td>Öffnet deine Statistikseite: Anzahl gelesener Bücher, Durchschnittsnote, Lieblingsautoren, Entwicklung im Zeitverlauf.</td></tr>
+      <tr><td>Link „Passwort ändern“</td><td>allauth-Formular: bisheriges Passwort + neues Passwort (zweimal).</td><td>Ersetzt dein Passwort. Andere geöffnete Sitzungen bleiben gültig.</td></tr>
+      <tr><td>Schaltfläche „Speichern“ (Profilformular)</td><td>Anzeigename (dein Pseudonym, Pflichtfeld), Bio (Freitext, optional).</td><td>Aktualisiert dein Profil. Die Änderungen erscheinen überall, wo dein Name angezeigt wird.</td></tr>
+      <tr><td>Papierkorb-Symbol unter „Mein Konto löschen“</td><td>Bestätigungsformular (eigene Seite).</td><td>Löscht dein Konto endgültig, inklusive Lektüren, Rezensionen, Listen und Einladungen. Die Aktion ist nicht rückgängig zu machen.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

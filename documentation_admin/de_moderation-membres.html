@@ -1,0 +1,37 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Mitglieder — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Diese Handbuchseite beschreibt eine Funktion, die nur Club-Administratoren zur Verfügung steht. Nur für Nutzer mit Staff-Status zugänglich.</div>
+  <h1>Moderation — Mitglieder <span class="badge-admin">Nur Admin</span></h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Admin-Ansicht. Überblick über alle Konten des Clubs: wer aktiv ist, wer Admin ist, wer über seine IP-Adresse gemeldet wurde, sowie Aktionen zum Sperren, Befördern oder Löschen eines Mitglieds. Die E-Mail-Adressen sind in dieser Dokumentation unkenntlich gemacht; in der Anwendung erscheinen sie im Klartext.</div>
+  <figure><img class="shot" src="screenshots/de/moderation-membres.png" alt="Moderation — Mitglieder"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Vier Reiter oben: Mitglieder (hier), Lesevorgänge, Rezensionen, Kommentare. Die Mitgliedertabelle listet für jedes Konto: Name (Pseudonym, klickbar, öffnet das Profil), E-Mail (in der Anwendung im Klartext), Registriert am (Datum), Bücher (Anzahl der Lektüren), IP (rotes Badge „IP“, wenn eine verdächtige IP-Adresse festgestellt wurde, sonst ein Strich) und Status (grüner Punkt = aktiv, grüner Blitz = Admin).</p>
+    <p>Die Spalte Aktionen bietet pro Zeile drei Symbol-Schaltflächen: Pause (sperren), Stern (Admin-Rechte vergeben bzw. entziehen) und Kreuz (löschen). Jede Spalte ist sortierbar (▲▼) und über das Lupen-Symbol filterbar, das das Filter-Modal öffnet.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Reiter Mitglieder / Lesevorgänge / Rezensionen / Kommentare</td><td>Navigation über ?tab=…</td><td>Wechselt die Ansicht (normale Navigation).</td></tr>
+      <tr><td>Pfeile ▲▼ in einer Spaltenüberschrift</td><td>—</td><td>Sortiert die Spalte aufsteigend (▲) oder absteigend (▼). Die Sortierung wird in der URL gespeichert.</td></tr>
+      <tr><td>Lupen-Symbol in einer Spaltenüberschrift (öffnet das Modal Filter)</td><td>Modal mit Textfeld „Filtern — &lt;Spalte&gt;“ und Schaltflächen „Anwenden“ / „Zurücksetzen“ / „Abbrechen“.</td><td>Filtert die Tabelle nach der gewählten Spalte. „Zurücksetzen“ entfernt den Filter. Mehrere Spalten können kombiniert gefiltert werden.</td></tr>
+      <tr><td>Pause-Schaltfläche (||) in einer Mitgliederzeile</td><td>Bestätigendes POST-Formular.</td><td>Sperrt das Konto: Das Mitglied kann sich nicht mehr anmelden und nichts mehr posten. Es kann später wieder aktiviert werden (gleiche Schaltfläche).</td></tr>
+      <tr><td>Stern-Schaltfläche (☆/★) in einer Mitgliederzeile</td><td>POST-Formular.</td><td>Vergibt oder entzieht Admin-Rechte (is_staff + is_superuser). Der grüne Blitz in der Spalte Status ändert sich sofort. Ein Admin, der seine eigenen Rechte entzieht, verliert den Zugang zur Moderation.</td></tr>
+      <tr><td>Kreuz-Schaltfläche (×) in einer Mitgliederzeile</td><td>Bestätigendes POST-Formular.</td><td>Löscht das Konto und alle zugehörigen Daten endgültig (Lektüren, Rezensionen, Kommentare, Listen, Einladungen). Nicht rückgängig zu machen.</td></tr>
+      <tr><td>Tabellenfuß: „Gehe zu [n] / X“ und Pfeile</td><td>Einfache Seitennavigation.</td><td>Wechsel zwischen den Ergebnisseiten.</td></tr>
+    </tbody>
+  </table>
+  <figure><img class="shot" src="screenshots/de/modal-filtre.png" alt="Filter-Modal für eine Spalte der Mitgliedertabelle"><figcaption>Filter-Modal für eine Spalte der Mitgliedertabelle</figcaption></figure>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

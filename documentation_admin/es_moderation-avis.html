@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderación — Reseñas — Guía letterbookd</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="es_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="es_index.html">← Volver al índice</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Esta página de la guía describe una funcionalidad reservada a administradores del club. Solo accesible a usuarios con estatus de staff.</div>
+  <h1>Moderación — Reseñas <span class="badge-admin">Solo administradores</span></h1>
+  <div class="goal"><strong>Para qué sirve:</strong> Todas las reseñas escritas en el club, con un extracto del texto. Permite a los administradores eliminar rápidamente una reseña inapropiada sin tocar la ficha de lectura en sí.</div>
+  <figure><img class="shot" src="screenshots/es/moderation-avis.png" alt="Moderación — Reseñas"></figure>
+  <h2>Recorrido</h2>
+  <div class="walkthrough"><p>Tabla: Miembro (autor de la reseña), Título (libro), Fecha (de la reseña), Reseña (extracto del texto) y Acciones (cruz para eliminar). La columna Reseña se puede ordenar y filtrar por texto, lo que resulta útil para buscar una palabra clave que haya motivado una denuncia. Eliminar una reseña borra el texto, pero conserva la ficha de lectura (nota y estado): así la estrella del miembro sigue en la media.</p></div>
+  <h2>Cadenas de acción</h2>
+  <p>Cada fila describe un disparador en la interfaz, el modal o formulario que abre, y el efecto producido.</p>
+  <table class="chains">
+    <thead><tr><th>Disparador</th><th>Modal / Campos</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Iconos de orden / filtro (lupa en la columna Reseña)</td><td>—</td><td>Orden estándar; filtro de texto sobre el contenido de la reseña.</td></tr>
+      <tr><td>Botón cruz (×) en una fila</td><td>Formulario POST de confirmación.</td><td>Elimina SOLO el texto de la reseña. La nota se mantiene, la ficha de lectura se mantiene y los comentarios vinculados se mantienen, aunque pierden su contexto.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Guía generada el 24 de noviembre de 2026 — letterbookd</footer>
+</main>
+</body></html>

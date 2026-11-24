@@ -1,0 +1,32 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Listen — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545718">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <h1>Listen</h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Deine Lektüren ordnen: Favoriten, Leseliste, bereits gelesene Bücher und alle thematischen Listen, die du anlegen möchtest (Genres, Themen, Lese-Challenges).</div>
+  <figure><img class="shot" src="screenshots/de/listes.png" alt="Listen"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Drei Systemlisten sind immer vorhanden: „Favoriten“ (Herz), „Zu lesen“ (Warteschlange) und „Alle meine Bücher“ (alles, was du erfasst hast). Darauf folgen deine persönlichen Listen.</p>
+    <p>Jede Liste lässt sich über ihren Pfeil auf- und zuklappen, zeigt ihre Anzahl an Büchern und stellt die Bücher als Cover mit eingeblendeten Bewertungssternen dar. Über das „+“ oben erstellst du eine neue Liste.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Schaltfläche „+“ neben „Listen“</td><td>Feld „Titel“ (max. 120 Zeichen).</td><td>Erstellt eine neue, leere Liste; sie erscheint sofort in der linken Spalte und kann über die Buchseiten gefüllt werden.</td></tr>
+      <tr><td>Pfeil vor einer Liste</td><td>—</td><td>Öffnet bzw. schließt die Liste. Es kann jeweils nur eine Liste geöffnet sein (name=„lists-acc“).</td></tr>
+      <tr><td>Papierkorb-Symbol neben einem Buch (in einer Liste)</td><td>Bestätigendes POST-Formular.</td><td>Entfernt das Buch aus der Liste. Das Buch bleibt im Katalog und in deinen anderen Listen.</td></tr>
+      <tr><td>Papierkorb-Symbol bei einer persönlichen Liste</td><td>Bestätigendes POST-Formular.</td><td>Löscht die gesamte Liste. Die Bücher selbst bleiben erhalten; nur die Liste verschwindet. Systemlisten können nicht gelöscht werden.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>

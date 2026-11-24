@@ -1,0 +1,31 @@
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moderation — Rezensionen — letterbookd-Handbuch</title>
+<link rel="stylesheet" href="/static/documentation/style.css?v=1795545642">
+</head><body>
+<header class="doc">
+  <a href="de_index.html" class="brand" aria-label="letterbookd"><img src="logo.gif" alt="letterbookd"></a>
+  <nav><a href="de_index.html">← Zurück zum Index</a></nav>
+</header>
+<main>
+  <div class="admin-banner">Diese Handbuchseite beschreibt eine Funktion, die nur Club-Administratoren zur Verfügung steht. Nur für Nutzer mit Staff-Status zugänglich.</div>
+  <h1>Moderation — Rezensionen <span class="badge-admin">Nur Admin</span></h1>
+  <div class="goal"><strong>Wozu es dient:</strong> Alle im Club geschriebenen Rezensionen mit einem Textauszug. Ermöglicht Admins, eine unangemessene Rezension schnell zu löschen, ohne den Lesevorgang selbst anzutasten.</div>
+  <figure><img class="shot" src="screenshots/de/moderation-avis.png" alt="Moderation — Rezensionen"></figure>
+  <h2>Ablauf</h2>
+  <div class="walkthrough">
+    <p>Tabelle: Mitglied (Verfasser der Rezension), Titel (betreffendes Buch), Datum (Datum der Rezension), Rezension (Textauszug) und Aktionen (Kreuz zum Löschen). Die Spalte Rezension ist sortierbar und per Text filterbar, nützlich, um nach einem Stichwort zu suchen, das eine Meldung ausgelöst hat.</p>
+    <p>Das Löschen einer Rezension entfernt nur den Text, behält aber den Lesevorgang (Note und Status). So bleibt die Sternenbewertung des Mitglieds im Durchschnitt erhalten.</p>
+  </div>
+  <h2>Aktionsketten</h2>
+  <p style="color:var(--muted)">Jede Zeile beschreibt einen Auslöser in der Oberfläche, das sich öffnende Modal/Formular und den erzielten Effekt.</p>
+  <table class="chains">
+    <thead><tr><th>Auslöser</th><th>Modal / Felder</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Sortier-/Filtersymbole (Lupe in der Spalte Rezension)</td><td>—</td><td>Standardsortierung; Textfilter auf den Inhalt der Rezension.</td></tr>
+      <tr><td>Kreuz-Schaltfläche (×) in einer Zeile</td><td>Bestätigendes POST-Formular.</td><td>Löscht NUR den Text der Rezension. Die Bewertung bleibt, der Lesevorgang bleibt; die angehängten Kommentare bleiben, verlieren aber ihren Kontext.</td></tr>
+    </tbody>
+  </table>
+  <footer class="doc">Handbuch generiert am 24. November 2026 — letterbookd</footer>
+</main>
+</body></html>
