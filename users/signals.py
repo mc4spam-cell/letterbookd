@@ -8,16 +8,20 @@ log = logging.getLogger(__name__)
 
 
 def _client_ip(request):
-    """IP du client via Caddy : dernière entrée de X-Forwarded-For.
+    """IP du client réel derrière Cloudflare → Caddy.
 
-    Les autres en-têtes (X-Real-IP, CF-Connecting-IP) ne sont pas posées
-    par notre proxy et seraient contrôlables par le client.
+    Cloudflare pose CF-Connecting-IP avec l'IP d'origine ; sans Cloudflare
+    on retombe sur la première entrée de X-Forwarded-For (celle du client,
+    les proxies ajoutent la leur en fin).
     """
     if request is None:
         return None
+    cf = request.META.get("HTTP_CF_CONNECTING_IP", "").strip()
+    if cf:
+        return cf
     xff = request.META.get("HTTP_X_FORWARDED_FOR", "")
     if xff:
-        return xff.split(",")[-1].strip()
+        return xff.split(",")[0].strip()
     return request.META.get("REMOTE_ADDR") or None
 
 
