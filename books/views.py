@@ -1,13 +1,20 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from django.contrib.auth import get_user_model
-
 from clubs.list_views import ensure_default_lists
-from clubs.models import Comment, Follow, ListItem, Reading, ReadingList, ReadingStatus, ReviewReaction
+from clubs.models import (
+    Comment,
+    Follow,
+    ListItem,
+    Reading,
+    ReadingList,
+    ReadingStatus,
+    ReviewReaction,
+)
 
 from . import openlibrary
 from .models import Book, NewRelease, PrizeWinner
